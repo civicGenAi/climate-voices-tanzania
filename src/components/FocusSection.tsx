@@ -1,17 +1,17 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { BookOpen, TreePine, Languages, Users, ArrowRight } from "lucide-react";
-import realCommunity from "@/assets/real-community.jpeg";
-import realEducation from "@/assets/real-education.jpeg";
-import realPlanting from "@/assets/real-planting.jpeg";
-import founderImg from "@/assets/founder.jpeg";
+import focusEducation from "@/assets/focus-education-cartoon.png";
+import focusPlanting from "@/assets/focus-planting-cartoon.png";
+import focusTranslate from "@/assets/focus-translate-cartoon.png";
+import focusLeadership from "@/assets/focus-leadership-cartoon.png";
 
 const focusAreas = [
   {
     title: "Climate Education",
     description: "Delivering climate literacy programs in schools and communities across Tanzania, making complex climate science understandable and actionable.",
     Icon: BookOpen,
-    image: realEducation,
+    image: focusEducation,
     iconColor: "text-gold",
     tag: "In Action",
   },
@@ -19,7 +19,7 @@ const focusAreas = [
     title: "Tree Planting",
     description: "Organizing tree planting initiatives to restore degraded ecosystems and combat deforestation — one seedling at a time.",
     Icon: TreePine,
-    image: realPlanting,
+    image: focusPlanting,
     iconColor: "text-leaf",
     tag: "In Action",
   },
@@ -27,7 +27,7 @@ const focusAreas = [
     title: "Translation Work",
     description: "Translating critical climate documents, guides, and educational materials into Kiswahili and tribal languages — bridging the knowledge gap.",
     Icon: Languages,
-    image: realCommunity,
+    image: focusTranslate,
     iconColor: "text-sky",
     tag: "In Action",
   },
@@ -35,7 +35,7 @@ const focusAreas = [
     title: "Youth Leadership",
     description: "Training and empowering young Tanzanians to become climate ambassadors in their communities — building the next generation of change-makers.",
     Icon: Users,
-    image: founderImg,
+    image: focusLeadership,
     iconColor: "text-gold",
     tag: "In Action",
   },
@@ -46,7 +46,6 @@ const FocusSection = () => {
   const inView = useInView(ref, { once: true, margin: "-50px" });
   const [activeCard, setActiveCard] = useState(0);
 
-  // Auto-cycle through cards
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveCard((prev) => (prev + 1) % focusAreas.length);
@@ -56,7 +55,6 @@ const FocusSection = () => {
 
   return (
     <section id="focus" ref={ref} className="relative py-24 md:py-36 bg-forest-night overflow-hidden">
-      {/* Decorative floating circles */}
       <div className="absolute top-20 left-10 w-72 h-72 rounded-full border border-gold/[0.06] animate-[spin_60s_linear_infinite]" />
       <div className="absolute top-40 right-20 w-48 h-48 rounded-full border border-leaf/[0.08] animate-[spin_45s_linear_infinite_reverse]" />
       <div className="absolute bottom-20 left-1/3 w-96 h-96 rounded-full bg-gold/[0.02] blur-3xl" />
@@ -87,14 +85,13 @@ const FocusSection = () => {
           </motion.p>
         </div>
 
-        {/* Single active card display */}
         <div className="flex flex-col lg:flex-row gap-8 items-stretch">
-          {/* Main card with photo background */}
+          {/* Main card with cartoon background */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="flex-1 relative rounded-[2rem] overflow-hidden min-h-[400px] md:min-h-[450px]"
+            className="flex-1 relative rounded-[2rem] overflow-hidden min-h-[400px] md:min-h-[450px] bg-card"
           >
             <AnimatePresence mode="wait">
               <motion.div
@@ -103,38 +100,37 @@ const FocusSection = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute inset-0"
+                className="absolute inset-0 flex items-end justify-end p-6"
               >
-                {/* Background image */}
                 <img
                   src={focusAreas[activeCard].image}
                   alt={focusAreas[activeCard].title}
-                  className="w-full h-full object-cover"
+                  className="w-[65%] md:w-[55%] max-h-[85%] object-contain drop-shadow-2xl"
                 />
               </motion.div>
             </AnimatePresence>
 
-            {/* Ocean wave shadow gradient from left — 45% coverage */}
-            <div 
-              className="absolute inset-0 pointer-events-none"
+            {/* Ocean wave shadow from left */}
+            <div
+              className="absolute inset-0 pointer-events-none z-[1]"
               style={{
                 background: `linear-gradient(
-                  to right, 
-                  hsl(var(--forest-night)) 0%, 
-                  hsl(var(--forest-night) / 0.95) 15%, 
-                  hsl(var(--forest-night) / 0.8) 25%, 
-                  hsl(var(--forest-night) / 0.5) 35%, 
-                  hsl(var(--forest-night) / 0.15) 45%, 
-                  transparent 55%
+                  to right,
+                  hsl(var(--forest-night)) 0%,
+                  hsl(var(--forest-night) / 0.97) 15%,
+                  hsl(var(--forest-night) / 0.88) 25%,
+                  hsl(var(--forest-night) / 0.65) 35%,
+                  hsl(var(--forest-night) / 0.3) 45%,
+                  transparent 60%
                 )`,
               }}
             />
 
-            {/* Bottom subtle gradient for readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-forest-night/40 via-transparent to-transparent pointer-events-none" />
+            {/* Bottom gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-forest-night/50 via-transparent to-transparent pointer-events-none z-[1]" />
 
-            {/* Content overlay on the left */}
-            <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12">
+            {/* Content on the left */}
+            <div className="absolute inset-0 z-[2] flex flex-col justify-end p-8 md:p-12">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeCard}
@@ -171,7 +167,7 @@ const FocusSection = () => {
             </div>
           </motion.div>
 
-          {/* Right side — Card selector pills */}
+          {/* Right side selector pills */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -216,7 +212,6 @@ const FocusSection = () => {
                   )}
                 </div>
 
-                {/* Progress bar for active card */}
                 {i === activeCard && (
                   <div className="mt-3 h-0.5 bg-border rounded-full overflow-hidden">
                     <motion.div
