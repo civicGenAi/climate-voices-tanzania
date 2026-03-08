@@ -108,6 +108,7 @@ const Programs = () => {
 
       <Footer />
     </main>
+    </PageTransition>
   );
 };
 

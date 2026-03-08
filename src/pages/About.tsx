@@ -443,6 +443,7 @@ const About = () => {
 
       <Footer />
     </main>
+    </PageTransition>
   );
 };
 

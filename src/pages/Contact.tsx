@@ -42,6 +42,7 @@ const Contact = () => {
   const heroInView = useInView(heroRef, { once: true });
 
   return (
+    <PageTransition>
     <main className="overflow-x-hidden">
       <Navigation />
 
