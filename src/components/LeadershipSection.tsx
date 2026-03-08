@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Quote, Star, MessageSquarePlus, ChevronLeft, ChevronRight, Send, CheckCircle, X } from "lucide-react";
 import founderImg from "@/assets/founder.jpeg";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const reviews = [
   {
@@ -33,6 +34,7 @@ const LeadershipSection = () => {
   const [rating, setRating] = useState(0);
   const [hoveredStar, setHoveredStar] = useState(0);
   const [reviewForm, setReviewForm] = useState({ name: "", position: "", description: "" });
+  const { t } = useLanguage();
 
   const nextReview = () => setCurrentReview((prev) => (prev + 1) % reviews.length);
   const prevReview = () => setCurrentReview((prev) => (prev - 1 + reviews.length) % reviews.length);
@@ -53,7 +55,6 @@ const LeadershipSection = () => {
     <>
       <section id="leadership" ref={ref} className="relative py-16 sm:py-24 md:py-36 bg-forest-night overflow-hidden">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12">
-          {/* Founder Message */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -69,7 +70,7 @@ const LeadershipSection = () => {
                   className="relative"
                 >
                   <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-3 border-gold/40 shadow-lg shadow-gold/10">
-                    <img src={founderImg} alt="Ester Kimario — Founder" className="w-full h-full object-cover object-top" />
+                    <img src={founderImg} alt={t("leadership.founderName")} className="w-full h-full object-cover object-top" />
                   </div>
                   <div className="absolute -inset-2 rounded-full border border-gold/15 hidden sm:block" />
                   <div className="absolute -inset-4 rounded-full border border-gold/8 hidden sm:block" />
@@ -77,31 +78,27 @@ const LeadershipSection = () => {
               </div>
 
               <div className="flex-1 text-center lg:text-left">
-                <span className="font-mono text-[10px] sm:text-xs text-gold tracking-[0.3em] uppercase mb-3 sm:mb-4 block">Message from the Founder</span>
-                <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 sm:mb-2">Ester Kimario</h2>
-                <p className="font-mono text-[10px] sm:text-xs text-gold/60 mb-4 sm:mb-6">Founder & Chapter Lead</p>
+                <span className="font-mono text-[10px] sm:text-xs text-gold tracking-[0.3em] uppercase mb-3 sm:mb-4 block">{t("leadership.founderLabel")}</span>
+                <h2 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1 sm:mb-2">{t("leadership.founderName")}</h2>
+                <p className="font-mono text-[10px] sm:text-xs text-gold/60 mb-4 sm:mb-6">{t("leadership.founderRole")}</p>
                 <div className="relative">
                   <Quote className="absolute -top-2 -left-2 w-6 h-6 sm:w-8 sm:h-8 text-gold/15 hidden sm:block" />
                   <p className="font-body text-foreground/70 text-sm sm:text-base md:text-lg leading-relaxed sm:pl-8 sm:border-l-2 sm:border-gold/20">
-                    I founded Climate Cardinals Tanzania because I believe that language should never be a barrier
-                    to survival. Every Tanzanian — whether they speak Kiswahili, Sukuma, Chagga, or any of our
-                    beautiful tribal languages — deserves to understand the climate crisis and how to protect
-                    their community. Together, we are building a movement where climate knowledge belongs to everyone.
+                    {t("leadership.founderMessage")}
                   </p>
                 </div>
               </div>
             </div>
           </motion.div>
 
-          {/* Reviews */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
             <div className="text-center mb-8 sm:mb-12">
-              <span className="font-mono text-[10px] sm:text-xs text-gold tracking-[0.3em] uppercase mb-3 sm:mb-4 block">Community Voices</span>
-              <h3 className="font-display text-xl sm:text-2xl md:text-4xl font-bold text-foreground">What People Say</h3>
+              <span className="font-mono text-[10px] sm:text-xs text-gold tracking-[0.3em] uppercase mb-3 sm:mb-4 block">{t("leadership.reviewsLabel")}</span>
+              <h3 className="font-display text-xl sm:text-2xl md:text-4xl font-bold text-foreground">{t("leadership.reviewsTitle")}</h3>
             </div>
 
             <div className="relative max-w-3xl mx-auto">
@@ -150,7 +147,7 @@ const LeadershipSection = () => {
                   className="inline-flex items-center gap-2 bg-gold text-accent-foreground font-body text-sm font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-full hover:bg-gold-warm transition-all duration-300 hover:shadow-lg hover:shadow-gold/20"
                 >
                   <MessageSquarePlus className="w-4 h-4" />
-                  Write Your Review Too
+                  {t("leadership.writeReview")}
                 </button>
               </div>
             </div>
@@ -158,7 +155,6 @@ const LeadershipSection = () => {
         </div>
       </section>
 
-      {/* Review Modal */}
       <AnimatePresence>
         {showReviewModal && (
           <motion.div
@@ -184,32 +180,32 @@ const LeadershipSection = () => {
                 <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
                   <MessageSquarePlus className="w-5 h-5 text-gold" />
                 </div>
-                <h3 className="font-display text-lg sm:text-xl font-bold text-foreground">Write Your Review</h3>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-foreground">{t("leadership.reviewModal.title")}</h3>
               </div>
 
               {reviewSubmitted ? (
                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-8">
                   <CheckCircle className="w-14 h-14 text-leaf mx-auto mb-3" />
-                  <p className="font-display text-xl font-bold text-foreground mb-1">Thank You!</p>
-                  <p className="font-body text-muted-foreground text-sm">Your review has been submitted.</p>
+                  <p className="font-display text-xl font-bold text-foreground mb-1">{t("leadership.reviewModal.thanks")}</p>
+                  <p className="font-body text-muted-foreground text-sm">{t("leadership.reviewModal.submitted")}</p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleReviewSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <input
                       type="text" value={reviewForm.name} onChange={(e) => setReviewForm({ ...reviewForm, name: e.target.value })}
-                      placeholder="Your Name *" maxLength={100} required
+                      placeholder={t("leadership.reviewModal.name")} maxLength={100} required
                       className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                     />
                     <input
                       type="text" value={reviewForm.position} onChange={(e) => setReviewForm({ ...reviewForm, position: e.target.value })}
-                      placeholder="Position (optional)" maxLength={100}
+                      placeholder={t("leadership.reviewModal.position")} maxLength={100}
                       className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                     />
                   </div>
 
                   <div>
-                    <label className="font-body text-sm text-muted-foreground mb-2 block">Rating *</label>
+                    <label className="font-body text-sm text-muted-foreground mb-2 block">{t("leadership.reviewModal.rating")}</label>
                     <div className="flex items-center gap-1.5">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <button
@@ -227,13 +223,13 @@ const LeadershipSection = () => {
 
                   <textarea
                     value={reviewForm.description} onChange={(e) => setReviewForm({ ...reviewForm, description: e.target.value })}
-                    placeholder="Share your experience... *" maxLength={1000} required rows={4}
+                    placeholder={t("leadership.reviewModal.description")} maxLength={1000} required rows={4}
                     className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all resize-none"
                   />
 
                   <button type="submit" className="w-full inline-flex items-center justify-center gap-2 bg-gold text-accent-foreground font-body font-semibold px-6 py-3 rounded-full hover:bg-gold-warm transition-all duration-300">
                     <Send className="w-4 h-4" />
-                    Submit Review
+                    {t("leadership.reviewModal.submit")}
                   </button>
                 </form>
               )}

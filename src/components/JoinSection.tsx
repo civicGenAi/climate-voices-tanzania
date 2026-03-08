@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { ArrowRight, Sprout, Handshake, Send, CheckCircle, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const JoinSection = () => {
   const ref = useRef(null);
@@ -10,6 +11,7 @@ const JoinSection = () => {
   const [showVolunteerModal, setShowVolunteerModal] = useState(false);
   const [volunteerSubmitted, setVolunteerSubmitted] = useState(false);
   const [volunteerForm, setVolunteerForm] = useState({ name: "", email: "", phone: "", motivation: "" });
+  const { t } = useLanguage();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -84,7 +86,7 @@ const JoinSection = () => {
               transition={{ duration: 0.8 }}
               className="font-display text-3xl sm:text-4xl md:text-6xl font-bold text-foreground mb-2"
             >
-              Be Part of <span className="text-gold">the Change.</span>
+              {t("join.title1")}<span className="text-gold">{t("join.title2")}</span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0 }}
@@ -92,12 +94,11 @@ const JoinSection = () => {
               transition={{ delay: 0.3 }}
               className="font-body text-sm sm:text-base text-muted-foreground max-w-lg mx-auto mt-3 sm:mt-4"
             >
-              Join our growing community of climate advocates making real impact across Tanzania.
+              {t("join.subtitle")}
             </motion.p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-            {/* Volunteer */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -108,21 +109,20 @@ const JoinSection = () => {
                 <Sprout className="w-5 h-5 sm:w-6 sm:h-6 text-leaf" />
               </div>
               <h3 className="font-display text-xl sm:text-2xl font-bold text-foreground mb-2 sm:mb-3">
-                Volunteer
+                {t("join.volunteer.title")}
               </h3>
               <p className="font-body text-muted-foreground text-xs sm:text-sm mb-4 sm:mb-6">
-                Join our team of youth climate translators and educators. Make a real difference in your community.
+                {t("join.volunteer.description")}
               </p>
               <button
                 onClick={() => setShowVolunteerModal(true)}
                 className="inline-flex items-center gap-2 bg-gold text-accent-foreground font-body text-sm font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-full hover:bg-gold-warm transition-all duration-300 hover:shadow-lg hover:shadow-gold/20"
               >
-                Apply Now
+                {t("join.volunteer.apply")}
                 <ArrowRight className="w-4 h-4" />
               </button>
             </motion.div>
 
-            {/* Partner */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -133,16 +133,16 @@ const JoinSection = () => {
                 <Handshake className="w-5 h-5 sm:w-6 sm:h-6 text-gold" />
               </div>
               <h3 className="font-display text-xl sm:text-2xl font-bold text-gold mb-2 sm:mb-3">
-                Partner With Us
+                {t("join.partner.title")}
               </h3>
               <p className="font-body text-muted-foreground text-xs sm:text-sm mb-4 sm:mb-6">
-                Organizations and institutions — let's amplify impact together across Tanzania.
+                {t("join.partner.description")}
               </p>
               <Link
                 to="/contact"
                 className="inline-flex items-center gap-2 bg-transparent text-gold font-body text-sm font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-full border-2 border-gold hover:bg-gold hover:text-accent-foreground transition-all duration-300"
               >
-                Get in Touch
+                {t("join.partner.contact")}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>
@@ -150,7 +150,6 @@ const JoinSection = () => {
         </div>
       </section>
 
-      {/* Volunteer Modal */}
       <AnimatePresence>
         {showVolunteerModal && (
           <motion.div
@@ -179,7 +178,7 @@ const JoinSection = () => {
                 <div className="w-10 h-10 rounded-xl bg-leaf/10 flex items-center justify-center">
                   <Sprout className="w-5 h-5 text-leaf" />
                 </div>
-                <h3 className="font-display text-lg sm:text-xl font-bold text-foreground">Volunteer Application</h3>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-foreground">{t("join.modal.title")}</h3>
               </div>
 
               {volunteerSubmitted ? (
@@ -189,29 +188,29 @@ const JoinSection = () => {
                   className="text-center py-8"
                 >
                   <CheckCircle className="w-14 h-14 text-leaf mx-auto mb-3" />
-                  <p className="font-display text-xl font-bold text-foreground mb-1">Application Sent!</p>
-                  <p className="font-body text-muted-foreground text-sm">We'll be in touch soon.</p>
+                  <p className="font-display text-xl font-bold text-foreground mb-1">{t("join.modal.success")}</p>
+                  <p className="font-body text-muted-foreground text-sm">{t("join.modal.successMsg")}</p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleVolunteerSubmit} className="space-y-4">
                   <input
                     type="text" value={volunteerForm.name} onChange={(e) => setVolunteerForm({ ...volunteerForm, name: e.target.value })}
-                    placeholder="Full Name *" maxLength={100} required
+                    placeholder={t("join.modal.name")} maxLength={100} required
                     className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                   />
                   <input
                     type="email" value={volunteerForm.email} onChange={(e) => setVolunteerForm({ ...volunteerForm, email: e.target.value })}
-                    placeholder="Email Address *" maxLength={255} required
+                    placeholder={t("join.modal.email")} maxLength={255} required
                     className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                   />
                   <input
                     type="tel" value={volunteerForm.phone} onChange={(e) => setVolunteerForm({ ...volunteerForm, phone: e.target.value })}
-                    placeholder="Phone Number (optional)" maxLength={20}
+                    placeholder={t("join.modal.phone")} maxLength={20}
                     className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                   />
                   <textarea
                     value={volunteerForm.motivation} onChange={(e) => setVolunteerForm({ ...volunteerForm, motivation: e.target.value })}
-                    placeholder="Why do you want to volunteer? (optional)" maxLength={500} rows={3}
+                    placeholder={t("join.modal.motivation")} maxLength={500} rows={3}
                     className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all resize-none"
                   />
                   <button
@@ -219,7 +218,7 @@ const JoinSection = () => {
                     className="w-full inline-flex items-center justify-center gap-2 bg-gold text-accent-foreground font-body font-semibold px-6 py-3 rounded-full hover:bg-gold-warm transition-all duration-300"
                   >
                     <Send className="w-4 h-4" />
-                    Submit Application
+                    {t("join.modal.submit")}
                   </button>
                 </form>
               )}
