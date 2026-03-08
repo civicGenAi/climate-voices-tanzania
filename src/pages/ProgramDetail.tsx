@@ -106,13 +106,13 @@ const ProgramDetail = () => {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full border border-foreground/[0.03]" />
 
               <div className="relative z-10 flex flex-col items-center">
-                <motion.div
+                <motion.img
+                  src={program.heroImage}
+                  alt={program.title}
+                  className="w-64 md:w-80 drop-shadow-2xl"
                   animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                  className={`w-36 h-36 rounded-[2rem] flex items-center justify-center ${bgColorLightClass} mb-8`}
-                >
-                  <program.icon className={`w-20 h-20 ${colorClass}`} strokeWidth={1} />
-                </motion.div>
+                />
 
                 {/* Stats orbiting */}
                 <div className="flex gap-6">

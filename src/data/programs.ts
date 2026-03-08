@@ -1,9 +1,14 @@
 import { BookOpen, Megaphone, Languages, TreePine } from "lucide-react";
+import programEducationHero from "@/assets/program-education-hero.png";
+import programCampaignsHero from "@/assets/program-campaigns-hero.png";
+import programTranslationHero from "@/assets/program-translation-hero.png";
+import programPlantingHero from "@/assets/program-planting-hero.png";
 
 export const programs = [
   {
     slug: "climate-education",
     icon: BookOpen,
+    heroImage: programEducationHero,
     title: "Climate Education Workshops",
     subtitle: "Knowledge for Every Community",
     tagline: "Translate. Educate. Empower.",
@@ -26,17 +31,18 @@ export const programs = [
       { step: "Deliver", detail: "Youth facilitators lead interactive sessions in local languages." },
       { step: "Follow Up", detail: "Post-workshop surveys and community action plans ensure lasting impact." },
     ],
-    impact: { number: "500+", label: "Workshops Conducted" },
+    impact: { number: "20+", label: "Workshops Conducted" },
     stats: [
-      { number: "30+", label: "Communities" },
-      { number: "50+", label: "Facilitators" },
-      { number: "10,000+", label: "Participants" },
+      { number: "6+", label: "Communities" },
+      { number: "20+", label: "Facilitators" },
+      { number: "300+", label: "Participants" },
     ],
     color: "leaf" as const,
   },
   {
     slug: "community-campaigns",
     icon: Megaphone,
+    heroImage: programCampaignsHero,
     title: "Community Awareness Campaigns",
     subtitle: "Reaching Every Corner of Tanzania",
     tagline: "Awareness is the first step toward action.",
@@ -70,6 +76,7 @@ export const programs = [
   {
     slug: "translation-program",
     icon: Languages,
+    heroImage: programTranslationHero,
     title: "Youth Translation Volunteer Program",
     subtitle: "Bridging the Language Gap",
     tagline: "No language left behind.",
@@ -103,6 +110,7 @@ export const programs = [
   {
     slug: "tree-planting",
     icon: TreePine,
+    heroImage: programPlantingHero,
     title: "Tree Planting & Environmental Restoration",
     subtitle: "From Knowledge to Action",
     tagline: "Plant today. Protect tomorrow.",
