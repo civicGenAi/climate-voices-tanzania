@@ -2,10 +2,10 @@ import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import realCommunity from "@/assets/real-community.jpeg";
-import realEducation from "@/assets/real-education.jpeg";
+import heroYouth from "@/assets/hero-youth-cartoon.png";
+import heroCommunity from "@/assets/hero-community-cartoon.png";
+import heroTranslate from "@/assets/hero-translate-cartoon.png";
 import realPlanting from "@/assets/real-planting.jpeg";
-import founderImg from "@/assets/founder.jpeg";
 
 const stats = [
   { number: 15, label: "Languages Targeted", suffix: "+" },
@@ -40,13 +40,6 @@ const CountUp = ({ target, suffix, inView }: { target: number; suffix: string; i
     </span>
   );
 };
-
-const images = [
-  { src: realPlanting, alt: "Tree planting initiative" },
-  { src: realEducation, alt: "Climate education workshop" },
-  { src: realCommunity, alt: "Community outreach event" },
-  { src: founderImg, alt: "Founder Ester Kimario" },
-];
 
 const AboutSection = () => {
   const ref = useRef(null);
@@ -108,59 +101,76 @@ const AboutSection = () => {
           </motion.div>
         </motion.div>
 
-        {/* Right — Clean masonry photo grid */}
+        {/* Right — Single main image + cartoon accents */}
         <motion.div
           initial={{ x: 60, opacity: 0 }}
           animate={inView ? { x: 0, opacity: 1 } : {}}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-          className="w-full lg:w-1/2 bg-forest p-6 md:p-12 flex items-center justify-center min-h-[50vh] lg:min-h-0"
+          className="w-full lg:w-1/2 bg-forest p-6 md:p-12 flex items-center justify-center min-h-[50vh] lg:min-h-0 relative"
         >
-          <div className="w-full max-w-lg grid grid-cols-2 gap-3 md:gap-4" style={{ perspective: "1200px" }}>
-            {/* Top-left — tall, opens like left page */}
-            <motion.div
-              initial={{ opacity: 0, rotateY: -90, transformOrigin: "left center" }}
-              animate={inView ? { opacity: 1, rotateY: 0 } : {}}
-              transition={{ delay: 0.5, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="row-span-2 rounded-2xl overflow-hidden group shadow-lg"
-              style={{ transformStyle: "preserve-3d" }}
-            >
+          {/* Main photo */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={inView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="relative z-10 w-full max-w-sm"
+          >
+            <div className="rounded-2xl overflow-hidden shadow-2xl shadow-forest-deep/60">
               <img
-                src={images[0].src}
-                alt={images[0].alt}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                src={realPlanting}
+                alt="Tree planting initiative"
+                className="w-full h-80 md:h-96 object-cover"
               />
-            </motion.div>
+            </div>
+            {/* Decorative border */}
+            <div className="absolute -inset-3 rounded-3xl border border-gold/15" />
+          </motion.div>
 
-            {/* Top-right, opens like right page */}
-            <motion.div
-              initial={{ opacity: 0, rotateY: 90, transformOrigin: "right center" }}
-              animate={inView ? { opacity: 1, rotateY: 0 } : {}}
-              transition={{ delay: 0.7, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="rounded-2xl overflow-hidden aspect-square group shadow-lg"
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              <img
-                src={images[1].src}
-                alt={images[1].alt}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-            </motion.div>
+          {/* Floating cartoon accents */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="absolute top-6 right-6 md:top-10 md:right-10 z-20"
+          >
+            <motion.img
+              src={heroYouth}
+              alt="Youth volunteers illustration"
+              className="w-20 md:w-28 drop-shadow-lg rounded-xl"
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </motion.div>
 
-            {/* Bottom-right, opens like bottom page flipping up */}
-            <motion.div
-              initial={{ opacity: 0, rotateX: 60, transformOrigin: "bottom center" }}
-              animate={inView ? { opacity: 1, rotateX: 0 } : {}}
-              transition={{ delay: 0.9, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="rounded-2xl overflow-hidden aspect-square group shadow-lg"
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              <img
-                src={images[2].src}
-                alt={images[2].alt}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-            </motion.div>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ delay: 1, duration: 0.8 }}
+            className="absolute bottom-6 left-6 md:bottom-10 md:left-10 z-20"
+          >
+            <motion.img
+              src={heroTranslate}
+              alt="Translation work illustration"
+              className="w-16 md:w-24 drop-shadow-lg rounded-xl"
+              animate={{ y: [0, 5, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 1.1, duration: 0.8 }}
+            className="absolute bottom-12 right-8 md:bottom-16 md:right-14 z-20"
+          >
+            <motion.img
+              src={heroCommunity}
+              alt="Community learning illustration"
+              className="w-14 md:w-20 drop-shadow-lg rounded-xl opacity-80"
+              animate={{ y: [0, -4, 0], rotate: [0, 2, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+            />
+          </motion.div>
         </motion.div>
       </div>
     </section>

@@ -1,18 +1,33 @@
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronDown } from "lucide-react";
-import heroYouth from "@/assets/hero-youth-cartoon.png";
-import heroCommunity from "@/assets/hero-community-cartoon.png";
-import heroTranslate from "@/assets/hero-translate-cartoon.png";
+import realCommunity from "@/assets/real-community.jpeg";
+import realEducation from "@/assets/real-education.jpeg";
+import realPlanting from "@/assets/real-planting.jpeg";
 
 const languages = [
   "KISWAHILI", "SUKUMA", "CHAGGA", "HEHE", "MAKONDE", "ARABIC", "ENGLISH", "LUGHA ZA JAMII",
   "MAASAI", "NYAMWEZI", "HAYA", "GOGO", "IRAQW",
 ];
 
+const heroImages = [
+  { src: realCommunity, alt: "Community outreach event" },
+  { src: realEducation, alt: "Climate education workshop" },
+  { src: realPlanting, alt: "Tree planting initiative" },
+];
+
 const HeroSection = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [currentImage, setCurrentImage] = useState(0);
+
+  // Auto-rotate images
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -119,61 +134,64 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
-        {/* Right — Cartoon images collage */}
+        {/* Right — Real photo with flip animation */}
         <div className="w-full lg:w-[50%] relative flex justify-center items-center min-h-[350px] md:min-h-[450px]">
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, rotate: -3 }}
-            animate={{ opacity: 1, scale: 1, rotate: -2 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.6, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-20"
+            className="relative w-72 md:w-96 lg:w-[420px] aspect-[4/3]"
+            style={{ perspective: "1200px" }}
           >
-            <img
-              src={heroCommunity}
-              alt="African community learning about climate change"
-              className="w-64 md:w-80 lg:w-96 drop-shadow-2xl"
+            {/* Decorative frame rings */}
+            <div className="absolute -inset-3 rounded-3xl border border-gold/15" />
+            <div className="absolute -inset-6 rounded-[2rem] border border-gold/8" />
+
+            {/* Image container with flip transition */}
+            <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl shadow-forest-deep/50">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={currentImage}
+                  src={heroImages[currentImage].src}
+                  alt={heroImages[currentImage].alt}
+                  initial={{ rotateY: 90, opacity: 0 }}
+                  animate={{ rotateY: 0, opacity: 1 }}
+                  exit={{ rotateY: -90, opacity: 0 }}
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                  className="w-full h-full object-cover"
+                  style={{ backfaceVisibility: "hidden" }}
+                />
+              </AnimatePresence>
+
+              {/* Subtle overlay gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-forest-night/30 via-transparent to-transparent pointer-events-none" />
+            </div>
+
+            {/* Image indicator dots */}
+            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+              {heroImages.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentImage(i)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    i === currentImage ? "bg-gold w-6" : "bg-foreground/20 hover:bg-foreground/40"
+                  }`}
+                />
+              ))}
+            </div>
+
+            {/* Floating particles around the image */}
+            <motion.div
+              animate={{ y: [0, -12, 0], x: [0, 5, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-4 -left-4 w-3 h-3 rounded-full bg-gold/40"
+            />
+            <motion.div
+              animate={{ y: [0, 8, 0], x: [0, -4, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+              className="absolute -bottom-2 -right-4 w-2 h-2 rounded-full bg-leaf/50"
             />
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 40, y: -20 }}
-            animate={{ opacity: 1, x: 0, y: 0 }}
-            transition={{ delay: 1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute top-0 right-0 md:right-4 z-30"
-          >
-            <motion.img
-              src={heroYouth}
-              alt="Youth volunteers"
-              className="w-36 md:w-44 drop-shadow-xl rounded-2xl"
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: -30, y: 20 }}
-            animate={{ opacity: 1, x: 0, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute bottom-4 left-0 md:left-4 z-30"
-          >
-            <motion.img
-              src={heroTranslate}
-              alt="Volunteers translating climate documents"
-              className="w-32 md:w-40 drop-shadow-xl rounded-2xl"
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            />
-          </motion.div>
-
-          <motion.div
-            animate={{ y: [0, -12, 0], x: [0, 5, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-8 left-16 w-3 h-3 rounded-full bg-gold/40"
-          />
-          <motion.div
-            animate={{ y: [0, 8, 0], x: [0, -4, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            className="absolute bottom-16 right-12 w-2 h-2 rounded-full bg-leaf/50"
-          />
         </div>
       </div>
 
