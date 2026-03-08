@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
+import globalLogo from "@/assets/climate-cardinals-global-logo.png";
 import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, ArrowUp } from "lucide-react";
 
 const Footer = () => {
