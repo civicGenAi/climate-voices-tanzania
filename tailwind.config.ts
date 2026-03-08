@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['Playfair Display', 'serif'],
-        body: ['DM Sans', 'sans-serif'],
-        mono: ['Space Mono', 'monospace'],
+        display: ["'Source Serif 4'", 'serif'],
+        body: ['Open Sans', 'sans-serif'],
+        mono: ['IBM Plex Mono', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border))",
