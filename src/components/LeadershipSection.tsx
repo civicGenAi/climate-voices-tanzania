@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { User, Award } from "lucide-react";
 
 const LeadershipSection = () => {
   const ref = useRef(null);
@@ -26,7 +27,7 @@ const LeadershipSection = () => {
           Founded & Led By
         </motion.h2>
 
-        {/* Avatar with botanical border */}
+        {/* Avatar */}
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={inView ? { scale: 1, opacity: 1 } : {}}
@@ -37,18 +38,21 @@ const LeadershipSection = () => {
           <div className="absolute -inset-3 rounded-full border border-leaf/20" />
           <div className="absolute -inset-6 rounded-full border border-leaf/10" />
           <div className="w-full h-full rounded-full bg-forest flex items-center justify-center">
-            <span className="font-display text-4xl md:text-5xl text-gold font-bold">EK</span>
+            <User className="w-12 h-12 md:w-16 md:h-16 text-gold/70" />
           </div>
         </motion.div>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ delay: 0.6 }}
-          className="font-mono text-xs text-gold tracking-[0.3em] uppercase mb-6 relative z-10"
+          className="flex items-center justify-center gap-2 mb-6 relative z-10"
         >
-          Founder & Chapter Lead
-        </motion.p>
+          <Award className="w-4 h-4 text-gold" />
+          <span className="font-mono text-xs text-gold tracking-[0.3em] uppercase">
+            Founder & Chapter Lead
+          </span>
+        </motion.div>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}

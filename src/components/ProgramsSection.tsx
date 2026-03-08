@@ -1,26 +1,27 @@
 import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import { GraduationCap, Megaphone, FileText, Sprout } from "lucide-react";
 
 const programs = [
   {
     title: "Climate Education Workshops",
     description: "Interactive sessions in schools and community centers, teaching climate science in Kiswahili and local languages. We use storytelling, visual aids, and participatory methods to make climate knowledge stick.",
-    visual: "🏫",
+    Icon: GraduationCap,
   },
   {
     title: "Community Awareness Campaigns",
     description: "Grassroots campaigns that bring climate information directly to rural and urban communities through radio, community gatherings, and creative media in local languages.",
-    visual: "📢",
+    Icon: Megaphone,
   },
   {
     title: "Youth Translation Program",
     description: "Training young volunteers to translate climate documents, reports, and educational materials into over 15 Tanzanian languages — creating a library of accessible climate knowledge.",
-    visual: "📝",
+    Icon: FileText,
   },
   {
     title: "Tree Planting & Restoration",
     description: "Hands-on environmental action — organizing community tree planting events that restore ecosystems while educating participants about the role of forests in climate regulation.",
-    visual: "🌱",
+    Icon: Sprout,
   },
 ];
 
@@ -50,21 +51,30 @@ const ProgramsSection = () => {
                 animate={inView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.3 + i * 0.15 }}
                 onClick={() => setActive(i)}
-                className={`text-left p-5 rounded-lg transition-all duration-500 group ${
+                className={`text-left p-5 rounded-lg transition-all duration-500 group flex items-center gap-4 ${
                   active === i
                     ? "bg-forest text-foreground"
                     : "bg-transparent text-parchment-foreground hover:bg-forest/10"
                 }`}
               >
-                <h3 className="font-display text-lg md:text-xl font-semibold">
-                  {program.title}
-                </h3>
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: active === i ? "100%" : 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="h-0.5 bg-gold mt-2"
-                />
+                <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors ${
+                  active === i ? "bg-gold/20" : "bg-forest/10 group-hover:bg-forest/20"
+                }`}>
+                  <program.Icon className={`w-5 h-5 transition-colors ${
+                    active === i ? "text-gold" : "text-forest group-hover:text-leaf"
+                  }`} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-display text-lg md:text-xl font-semibold">
+                    {program.title}
+                  </h3>
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: active === i ? "100%" : 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="h-0.5 bg-gold mt-2"
+                  />
+                </div>
               </motion.button>
             ))}
           </div>
@@ -80,7 +90,12 @@ const ProgramsSection = () => {
                 transition={{ duration: 0.5 }}
                 className="bg-forest-night text-foreground p-8 md:p-12 rounded-2xl w-full"
               >
-                <span className="text-6xl mb-6 block">{programs[active].visual}</span>
+                <div className="w-14 h-14 rounded-xl bg-gold/10 flex items-center justify-center mb-6">
+                  {(() => {
+                    const ActiveIcon = programs[active].Icon;
+                    return <ActiveIcon className="w-7 h-7 text-gold" />;
+                  })()}
+                </div>
                 <h3 className="font-display text-2xl md:text-3xl font-bold mb-4 text-gold">
                   {programs[active].title}
                 </h3>
