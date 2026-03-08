@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { User, Quote, Star, MessageSquarePlus, ChevronLeft, ChevronRight } from "lucide-react";
+import { Quote, Star, MessageSquarePlus, ChevronLeft, ChevronRight } from "lucide-react";
+import founderImg from "@/assets/founder.jpeg";
 
 const reviews = [
   {
@@ -43,7 +44,7 @@ const LeadershipSection = () => {
           className="relative mb-24"
         >
           <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
-            {/* Founder avatar */}
+            {/* Founder photo — circular */}
             <div className="flex-shrink-0">
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
@@ -51,11 +52,15 @@ const LeadershipSection = () => {
                 transition={{ delay: 0.3, duration: 0.8 }}
                 className="relative"
               >
-                <div className="w-40 h-40 md:w-48 md:h-48 rounded-full bg-forest flex items-center justify-center border-2 border-gold/30">
-                  <User className="w-16 h-16 md:w-20 md:h-20 text-gold/60" />
+                <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-3 border-gold/40 shadow-lg shadow-gold/10">
+                  <img
+                    src={founderImg}
+                    alt="Ester Kimario — Founder"
+                    className="w-full h-full object-cover object-top"
+                  />
                 </div>
-                <div className="absolute -inset-3 rounded-full border border-gold/10" />
-                <div className="absolute -inset-6 rounded-full border border-gold/5" />
+                <div className="absolute -inset-2 rounded-full border border-gold/15" />
+                <div className="absolute -inset-4 rounded-full border border-gold/8" />
               </motion.div>
             </div>
 
@@ -108,7 +113,6 @@ const LeadershipSection = () => {
                   exit={{ opacity: 0, x: -30 }}
                   transition={{ duration: 0.4 }}
                 >
-                  {/* Stars */}
                   <div className="flex gap-1 mb-6">
                     {Array.from({ length: reviews[currentReview].rating }).map((_, i) => (
                       <Star key={i} className="w-4 h-4 text-gold fill-gold" />
@@ -131,7 +135,6 @@ const LeadershipSection = () => {
               </AnimatePresence>
             </div>
 
-            {/* Navigation */}
             <div className="flex items-center justify-between mt-6">
               <button
                 onClick={prevReview}
@@ -160,7 +163,6 @@ const LeadershipSection = () => {
               </button>
             </div>
 
-            {/* Write review button */}
             <div className="text-center mt-10">
               <Link
                 to="/contact"
