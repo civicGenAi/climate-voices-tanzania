@@ -8,16 +8,15 @@ import { ArrowRight, ArrowLeft, CheckCircle, Users, Handshake, MessageCircle } f
 
 const ProgramDetail = () => {
   const { slug } = useParams<{ slug: string }>();
-  const program = programs.find((p) => p.slug === slug);
-
-  if (!program) return <Navigate to="/programs" replace />;
-
   const heroRef = useRef(null);
   const heroInView = useInView(heroRef, { once: true });
   const approachRef = useRef(null);
   const approachInView = useInView(approachRef, { once: true, margin: "-80px" });
   const ctaRef = useRef(null);
   const ctaInView = useInView(ctaRef, { once: true, margin: "-80px" });
+
+  const program = programs.find((p) => p.slug === slug);
+  if (!program) return <Navigate to="/programs" replace />;
 
   const currentIndex = programs.findIndex((p) => p.slug === slug);
   const nextProgram = programs[(currentIndex + 1) % programs.length];
