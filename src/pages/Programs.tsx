@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import { programs } from "@/data/programs";
 import pageProgramsCartoon from "@/assets/page-programs-cartoon.png";
+import { PageTransition } from "@/components/animations/AnimationUtils";
 
 const Programs = () => {
   const heroRef = useRef(null);
