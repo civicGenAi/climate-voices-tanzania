@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Mail, Phone, MapPin, Instagram, Clock, Send } from "lucide-react";
 import pageContactCartoon from "@/assets/page-contact-cartoon.png";
+import { PageTransition } from "@/components/animations/AnimationUtils";
 
 const contactMethods = [
   {
@@ -41,6 +42,7 @@ const Contact = () => {
   const heroInView = useInView(heroRef, { once: true });
 
   return (
+    <PageTransition>
     <main className="overflow-x-hidden">
       <Navigation />
 
@@ -264,6 +266,7 @@ const Contact = () => {
 
       <Footer />
     </main>
+    </PageTransition>
   );
 };
 

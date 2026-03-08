@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { PageTransition } from "@/components/animations/AnimationUtils";
 import { Calendar, Clock, ArrowRight, BookOpen, Search, Tag } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -78,6 +79,7 @@ const Journal = () => {
   const regularPosts = filtered.filter((p) => !p.featured || activeCategory !== "All");
 
   return (
+    <PageTransition>
     <main className="overflow-x-hidden">
       <Navigation />
 
@@ -228,6 +230,7 @@ const Journal = () => {
 
       <Footer />
     </main>
+    </PageTransition>
   );
 };
 

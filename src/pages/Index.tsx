@@ -7,20 +7,23 @@ import LeadershipSection from "@/components/LeadershipSection";
 import PartnerSection from "@/components/PartnerSection";
 import JoinSection from "@/components/JoinSection";
 import Footer from "@/components/Footer";
+import { PageTransition } from "@/components/animations/AnimationUtils";
 
 const Index = () => {
   return (
-    <main className="overflow-x-hidden">
-      <Navigation />
-      <HeroSection />
-      <AboutSection />
-      <FocusSection />
-      <ProgramsSection />
-      <LeadershipSection />
-      <PartnerSection />
-      <JoinSection />
-      <Footer />
-    </main>
+    <PageTransition>
+      <main className="overflow-x-hidden">
+        <Navigation />
+        <HeroSection />
+        <AboutSection />
+        <FocusSection />
+        <ProgramsSection />
+        <LeadershipSection />
+        <PartnerSection />
+        <JoinSection />
+        <Footer />
+      </main>
+    </PageTransition>
   );
 };
 

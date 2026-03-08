@@ -4,6 +4,7 @@ import { MessageCircle, Heart, Share2, Trophy, TrendingUp, Users, ChevronUp, Sen
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import communityHero from "@/assets/community-hero-cartoon.png";
+import { PageTransition } from "@/components/animations/AnimationUtils";
 
 type Topic = {
   id: number;
@@ -148,6 +149,7 @@ const Community = () => {
   ];
 
   return (
+    <PageTransition>
     <main className="overflow-x-hidden">
       <Navigation />
 
@@ -409,6 +411,7 @@ const Community = () => {
 
       <Footer />
     </main>
+    </PageTransition>
   );
 };
 

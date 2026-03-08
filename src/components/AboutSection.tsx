@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import aboutLanguages from "@/assets/about-languages-cartoon.png";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { WordReveal, ScrollReveal, StaggerReveal, StaggerItem } from "@/components/animations/AnimationUtils";
 
 const statKeys = [
   { number: 15, key: "about.stat.languages", suffix: "+" },
@@ -33,9 +34,14 @@ const CountUp = ({ target, suffix, inView }: { target: number; suffix: string; i
   }, [inView, target]);
 
   return (
-    <span className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-gold">
+    <motion.span
+      className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-gold"
+      initial={{ scale: 0.5, opacity: 0 }}
+      animate={inView ? { scale: 1, opacity: 1 } : {}}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+    >
       {count}{suffix}
-    </span>
+    </motion.span>
   );
 };
 
@@ -53,31 +59,42 @@ const AboutSection = () => {
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           className="w-full lg:w-1/2 bg-parchment p-6 sm:p-8 md:p-16 flex flex-col justify-center"
         >
-          <span className="font-mono text-xs text-forest tracking-[0.3em] uppercase mb-2 sm:mb-3 block">{t("about.label")}</span>
+          <motion.span
+            initial={{ opacity: 0, x: -20 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="font-mono text-xs text-forest tracking-[0.3em] uppercase mb-2 sm:mb-3 block"
+          >
+            {t("about.label")}
+          </motion.span>
           <h2 className="font-display text-2xl sm:text-3xl md:text-5xl font-bold text-parchment-foreground mb-4 sm:mb-6">
-            {t("about.title")}
+            <WordReveal text={t("about.title")} delay={0.3} />
           </h2>
-          <p className="font-body text-parchment-foreground/80 text-sm sm:text-lg leading-relaxed max-w-lg mb-3 sm:mb-4">
+          <motion.p
+            initial={{ opacity: 0, y: 15, filter: "blur(4px)" }}
+            animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+            transition={{ delay: 0.5, duration: 0.7 }}
+            className="font-body text-parchment-foreground/80 text-sm sm:text-lg leading-relaxed max-w-lg mb-3 sm:mb-4"
+          >
             {t("about.p1")}
-          </p>
-          <p className="font-body text-parchment-foreground/60 text-xs sm:text-sm max-w-lg mb-3 italic">
+          </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 15, filter: "blur(4px)" }}
+            animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+            transition={{ delay: 0.7, duration: 0.7 }}
+            className="font-body text-parchment-foreground/60 text-xs sm:text-sm max-w-lg mb-3 italic"
+          >
             {t("about.p2")}
-          </p>
+          </motion.p>
 
-          <div className="flex flex-wrap gap-5 sm:gap-8 mt-4 sm:mt-6 mb-6 sm:mb-8">
-            {statKeys.map((stat, i) => (
-              <motion.div
-                key={stat.key}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.6 + i * 0.15, duration: 0.6 }}
-                className="text-center"
-              >
+          <StaggerReveal className="flex flex-wrap gap-5 sm:gap-8 mt-4 sm:mt-6 mb-6 sm:mb-8">
+            {statKeys.map((stat) => (
+              <StaggerItem key={stat.key} className="text-center">
                 <CountUp target={stat.number} suffix={stat.suffix} inView={inView} />
                 <p className="font-body text-parchment-foreground/50 mt-1 text-[10px] sm:text-xs">{t(stat.key)}</p>
-              </motion.div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerReveal>
 
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -86,7 +103,7 @@ const AboutSection = () => {
           >
             <Link
               to="/about"
-              className="inline-flex items-center gap-2 bg-forest text-foreground font-body font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-full hover:bg-forest/90 transition-colors duration-300 text-sm"
+              className="inline-flex items-center gap-2 bg-forest text-foreground font-body font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-full hover:bg-forest/90 transition-colors duration-300 text-sm btn-press"
             >
               {t("about.learnMore")}
               <ArrowRight className="w-4 h-4" />
@@ -104,17 +121,17 @@ const AboutSection = () => {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 sm:w-[400px] h-80 sm:h-[400px] rounded-full border border-dashed border-gold/[0.05] hidden sm:block" />
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ delay: 0.6, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, scale: 0.7, rotate: -10 }}
+            animate={inView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+            transition={{ delay: 0.6, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="relative z-10"
           >
             <motion.img
               src={aboutLanguages}
               alt="Diverse community speaking many languages"
               className="w-52 sm:w-72 md:w-96 drop-shadow-2xl"
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              animate={{ y: [0, -8, 0], rotate: [0, 1, 0, -1, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             />
           </motion.div>
 
@@ -127,6 +144,11 @@ const AboutSection = () => {
             animate={{ y: [0, 8, 0], x: [0, -6, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
             className="absolute bottom-16 left-12 w-2 h-2 rounded-full bg-leaf/40 hidden sm:block"
+          />
+          <motion.div
+            animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.5, 0.2] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            className="absolute top-1/4 right-1/4 w-2 h-2 rounded-full bg-gold/20 hidden sm:block"
           />
         </motion.div>
       </div>

@@ -6,6 +6,7 @@ import realCommunity from "@/assets/real-community.jpeg";
 import realEducation from "@/assets/real-education.jpeg";
 import realPlanting from "@/assets/real-planting.jpeg";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { WordReveal, ShimmerText } from "@/components/animations/AnimationUtils";
 
 const languages = [
   "KISWAHILI", "SUKUMA", "CHAGGA", "HEHE", "MAKONDE", "ARABIC", "ENGLISH", "LUGHA ZA JAMII",
@@ -104,53 +105,41 @@ const HeroSection = () => {
           </motion.div>
         </AnimatePresence>
 
-        <div
-          className="absolute inset-0 z-[1] md:hidden"
-          style={{
-            background: `linear-gradient(to top, hsl(var(--forest-night)) 0%, hsl(var(--forest-night) / 0.85) 30%, hsl(var(--forest-night) / 0.6) 60%, hsl(var(--forest-night) / 0.4) 100%)`,
-          }}
-        />
-        <div
-          className="absolute inset-0 z-[1] hidden md:block"
-          style={{
-            background: `linear-gradient(to right, hsl(var(--forest-night)) 0%, hsl(var(--forest-night) / 0.97) 15%, hsl(var(--forest-night) / 0.88) 25%, hsl(var(--forest-night) / 0.7) 35%, hsl(var(--forest-night) / 0.4) 50%, hsl(var(--forest-night) / 0.1) 65%, transparent 80%)`,
-          }}
-        />
-        <div
-          className="absolute inset-0 z-[1]"
-          style={{
-            background: `linear-gradient(to top, hsl(var(--forest-night)) 0%, hsl(var(--forest-night) / 0.6) 15%, transparent 40%)`,
-          }}
-        />
-        <div
-          className="absolute inset-0 z-[1]"
-          style={{
-            background: `linear-gradient(to bottom, hsl(var(--forest-night) / 0.5) 0%, transparent 20%)`,
-          }}
-        />
+        <div className="absolute inset-0 z-[1] md:hidden" style={{
+          background: `linear-gradient(to top, hsl(var(--forest-night)) 0%, hsl(var(--forest-night) / 0.85) 30%, hsl(var(--forest-night) / 0.6) 60%, hsl(var(--forest-night) / 0.4) 100%)`,
+        }} />
+        <div className="absolute inset-0 z-[1] hidden md:block" style={{
+          background: `linear-gradient(to right, hsl(var(--forest-night)) 0%, hsl(var(--forest-night) / 0.97) 15%, hsl(var(--forest-night) / 0.88) 25%, hsl(var(--forest-night) / 0.7) 35%, hsl(var(--forest-night) / 0.4) 50%, hsl(var(--forest-night) / 0.1) 65%, transparent 80%)`,
+        }} />
+        <div className="absolute inset-0 z-[1]" style={{
+          background: `linear-gradient(to top, hsl(var(--forest-night)) 0%, hsl(var(--forest-night) / 0.6) 15%, transparent 40%)`,
+        }} />
+        <div className="absolute inset-0 z-[1]" style={{
+          background: `linear-gradient(to bottom, hsl(var(--forest-night) / 0.5) 0%, transparent 20%)`,
+        }} />
       </div>
 
       <canvas ref={canvasRef} className="absolute inset-0 z-[2]" />
 
       <div className="relative z-10 flex-1 flex items-end sm:items-center px-5 sm:px-6 md:px-12 lg:px-20 pt-24 sm:pt-28 pb-28 sm:pb-24">
         <div className="w-full max-w-xl">
-          <div className="overflow-hidden">
-            <motion.h1
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-foreground leading-[1.1] mb-4 sm:mb-6"
-            >
-              {t("hero.title1")}
+          {/* Word-by-word title reveal */}
+          <div className="overflow-hidden mb-4 sm:mb-6">
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-foreground leading-[1.1]">
+              <WordReveal text={t("hero.title1")} delay={0.4} />
               <br />
-              <span className="text-gold">{t("hero.title2")}</span>
-            </motion.h1>
+              <span className="text-gold">
+                <ShimmerText>
+                  <WordReveal text={t("hero.title2")} delay={0.8} />
+                </ShimmerText>
+              </span>
+            </h1>
           </div>
 
           <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.6 }}
+            initial={{ opacity: 0, y: 15, filter: "blur(6px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ delay: 1.2, duration: 0.8 }}
             className="font-body text-sm sm:text-base md:text-lg text-foreground/80 max-w-md leading-relaxed mb-6 sm:mb-10"
           >
             {t("hero.description")}
@@ -159,19 +148,19 @@ const HeroSection = () => {
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.3, duration: 0.6 }}
+            transition={{ delay: 1.5, duration: 0.6 }}
             className="flex flex-col sm:flex-row gap-3 mb-6 sm:mb-10"
           >
             <Link
               to="/join"
-              className="inline-flex items-center justify-center gap-2 bg-gold text-accent-foreground font-body font-semibold px-6 sm:px-7 py-3 sm:py-3.5 rounded-full hover:bg-gold-warm transition-all duration-300 hover:shadow-lg hover:shadow-gold/20 text-sm sm:text-base"
+              className="inline-flex items-center justify-center gap-2 bg-gold text-accent-foreground font-body font-semibold px-6 sm:px-7 py-3 sm:py-3.5 rounded-full hover:bg-gold-warm transition-all duration-300 hover:shadow-lg hover:shadow-gold/20 text-sm sm:text-base btn-press pulse-glow"
             >
               {t("hero.joinMovement")}
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               to="/about"
-              className="inline-flex items-center justify-center gap-2 bg-foreground/10 backdrop-blur-sm text-foreground font-body font-medium px-6 sm:px-7 py-3 sm:py-3.5 rounded-full border border-foreground/20 hover:border-gold/40 hover:bg-foreground/15 transition-all duration-300 text-sm sm:text-base"
+              className="inline-flex items-center justify-center gap-2 bg-foreground/10 backdrop-blur-sm text-foreground font-body font-medium px-6 sm:px-7 py-3 sm:py-3.5 rounded-full border border-foreground/20 hover:border-gold/40 hover:bg-foreground/15 transition-all duration-300 text-sm sm:text-base btn-press"
             >
               {t("hero.learnMore")}
             </Link>
@@ -180,7 +169,7 @@ const HeroSection = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1.6 }}
+            transition={{ delay: 1.8 }}
             className="flex items-center gap-3"
           >
             {heroImages.map((_, i) => (
@@ -219,7 +208,7 @@ const HeroSection = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
+        transition={{ delay: 2.2 }}
         className="absolute bottom-16 sm:bottom-20 left-1/2 -translate-x-1/2 z-10 hidden sm:flex flex-col items-center gap-1"
       >
         <span className="font-mono text-[10px] text-foreground/50 tracking-widest">{t("hero.scroll")}</span>
