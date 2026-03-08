@@ -173,7 +173,8 @@ const Navigation = () => {
             className="fixed inset-0 z-40 bg-forest-night/98 backdrop-blur-xl flex flex-col items-center justify-center"
           >
             <div className="flex flex-col items-center gap-1 sm:gap-2">
-              <img src={logo} alt="Climate Cardinals Tanzania" className="h-12 sm:h-16 w-12 sm:w-16 object-contain mb-6 sm:mb-8" />
+              <img src={globalLogo} alt="Climate Cardinals" className="h-10 sm:h-14 w-auto object-contain mb-2" />
+              <span className="font-display text-[10px] sm:text-xs font-semibold text-gold tracking-widest uppercase mb-6 sm:mb-8">Tanzania Chapter</span>
               {navLinks.map((link, i) => (
                 <motion.div
                   key={link.href}

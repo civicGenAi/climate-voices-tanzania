@@ -166,9 +166,18 @@ const Footer = () => {
 
         {/* Bottom bar */}
         <div className="border-t border-border pt-4 sm:pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-          <p className="font-body text-[10px] sm:text-xs text-muted-foreground text-center sm:text-left">
-            © 2026 Climate Cardinals Tanzania · Founded by Ester Kimario · All Rights Reserved
-          </p>
+          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
+            <div className="flex items-center gap-2">
+              <img src={globalLogo} alt="Climate Cardinals" className="h-5 sm:h-6 w-auto object-contain opacity-60" />
+              <span className="font-body text-[10px] sm:text-xs text-muted-foreground">
+                An official chapter of Climate Cardinals
+              </span>
+            </div>
+            <span className="hidden sm:inline font-body text-[10px] text-muted-foreground/40">·</span>
+            <p className="font-body text-[10px] sm:text-xs text-muted-foreground text-center sm:text-left">
+              © 2026 Climate Cardinals Tanzania · Founded by Ester Kimario
+            </p>
+          </div>
           <button
             onClick={scrollToTop}
             className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-muted/30 border border-border flex items-center justify-center text-muted-foreground hover:text-gold hover:border-gold/40 transition-colors"
