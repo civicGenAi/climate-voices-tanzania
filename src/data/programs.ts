@@ -8,6 +8,7 @@ export const programs = [
   {
     slug: "climate-education",
     icon: BookOpen,
+    heroImage: programEducationHero,
     title: "Climate Education Workshops",
     subtitle: "Knowledge for Every Community",
     tagline: "Translate. Educate. Empower.",
