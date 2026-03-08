@@ -76,6 +76,7 @@ export const programs = [
   {
     slug: "translation-program",
     icon: Languages,
+    heroImage: programTranslationHero,
     title: "Youth Translation Volunteer Program",
     subtitle: "Bridging the Language Gap",
     tagline: "No language left behind.",
