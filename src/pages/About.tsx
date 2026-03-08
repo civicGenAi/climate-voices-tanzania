@@ -3,7 +3,8 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Users, Globe, BookOpen, TreePine, Heart, Target, Eye, ArrowRight, MessageCircle } from "lucide-react";
+import { Users, Globe, BookOpen, TreePine, Heart, Target, Eye, ArrowRight, MessageCircle, ChevronDown } from "lucide-react";
+import React from "react";
 import pageAboutCartoon from "@/assets/page-about-cartoon.png";
 
 const values = [
