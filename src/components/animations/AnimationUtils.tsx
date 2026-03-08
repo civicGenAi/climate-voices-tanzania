@@ -1,4 +1,4 @@
-import { ReactNode, useRef } from "react";
+import { ReactNode, useRef, useState, useEffect } from "react";
 import { motion, useInView, Variants } from "framer-motion";
 
 // Stagger container for children animations
@@ -12,7 +12,6 @@ export const staggerContainer: Variants = {
   },
 };
 
-// Fade up animation
 export const fadeUp: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: {
@@ -22,7 +21,6 @@ export const fadeUp: Variants = {
   },
 };
 
-// Fade in from sides
 export const fadeLeft: Variants = {
   hidden: { opacity: 0, x: -40 },
   visible: {
@@ -41,7 +39,6 @@ export const fadeRight: Variants = {
   },
 };
 
-// Scale up
 export const scaleUp: Variants = {
   hidden: { opacity: 0, scale: 0.85 },
   visible: {
@@ -51,7 +48,6 @@ export const scaleUp: Variants = {
   },
 };
 
-// Blur fade in
 export const blurFadeIn: Variants = {
   hidden: { opacity: 0, filter: "blur(10px)", y: 20 },
   visible: {
@@ -62,7 +58,7 @@ export const blurFadeIn: Variants = {
   },
 };
 
-// Word-by-word reveal animation component
+// Word-by-word reveal
 export const WordReveal = ({
   text,
   className = "",
@@ -97,41 +93,6 @@ export const WordReveal = ({
   );
 };
 
-// Character-by-character reveal
-export const CharReveal = ({
-  text,
-  className = "",
-  delay = 0,
-}: {
-  text: string;
-  className?: string;
-  delay?: number;
-}) => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
-
-  return (
-    <span ref={ref} className={className}>
-      {text.split("").map((char, i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0, y: 15 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{
-            delay: delay + i * 0.02,
-            duration: 0.4,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-          className="inline-block"
-          style={{ whiteSpace: char === " " ? "pre" : undefined }}
-        >
-          {char}
-        </motion.span>
-      ))}
-    </span>
-  );
-};
-
 // Scroll-triggered section wrapper
 export const ScrollReveal = ({
   children,
@@ -155,13 +116,23 @@ export const ScrollReveal = ({
     blurFadeIn,
   };
 
+  const selectedVariant = variants[variant];
+
   return (
     <motion.div
       ref={ref}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
-      variants={variants[variant]}
-      transition={{ delay }}
+      variants={{
+        hidden: selectedVariant.hidden,
+        visible: {
+          ...(selectedVariant.visible as object),
+          transition: {
+            ...((selectedVariant.visible as any)?.transition || {}),
+            delay,
+          },
+        },
+      }}
       className={className}
     >
       {children}
@@ -193,7 +164,6 @@ export const StaggerReveal = ({
   );
 };
 
-// Individual stagger child
 export const StaggerItem = ({
   children,
   className = "",
@@ -206,98 +176,18 @@ export const StaggerItem = ({
   </motion.div>
 );
 
-// Counter animation with smooth easing
-export const AnimatedCounter = ({
-  target,
-  suffix = "",
-  prefix = "",
-  className = "",
-  duration = 2000,
-}: {
-  target: number;
-  suffix?: string;
-  prefix?: string;
-  className?: string;
-  duration?: number;
-}) => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
-
-  return (
-    <motion.span
-      ref={ref}
-      className={className}
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={inView ? { opacity: 1, scale: 1 } : {}}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-    >
-      {prefix}
-      <CountUpInner target={target} inView={inView} duration={duration} />
-      {suffix}
-    </motion.span>
-  );
-};
-
-const CountUpInner = ({ target, inView, duration }: { target: number; inView: boolean; duration: number }) => {
-  const [count, setCount] = __import_react_useState(0);
-
-  __import_react_useEffect(() => {
-    if (!inView) return;
-    let start = 0;
-    const stepTime = 16;
-    const steps = duration / stepTime;
-    const increment = target / steps;
-    const timer = setInterval(() => {
-      start += increment;
-      if (start >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, stepTime);
-    return () => clearInterval(timer);
-  }, [inView, target, duration]);
-
-  return <>{count}</>;
-};
-
-// Need to use React hooks directly
-import { useState as __import_react_useState, useEffect as __import_react_useEffect } from "react";
-
 // Page transition wrapper
 export const PageTransition = ({ children }: { children: ReactNode }) => (
   <motion.div
-    initial={{ opacity: 0, y: 8 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -8 }}
-    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
   >
     {children}
   </motion.div>
 );
 
-// Magnetic hover effect (for buttons/icons)
-export const MagneticHover = ({
-  children,
-  className = "",
-  strength = 0.3,
-}: {
-  children: ReactNode;
-  className?: string;
-  strength?: number;
-}) => (
-  <motion.div
-    className={className}
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.97 }}
-    transition={{ type: "spring", stiffness: 400, damping: 17 }}
-  >
-    {children}
-  </motion.div>
-);
-
-// Text gradient shimmer
+// Shimmer text highlight
 export const ShimmerText = ({
   children,
   className = "",
@@ -305,33 +195,35 @@ export const ShimmerText = ({
   children: ReactNode;
   className?: string;
 }) => (
-  <span className={`relative inline-block ${className}`}>
+  <span className={`relative inline-block overflow-hidden ${className}`}>
     <span className="relative z-10">{children}</span>
     <motion.span
       className="absolute inset-0 bg-gradient-to-r from-transparent via-foreground/10 to-transparent z-20 pointer-events-none"
       initial={{ x: "-100%" }}
       animate={{ x: "200%" }}
-      transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 4, ease: "easeInOut" }}
+      transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 5, ease: "easeInOut" }}
     />
   </span>
 );
 
-// Parallax scroll effect
-export const ParallaxSection = ({
+// Floating animation wrapper
+export const FloatingElement = ({
   children,
   className = "",
-  speed = 0.15,
+  amplitude = 8,
+  duration = 5,
+  delay = 0,
 }: {
   children: ReactNode;
   className?: string;
-  speed?: number;
+  amplitude?: number;
+  duration?: number;
+  delay?: number;
 }) => (
   <motion.div
     className={className}
-    style={{ willChange: "transform" }}
-    initial={{ y: 0 }}
-    whileInView={{ y: 0 }}
-    viewport={{ once: false }}
+    animate={{ y: [0, -amplitude, 0] }}
+    transition={{ duration, repeat: Infinity, ease: "easeInOut", delay }}
   >
     {children}
   </motion.div>
