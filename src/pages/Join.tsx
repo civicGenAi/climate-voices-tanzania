@@ -40,6 +40,7 @@ const Join = () => {
   };
 
   return (
+    <PageTransition>
     <main className="overflow-x-hidden">
       <Navigation />
 
