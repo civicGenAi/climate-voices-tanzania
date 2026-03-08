@@ -110,6 +110,7 @@ export const programs = [
   {
     slug: "tree-planting",
     icon: TreePine,
+    heroImage: programPlantingHero,
     title: "Tree Planting & Environmental Restoration",
     subtitle: "From Knowledge to Action",
     tagline: "Plant today. Protect tomorrow.",
