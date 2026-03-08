@@ -37,21 +37,13 @@ const Navigation = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-3 group">
+            {/* Logo only */}
+            <Link to="/" className="flex items-center group">
               <img
                 src={logo}
                 alt="Climate Cardinals Tanzania"
                 className="h-10 w-10 md:h-12 md:w-12 object-contain transition-transform duration-300 group-hover:scale-105"
               />
-              <div className="hidden sm:flex flex-col">
-                <span className="font-display text-sm font-semibold text-foreground leading-tight">
-                  Climate Cardinals
-                </span>
-                <span className="font-body text-xs text-gold font-medium tracking-wider">
-                  TANZANIA
-                </span>
-              </div>
             </Link>
 
             {/* Desktop Nav */}
@@ -84,19 +76,19 @@ const Navigation = () => {
             {/* Right side */}
             <div className="hidden md:flex items-center gap-4">
               {/* Language Toggle */}
-              <div className="relative flex items-center bg-muted/40 rounded-full p-0.5 border border-border">
+              <div className="relative flex items-center bg-forest/60 rounded-full p-0.5 border border-gold/20">
                 <button
                   onClick={() => setLang("EN")}
-                  className={`relative z-10 font-mono text-xs font-medium px-3 py-1.5 rounded-full transition-colors duration-200 ${
-                    lang === "EN" ? "text-accent-foreground" : "text-muted-foreground"
+                  className={`relative z-10 font-body text-xs font-semibold px-3 py-1.5 rounded-full transition-colors duration-200 ${
+                    lang === "EN" ? "text-accent-foreground" : "text-foreground/50"
                   }`}
                 >
                   EN
                 </button>
                 <button
                   onClick={() => setLang("SW")}
-                  className={`relative z-10 font-mono text-xs font-medium px-3 py-1.5 rounded-full transition-colors duration-200 ${
-                    lang === "SW" ? "text-accent-foreground" : "text-muted-foreground"
+                  className={`relative z-10 font-body text-xs font-semibold px-3 py-1.5 rounded-full transition-colors duration-200 ${
+                    lang === "SW" ? "text-accent-foreground" : "text-foreground/50"
                   }`}
                 >
                   SW
@@ -117,12 +109,11 @@ const Navigation = () => {
               </Link>
             </div>
 
-            {/* Mobile hamburger */}
+            {/* Mobile */}
             <div className="flex md:hidden items-center gap-3">
-              {/* Mini language toggle */}
               <button
                 onClick={() => setLang(lang === "EN" ? "SW" : "EN")}
-                className="font-mono text-[10px] font-semibold text-gold border border-gold/30 rounded-full px-2.5 py-1"
+                className="font-body text-[10px] font-semibold text-gold border border-gold/30 rounded-full px-2.5 py-1"
               >
                 {lang}
               </button>
@@ -152,7 +143,7 @@ const Navigation = () => {
         </div>
       </nav>
 
-      {/* Mobile menu overlay */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
