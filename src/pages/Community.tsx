@@ -411,6 +411,7 @@ const Community = () => {
 
       <Footer />
     </main>
+    </PageTransition>
   );
 };
 

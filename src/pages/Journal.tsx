@@ -230,6 +230,7 @@ const Journal = () => {
 
       <Footer />
     </main>
+    </PageTransition>
   );
 };
 

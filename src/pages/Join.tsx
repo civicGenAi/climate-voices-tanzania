@@ -313,6 +313,7 @@ const Join = () => {
 
       <Footer />
     </main>
+    </PageTransition>
   );
 };
 
