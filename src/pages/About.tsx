@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { Users, Globe, BookOpen, TreePine, Heart, Target, Eye, ArrowRight, MessageCircle, ChevronDown } from "lucide-react";
 import React from "react";
 import pageAboutCartoon from "@/assets/page-about-cartoon.png";
+import { PageTransition, WordReveal } from "@/components/animations/AnimationUtils";
 
 const values = [
   { icon: Users, title: "Youth-Led", description: "We believe young people are the most powerful agents of change in the climate movement.", color: "gold" },
