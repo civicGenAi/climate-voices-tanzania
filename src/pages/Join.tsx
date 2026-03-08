@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { PageTransition } from "@/components/animations/AnimationUtils";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Heart, Users, Globe, Handshake, CheckCircle, ArrowRight } from "lucide-react";
