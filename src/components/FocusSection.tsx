@@ -54,24 +54,24 @@ const FocusSection = () => {
   }, []);
 
   return (
-    <section id="focus" ref={ref} className="relative py-24 md:py-36 bg-forest-night overflow-hidden">
-      <div className="absolute top-20 left-10 w-72 h-72 rounded-full border border-gold/[0.06] animate-[spin_60s_linear_infinite]" />
-      <div className="absolute top-40 right-20 w-48 h-48 rounded-full border border-leaf/[0.08] animate-[spin_45s_linear_infinite_reverse]" />
+    <section id="focus" ref={ref} className="relative py-16 sm:py-24 md:py-36 bg-forest-night overflow-hidden">
+      <div className="absolute top-20 left-10 w-72 h-72 rounded-full border border-gold/[0.06] animate-[spin_60s_linear_infinite] hidden sm:block" />
+      <div className="absolute top-40 right-20 w-48 h-48 rounded-full border border-leaf/[0.08] animate-[spin_45s_linear_infinite_reverse] hidden sm:block" />
       <div className="absolute bottom-20 left-1/3 w-96 h-96 rounded-full bg-gold/[0.02] blur-3xl" />
 
-      <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10">
-        <div className="text-center mb-16">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12 relative z-10">
+        <div className="text-center mb-10 sm:mb-16">
           <motion.span
             initial={{ opacity: 0, scale: 0.8 }}
             animate={inView ? { opacity: 1, scale: 1 } : {}}
-            className="inline-block font-mono text-xs text-gold tracking-[0.3em] uppercase mb-4 px-4 py-1.5 rounded-full border border-gold/20 bg-gold/5"
+            className="inline-block font-mono text-xs text-gold tracking-[0.3em] uppercase mb-3 sm:mb-4 px-4 py-1.5 rounded-full border border-gold/20 bg-gold/5"
           >
             Our Approach
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            className="font-display text-3xl md:text-5xl font-bold text-foreground mb-4"
+            className="font-display text-2xl sm:text-3xl md:text-5xl font-bold text-foreground mb-3 sm:mb-4"
           >
             How We Work
           </motion.h2>
@@ -79,19 +79,19 @@ const FocusSection = () => {
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ delay: 0.2 }}
-            className="font-body text-muted-foreground max-w-xl mx-auto"
+            className="font-body text-sm sm:text-base text-muted-foreground max-w-xl mx-auto"
           >
             Four pillars that define our approach to climate action in Tanzania.
           </motion.p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8 items-stretch">
+        <div className="flex flex-col lg:flex-row gap-4 sm:gap-8 items-stretch">
           {/* Main card with cartoon background */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="flex-1 relative rounded-[2rem] overflow-hidden min-h-[400px] md:min-h-[450px] bg-card"
+            className="flex-1 relative rounded-2xl sm:rounded-[2rem] overflow-hidden min-h-[300px] sm:min-h-[400px] md:min-h-[450px] bg-card"
           >
             <AnimatePresence mode="wait">
               <motion.div
@@ -100,17 +100,17 @@ const FocusSection = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute inset-0 flex items-end justify-end p-6"
+                className="absolute inset-0 flex items-end justify-end p-4 sm:p-6"
               >
                 <img
                   src={focusAreas[activeCard].image}
                   alt={focusAreas[activeCard].title}
-                  className="w-[65%] md:w-[55%] max-h-[85%] object-contain drop-shadow-2xl"
+                  className="w-[55%] sm:w-[65%] md:w-[55%] max-h-[80%] sm:max-h-[85%] object-contain drop-shadow-2xl"
                 />
               </motion.div>
             </AnimatePresence>
 
-            {/* Ocean wave shadow from left */}
+            {/* Shadow overlay */}
             <div
               className="absolute inset-0 pointer-events-none z-[1]"
               style={{
@@ -126,11 +126,10 @@ const FocusSection = () => {
               }}
             />
 
-            {/* Bottom gradient */}
             <div className="absolute inset-0 bg-gradient-to-t from-forest-night/50 via-transparent to-transparent pointer-events-none z-[1]" />
 
-            {/* Content on the left */}
-            <div className="absolute inset-0 z-[2] flex flex-col justify-end p-8 md:p-12">
+            {/* Content */}
+            <div className="absolute inset-0 z-[2] flex flex-col justify-end p-5 sm:p-8 md:p-12">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeCard}
@@ -140,26 +139,26 @@ const FocusSection = () => {
                   transition={{ duration: 0.5, delay: 0.2 }}
                   className="max-w-sm"
                 >
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 rounded-full bg-background/20 backdrop-blur-md flex items-center justify-center border border-foreground/10">
+                  <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-background/20 backdrop-blur-md flex items-center justify-center border border-foreground/10">
                       {(() => {
                         const IconComp = focusAreas[activeCard].Icon;
-                        return <IconComp className={`w-6 h-6 ${focusAreas[activeCard].iconColor}`} />;
+                        return <IconComp className={`w-5 h-5 sm:w-6 sm:h-6 ${focusAreas[activeCard].iconColor}`} />;
                       })()}
                     </div>
-                    <span className="font-mono text-[10px] tracking-[0.2em] uppercase px-3 py-1 rounded-full bg-gold/20 backdrop-blur-sm text-gold font-semibold border border-gold/20">
+                    <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.2em] uppercase px-2 sm:px-3 py-1 rounded-full bg-gold/20 backdrop-blur-sm text-gold font-semibold border border-gold/20">
                       {focusAreas[activeCard].tag}
                     </span>
                   </div>
 
-                  <span className="font-display text-7xl md:text-8xl font-bold text-foreground/[0.08] absolute top-8 left-8">
+                  <span className="font-display text-5xl sm:text-7xl md:text-8xl font-bold text-foreground/[0.08] absolute top-4 sm:top-8 left-4 sm:left-8">
                     {String(activeCard + 1).padStart(2, "0")}
                   </span>
 
-                  <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-3">
+                  <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2 sm:mb-3">
                     {focusAreas[activeCard].title}
                   </h3>
-                  <p className="font-body text-foreground/80 text-sm md:text-base leading-relaxed">
+                  <p className="font-body text-foreground/80 text-xs sm:text-sm md:text-base leading-relaxed line-clamp-3 sm:line-clamp-none">
                     {focusAreas[activeCard].description}
                   </p>
                 </motion.div>
@@ -167,38 +166,38 @@ const FocusSection = () => {
             </div>
           </motion.div>
 
-          {/* Right side selector pills */}
+          {/* Selector pills — horizontal scroll on mobile, vertical on desktop */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="w-full lg:w-72 flex flex-row lg:flex-col gap-3"
+            className="w-full lg:w-72 flex flex-row lg:flex-col gap-2 sm:gap-3 overflow-x-auto pb-2 lg:pb-0 snap-x snap-mandatory lg:snap-none"
           >
             {focusAreas.map((area, i) => (
               <button
                 key={area.title}
                 onClick={() => setActiveCard(i)}
-                className={`flex-1 lg:flex-none text-left p-4 md:p-5 rounded-2xl border transition-all duration-500 group ${
+                className={`flex-shrink-0 w-[140px] sm:w-auto lg:flex-none text-left p-3 sm:p-4 md:p-5 rounded-xl sm:rounded-2xl border transition-all duration-500 group snap-start ${
                   i === activeCard
                     ? "bg-card border-gold/30 shadow-lg shadow-gold/5"
                     : "bg-card/40 border-border hover:border-gold/20 hover:bg-card/70"
                 }`}
               >
-                <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-300 ${
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-colors duration-300 flex-shrink-0 ${
                     i === activeCard ? "bg-gold/15" : "bg-background/50"
                   }`}>
-                    <area.Icon className={`w-5 h-5 transition-colors duration-300 ${
+                    <area.Icon className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors duration-300 ${
                       i === activeCard ? area.iconColor : "text-muted-foreground"
                     }`} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className={`font-display text-sm font-bold transition-colors truncate ${
+                    <p className={`font-display text-xs sm:text-sm font-bold transition-colors truncate ${
                       i === activeCard ? "text-foreground" : "text-muted-foreground"
                     }`}>
                       {area.title}
                     </p>
-                    <span className={`font-mono text-[10px] tracking-wider ${
+                    <span className={`font-mono text-[9px] sm:text-[10px] tracking-wider ${
                       i === activeCard ? "text-gold" : "text-muted-foreground/50"
                     }`}>
                       {String(i + 1).padStart(2, "0")}
@@ -213,7 +212,7 @@ const FocusSection = () => {
                 </div>
 
                 {i === activeCard && (
-                  <div className="mt-3 h-0.5 bg-border rounded-full overflow-hidden">
+                  <div className="mt-2 sm:mt-3 h-0.5 bg-border rounded-full overflow-hidden">
                     <motion.div
                       key={`progress-${activeCard}`}
                       initial={{ width: "0%" }}

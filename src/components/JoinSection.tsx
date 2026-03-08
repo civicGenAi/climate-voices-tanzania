@@ -23,7 +23,8 @@ const JoinSection = () => {
     resize();
     window.addEventListener("resize", resize);
 
-    for (let i = 0; i < 40; i++) {
+    const count = window.innerWidth < 768 ? 20 : 40;
+    for (let i = 0; i < count; i++) {
       fireflies.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -72,16 +73,16 @@ const JoinSection = () => {
 
   return (
     <>
-      <section id="join" ref={ref} className="relative py-24 md:py-36 bg-forest overflow-hidden">
+      <section id="join" ref={ref} className="relative py-16 sm:py-24 md:py-36 bg-forest overflow-hidden">
         <canvas ref={canvasRef} className="absolute inset-0 z-0" />
 
-        <div className="max-w-5xl mx-auto px-6 md:px-12 relative z-10">
-          <div className="text-center mb-16">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-12 relative z-10">
+          <div className="text-center mb-10 sm:mb-16">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8 }}
-              className="font-display text-4xl md:text-6xl font-bold text-foreground mb-2"
+              className="font-display text-3xl sm:text-4xl md:text-6xl font-bold text-foreground mb-2"
             >
               Be Part of <span className="text-gold">the Change.</span>
             </motion.h2>
@@ -89,32 +90,32 @@ const JoinSection = () => {
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
               transition={{ delay: 0.3 }}
-              className="font-body text-muted-foreground max-w-lg mx-auto mt-4"
+              className="font-body text-sm sm:text-base text-muted-foreground max-w-lg mx-auto mt-3 sm:mt-4"
             >
               Join our growing community of climate advocates making real impact across Tanzania.
             </motion.p>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-6">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
             {/* Volunteer */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.5 }}
-              className="flex-1 bg-forest-night border border-border rounded-2xl p-8 hover:border-gold/30 transition-all duration-300 group"
+              className="flex-1 bg-forest-night border border-border rounded-xl sm:rounded-2xl p-5 sm:p-8 hover:border-gold/30 transition-all duration-300 group"
             >
-              <div className="w-12 h-12 rounded-xl bg-leaf/10 flex items-center justify-center mb-5">
-                <Sprout className="w-6 h-6 text-leaf" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-leaf/10 flex items-center justify-center mb-4 sm:mb-5">
+                <Sprout className="w-5 h-5 sm:w-6 sm:h-6 text-leaf" />
               </div>
-              <h3 className="font-display text-2xl font-bold text-foreground mb-3">
+              <h3 className="font-display text-xl sm:text-2xl font-bold text-foreground mb-2 sm:mb-3">
                 Volunteer
               </h3>
-              <p className="font-body text-muted-foreground text-sm mb-6">
+              <p className="font-body text-muted-foreground text-xs sm:text-sm mb-4 sm:mb-6">
                 Join our team of youth climate translators and educators. Make a real difference in your community.
               </p>
               <button
                 onClick={() => setShowVolunteerModal(true)}
-                className="inline-flex items-center gap-2 bg-gold text-accent-foreground font-body font-semibold px-6 py-3 rounded-full hover:bg-gold-warm transition-all duration-300 hover:shadow-lg hover:shadow-gold/20"
+                className="inline-flex items-center gap-2 bg-gold text-accent-foreground font-body text-sm font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-full hover:bg-gold-warm transition-all duration-300 hover:shadow-lg hover:shadow-gold/20"
               >
                 Apply Now
                 <ArrowRight className="w-4 h-4" />
@@ -126,20 +127,20 @@ const JoinSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.7 }}
-              className="flex-1 bg-gold/10 border border-gold/20 rounded-2xl p-8 hover:bg-gold/15 transition-all duration-300 group"
+              className="flex-1 bg-gold/10 border border-gold/20 rounded-xl sm:rounded-2xl p-5 sm:p-8 hover:bg-gold/15 transition-all duration-300 group"
             >
-              <div className="w-12 h-12 rounded-xl bg-gold/15 flex items-center justify-center mb-5">
-                <Handshake className="w-6 h-6 text-gold" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gold/15 flex items-center justify-center mb-4 sm:mb-5">
+                <Handshake className="w-5 h-5 sm:w-6 sm:h-6 text-gold" />
               </div>
-              <h3 className="font-display text-2xl font-bold text-gold mb-3">
+              <h3 className="font-display text-xl sm:text-2xl font-bold text-gold mb-2 sm:mb-3">
                 Partner With Us
               </h3>
-              <p className="font-body text-muted-foreground text-sm mb-6">
+              <p className="font-body text-muted-foreground text-xs sm:text-sm mb-4 sm:mb-6">
                 Organizations and institutions — let's amplify impact together across Tanzania.
               </p>
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 bg-transparent text-gold font-body font-semibold px-6 py-3 rounded-full border-2 border-gold hover:bg-gold hover:text-accent-foreground transition-all duration-300"
+                className="inline-flex items-center gap-2 bg-transparent text-gold font-body text-sm font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-full border-2 border-gold hover:bg-gold hover:text-accent-foreground transition-all duration-300"
               >
                 Get in Touch
                 <ArrowRight className="w-4 h-4" />
@@ -156,7 +157,7 @@ const JoinSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-background/80 backdrop-blur-sm"
             onClick={() => setShowVolunteerModal(false)}
           >
             <motion.div
@@ -165,7 +166,7 @@ const JoinSection = () => {
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-lg bg-card border border-border rounded-2xl p-8 relative shadow-2xl"
+              className="w-full sm:max-w-lg bg-card border border-border rounded-t-2xl sm:rounded-2xl p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto"
             >
               <button
                 onClick={() => setShowVolunteerModal(false)}
@@ -178,7 +179,7 @@ const JoinSection = () => {
                 <div className="w-10 h-10 rounded-xl bg-leaf/10 flex items-center justify-center">
                   <Sprout className="w-5 h-5 text-leaf" />
                 </div>
-                <h3 className="font-display text-xl font-bold text-foreground">Volunteer Application</h3>
+                <h3 className="font-display text-lg sm:text-xl font-bold text-foreground">Volunteer Application</h3>
               </div>
 
               {volunteerSubmitted ? (
@@ -194,37 +195,23 @@ const JoinSection = () => {
               ) : (
                 <form onSubmit={handleVolunteerSubmit} className="space-y-4">
                   <input
-                    type="text"
-                    value={volunteerForm.name}
-                    onChange={(e) => setVolunteerForm({ ...volunteerForm, name: e.target.value })}
-                    placeholder="Full Name *"
-                    maxLength={100}
-                    required
+                    type="text" value={volunteerForm.name} onChange={(e) => setVolunteerForm({ ...volunteerForm, name: e.target.value })}
+                    placeholder="Full Name *" maxLength={100} required
                     className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                   />
                   <input
-                    type="email"
-                    value={volunteerForm.email}
-                    onChange={(e) => setVolunteerForm({ ...volunteerForm, email: e.target.value })}
-                    placeholder="Email Address *"
-                    maxLength={255}
-                    required
+                    type="email" value={volunteerForm.email} onChange={(e) => setVolunteerForm({ ...volunteerForm, email: e.target.value })}
+                    placeholder="Email Address *" maxLength={255} required
                     className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                   />
                   <input
-                    type="tel"
-                    value={volunteerForm.phone}
-                    onChange={(e) => setVolunteerForm({ ...volunteerForm, phone: e.target.value })}
-                    placeholder="Phone Number (optional)"
-                    maxLength={20}
+                    type="tel" value={volunteerForm.phone} onChange={(e) => setVolunteerForm({ ...volunteerForm, phone: e.target.value })}
+                    placeholder="Phone Number (optional)" maxLength={20}
                     className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                   />
                   <textarea
-                    value={volunteerForm.motivation}
-                    onChange={(e) => setVolunteerForm({ ...volunteerForm, motivation: e.target.value })}
-                    placeholder="Why do you want to volunteer? (optional)"
-                    maxLength={500}
-                    rows={3}
+                    value={volunteerForm.motivation} onChange={(e) => setVolunteerForm({ ...volunteerForm, motivation: e.target.value })}
+                    placeholder="Why do you want to volunteer? (optional)" maxLength={500} rows={3}
                     className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all resize-none"
                   />
                   <button
