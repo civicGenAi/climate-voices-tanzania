@@ -38,6 +38,96 @@ const timeline = [
   { year: "2030", event: "Vision: Every Tanzanian community climate-literate in their own language" },
 ];
 
+const INITIAL_VISIBLE = 8;
+
+const TimelineSection = React.forwardRef<HTMLElement, { inView: boolean }>(({ inView }, ref) => {
+  const [expanded, setExpanded] = useState(false);
+  const visibleItems = expanded ? timeline : timeline.slice(0, INITIAL_VISIBLE);
+
+  return (
+    <section ref={ref} className="py-20 md:py-28 bg-forest-night">
+      <div className="max-w-4xl mx-auto px-6 md:px-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          className="text-center mb-16"
+        >
+          <span className="font-mono text-xs text-gold tracking-[0.3em] uppercase mb-3 block">Where We've Been & Where We're Going</span>
+          <h2 className="font-display text-3xl md:text-5xl font-bold text-foreground">Our Journey</h2>
+        </motion.div>
+
+        <div className="relative">
+          <motion.div
+            initial={{ scaleY: 0 }}
+            animate={inView ? { scaleY: 1 } : {}}
+            transition={{ duration: 2.5, ease: "easeOut" }}
+            className="absolute left-4 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-gold via-leaf to-forest origin-top"
+          />
+
+          <AnimatePresence mode="sync">
+            {visibleItems.map((item, i) => {
+              const isFuture = parseInt(item.year) > 2025;
+              return (
+                <motion.div
+                  key={`${item.year}-${item.event}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ delay: i < INITIAL_VISIBLE ? 0.2 + i * 0.08 : 0.05 * (i - INITIAL_VISIBLE) }}
+                  className={`relative flex items-start gap-6 mb-6 ${
+                    i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                  }`}
+                >
+                  <div className={`hidden md:block flex-1 ${i % 2 === 0 ? "text-right" : "text-left"}`}>
+                    <span className={`font-mono text-sm font-semibold ${isFuture ? "text-leaf" : "text-gold"}`}>
+                      {item.year}
+                    </span>
+                  </div>
+                  <div className="relative z-10 flex-shrink-0">
+                    <div className={`w-8 h-8 rounded-full ${isFuture ? "bg-leaf/20 border-leaf/40" : "bg-forest border-parchment"} border-4 flex items-center justify-center`}>
+                      <div className={`w-2 h-2 rounded-full ${isFuture ? "bg-leaf" : "bg-gold"}`} />
+                    </div>
+                  </div>
+                  <div className="flex-1 pb-2">
+                    <span className={`font-mono text-sm font-semibold md:hidden ${isFuture ? "text-leaf" : "text-gold"}`}>
+                      {item.year}
+                    </span>
+                    <p className={`font-body text-sm leading-relaxed ${isFuture ? "text-muted-foreground italic" : "text-foreground/80"}`}>
+                      {isFuture && <span className="text-leaf/60 mr-1">→</span>}
+                      {item.event}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+
+          {/* Show more / less */}
+          {timeline.length > INITIAL_VISIBLE && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ delay: 1 }}
+              className="flex justify-center mt-8"
+            >
+              <button
+                onClick={() => setExpanded(!expanded)}
+                className="inline-flex items-center gap-2 font-body text-sm font-semibold text-gold hover:text-gold/80 transition-colors bg-gold/10 hover:bg-gold/20 px-6 py-3 rounded-full"
+              >
+                {expanded ? "Show Less" : `View Full Journey (${timeline.length - INITIAL_VISIBLE} more)`}
+                <motion.div animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.3 }}>
+                  <ChevronDown className="w-4 h-4" />
+                </motion.div>
+              </button>
+            </motion.div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+});
+TimelineSection.displayName = "TimelineSection";
+
 const About = () => {
   const heroRef = useRef(null);
   const heroInView = useInView(heroRef, { once: true });
