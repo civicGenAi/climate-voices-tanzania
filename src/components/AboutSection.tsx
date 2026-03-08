@@ -115,13 +115,14 @@ const AboutSection = () => {
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
           className="w-full lg:w-1/2 bg-forest p-6 md:p-12 flex items-center justify-center min-h-[50vh] lg:min-h-0"
         >
-          <div className="w-full max-w-lg grid grid-cols-2 gap-3 md:gap-4">
-            {/* Top-left — tall */}
+          <div className="w-full max-w-lg grid grid-cols-2 gap-3 md:gap-4" style={{ perspective: "1200px" }}>
+            {/* Top-left — tall, opens like left page */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.5, duration: 0.7 }}
-              className="row-span-2 rounded-2xl overflow-hidden group"
+              initial={{ opacity: 0, rotateY: -90, transformOrigin: "left center" }}
+              animate={inView ? { opacity: 1, rotateY: 0 } : {}}
+              transition={{ delay: 0.5, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="row-span-2 rounded-2xl overflow-hidden group shadow-lg"
+              style={{ transformStyle: "preserve-3d" }}
             >
               <img
                 src={images[0].src}
@@ -130,12 +131,13 @@ const AboutSection = () => {
               />
             </motion.div>
 
-            {/* Top-right */}
+            {/* Top-right, opens like right page */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.65, duration: 0.7 }}
-              className="rounded-2xl overflow-hidden aspect-square group"
+              initial={{ opacity: 0, rotateY: 90, transformOrigin: "right center" }}
+              animate={inView ? { opacity: 1, rotateY: 0 } : {}}
+              transition={{ delay: 0.7, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="rounded-2xl overflow-hidden aspect-square group shadow-lg"
+              style={{ transformStyle: "preserve-3d" }}
             >
               <img
                 src={images[1].src}
@@ -144,12 +146,13 @@ const AboutSection = () => {
               />
             </motion.div>
 
-            {/* Bottom-right */}
+            {/* Bottom-right, opens like bottom page flipping up */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.8, duration: 0.7 }}
-              className="rounded-2xl overflow-hidden aspect-square group"
+              initial={{ opacity: 0, rotateX: 60, transformOrigin: "bottom center" }}
+              animate={inView ? { opacity: 1, rotateX: 0 } : {}}
+              transition={{ delay: 0.9, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="rounded-2xl overflow-hidden aspect-square group shadow-lg"
+              style={{ transformStyle: "preserve-3d" }}
             >
               <img
                 src={images[2].src}
