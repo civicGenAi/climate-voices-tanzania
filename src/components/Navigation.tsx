@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "@/assets/logo.png";
+import globalLogo from "@/assets/climate-cardinals-global-logo.png";
 
 const navLinks = [
   { label: "Home", href: "/" },
