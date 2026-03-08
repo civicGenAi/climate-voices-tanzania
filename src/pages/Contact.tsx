@@ -266,6 +266,7 @@ const Contact = () => {
 
       <Footer />
     </main>
+    </PageTransition>
   );
 };
 
