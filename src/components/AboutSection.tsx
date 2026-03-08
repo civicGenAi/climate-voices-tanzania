@@ -42,10 +42,10 @@ const CountUp = ({ target, suffix, inView }: { target: number; suffix: string; i
 };
 
 const images = [
-  { src: realPlanting, alt: "Tree planting initiative", rotate: -5, delay: 0 },
-  { src: realEducation, alt: "Climate education workshop", rotate: 3, delay: 0.15 },
-  { src: realCommunity, alt: "Community outreach event", rotate: -2, delay: 0.3 },
-  { src: founderImg, alt: "Founder Ester Kimario", rotate: 4, delay: 0.45 },
+  { src: realPlanting, alt: "Tree planting initiative" },
+  { src: realEducation, alt: "Climate education workshop" },
+  { src: realCommunity, alt: "Community outreach event" },
+  { src: founderImg, alt: "Founder Ester Kimario" },
 ];
 
 const AboutSection = () => {
@@ -108,46 +108,55 @@ const AboutSection = () => {
           </motion.div>
         </motion.div>
 
-        {/* Right — 4 real photos in animated collage */}
+        {/* Right — Clean masonry photo grid */}
         <motion.div
           initial={{ x: 60, opacity: 0 }}
           animate={inView ? { x: 0, opacity: 1 } : {}}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-          className="w-full lg:w-1/2 bg-forest p-8 md:p-16 flex items-center justify-center min-h-[50vh] lg:min-h-0"
+          className="w-full lg:w-1/2 bg-forest p-6 md:p-12 flex items-center justify-center min-h-[50vh] lg:min-h-0"
         >
-          <div className="relative w-full max-w-md aspect-square">
-            {images.map((img, i) => (
-              <motion.div
-                key={img.alt}
-                initial={{ opacity: 0, scale: 0.6, rotate: 0 }}
-                animate={inView ? { opacity: 1, scale: 1, rotate: img.rotate } : {}}
-                transition={{ delay: 0.6 + img.delay, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute w-[48%] rounded-xl overflow-hidden shadow-xl border-2 border-gold/20 hover:z-40 hover:scale-110 transition-transform duration-500 cursor-pointer"
-                style={{
-                  top: i < 2 ? "2%" : "50%",
-                  left: i % 2 === 0 ? "2%" : "50%",
-                }}
-              >
-                <motion.div
-                  animate={{
-                    y: [0, i % 2 === 0 ? -6 : 6, 0],
-                    rotate: [img.rotate, img.rotate + (i % 2 === 0 ? 2 : -2), img.rotate],
-                  }}
-                  transition={{
-                    duration: 4 + i * 0.5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: i * 0.3,
-                  }}
-                >
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    className="w-full h-full object-cover aspect-square"
-                  />
-                </motion.div>
-              </motion.div>
-            ))}
+          <div className="w-full max-w-lg grid grid-cols-2 gap-3 md:gap-4">
+            {/* Top-left — tall */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.5, duration: 0.7 }}
+              className="row-span-2 rounded-2xl overflow-hidden group"
+            >
+              <img
+                src={images[0].src}
+                alt={images[0].alt}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </motion.div>
+
+            {/* Top-right */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.65, duration: 0.7 }}
+              className="rounded-2xl overflow-hidden aspect-square group"
+            >
+              <img
+                src={images[1].src}
+                alt={images[1].alt}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </motion.div>
+
+            {/* Bottom-right */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.8, duration: 0.7 }}
+              className="rounded-2xl overflow-hidden aspect-square group"
+            >
+              <img
+                src={images[2].src}
+                alt={images[2].alt}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </motion.div>
           </div>
         </motion.div>
       </div>
