@@ -79,6 +79,7 @@ const Journal = () => {
   const regularPosts = filtered.filter((p) => !p.featured || activeCategory !== "All");
 
   return (
+    <PageTransition>
     <main className="overflow-x-hidden">
       <Navigation />
 
