@@ -153,10 +153,10 @@ const Community = () => {
       <Navigation />
 
       {/* Hero */}
-      <section className="relative pt-28 pb-12 md:pt-36 md:pb-16 bg-forest-night">
+      <section className="relative pt-28 pb-12 md:pt-36 md:pb-16 bg-forest-night overflow-hidden">
         <div className="absolute top-0 left-0 w-80 h-80 bg-leaf/[0.03] rounded-full blur-3xl" />
-        <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
+        <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10 flex flex-col md:flex-row items-center gap-8">
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="flex-1 text-center md:text-left">
             <span className="inline-flex items-center gap-2 font-mono text-xs text-gold tracking-[0.3em] uppercase mb-4 px-4 py-1.5 rounded-full border border-gold/20 bg-gold/5">
               <Users className="w-3.5 h-3.5" />
               Community
@@ -164,9 +164,23 @@ const Community = () => {
             <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-4">
               Climate <span className="text-gold">Community</span>
             </h1>
-            <p className="font-body text-muted-foreground max-w-xl mx-auto">
+            <p className="font-body text-muted-foreground max-w-xl">
               Connect, discuss, and collaborate with fellow climate advocates across Tanzania.
             </p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="flex-shrink-0"
+          >
+            <motion.img
+              src={communityHero}
+              alt="Community discussion illustration"
+              className="w-48 md:w-64 drop-shadow-2xl"
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            />
           </motion.div>
         </div>
       </section>

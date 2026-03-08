@@ -82,10 +82,10 @@ const Journal = () => {
       <Navigation />
 
       {/* Hero */}
-      <section className="relative pt-28 pb-16 md:pt-36 md:pb-20 bg-forest-night">
+      <section className="relative pt-28 pb-16 md:pt-36 md:pb-20 bg-forest-night overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-gold/[0.03] rounded-full blur-3xl" />
-        <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
+        <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10 flex flex-col md:flex-row items-center gap-8">
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="flex-1 text-center md:text-left">
             <span className="inline-flex items-center gap-2 font-mono text-xs text-gold tracking-[0.3em] uppercase mb-4 px-4 py-1.5 rounded-full border border-gold/20 bg-gold/5">
               <BookOpen className="w-3.5 h-3.5" />
               Our Journal
@@ -93,9 +93,23 @@ const Journal = () => {
             <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-4">
               Stories & <span className="text-gold">Impact</span>
             </h1>
-            <p className="font-body text-muted-foreground max-w-xl mx-auto">
+            <p className="font-body text-muted-foreground max-w-xl">
               News, stories, and updates from our climate action journey across Tanzania.
             </p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="flex-shrink-0"
+          >
+            <motion.img
+              src={journalHero}
+              alt="Climate stories journal illustration"
+              className="w-48 md:w-64 drop-shadow-2xl"
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            />
           </motion.div>
         </div>
       </section>
