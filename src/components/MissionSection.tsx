@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { Target, Eye } from "lucide-react";
 
 const MissionSection = () => {
   const ref = useRef(null);
@@ -34,7 +35,12 @@ const MissionSection = () => {
           >
             <div className="w-full md:w-[45%] bg-forest text-foreground p-8 rounded-2xl rounded-tr-[3rem] shadow-lg">
               <span className="font-mono text-xs text-leaf tracking-widest uppercase mb-3 block">Our Mission</span>
-              <h3 className="font-display text-2xl md:text-3xl font-bold mb-4">🌿 Mission</h3>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-lg bg-leaf/10 flex items-center justify-center">
+                  <Target className="w-5 h-5 text-leaf" />
+                </div>
+                <h3 className="font-display text-2xl md:text-3xl font-bold">Mission</h3>
+              </div>
               <p className="font-body text-foreground/80 leading-relaxed">
                 To make climate education accessible to every Tanzanian community by translating climate 
                 knowledge into Kiswahili and local tribal languages — empowering youth to lead climate 
@@ -52,7 +58,12 @@ const MissionSection = () => {
           >
             <div className="w-full md:w-[45%] bg-gold text-accent-foreground p-8 rounded-2xl rounded-tl-[3rem] shadow-lg">
               <span className="font-mono text-xs text-forest/70 tracking-widest uppercase mb-3 block">Our Vision</span>
-              <h3 className="font-display text-2xl md:text-3xl font-bold mb-4">☀️ Vision</h3>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-lg bg-forest/10 flex items-center justify-center">
+                  <Eye className="w-5 h-5 text-forest" />
+                </div>
+                <h3 className="font-display text-2xl md:text-3xl font-bold">Vision</h3>
+              </div>
               <p className="font-body text-accent-foreground/80 leading-relaxed">
                 A Tanzania where every community — urban or rural, young or old — has the knowledge and 
                 tools to understand, respond to, and combat the effects of climate change in their own language.
