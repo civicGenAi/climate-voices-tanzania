@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "@/assets/logo.png";
+import globalLogo from "@/assets/climate-cardinals-global-logo.png";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -50,12 +51,18 @@ const Navigation = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16 md:h-20">
             {/* Logo */}
-            <Link to="/" className="flex items-center group">
+            <Link to="/" className="flex items-center gap-2 sm:gap-3 group">
               <img
-                src={logo}
-                alt="Climate Cardinals Tanzania"
-                className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 object-contain transition-transform duration-300 group-hover:scale-105"
+                src={globalLogo}
+                alt="Climate Cardinals"
+                className="h-7 w-auto sm:h-8 md:h-10 object-contain transition-transform duration-300 group-hover:scale-105"
               />
+              <div className="hidden sm:flex items-center gap-1.5">
+                <div className="w-px h-6 md:h-7 bg-gold/30" />
+                <span className="font-display text-[10px] md:text-xs font-semibold text-gold tracking-wider uppercase leading-tight">
+                  Tanzania<br />Chapter
+                </span>
+              </div>
             </Link>
 
             {/* Desktop Nav */}
@@ -166,7 +173,8 @@ const Navigation = () => {
             className="fixed inset-0 z-40 bg-forest-night/98 backdrop-blur-xl flex flex-col items-center justify-center"
           >
             <div className="flex flex-col items-center gap-1 sm:gap-2">
-              <img src={logo} alt="Climate Cardinals Tanzania" className="h-12 sm:h-16 w-12 sm:w-16 object-contain mb-6 sm:mb-8" />
+              <img src={globalLogo} alt="Climate Cardinals" className="h-10 sm:h-14 w-auto object-contain mb-2" />
+              <span className="font-display text-[10px] sm:text-xs font-semibold text-gold tracking-widest uppercase mb-6 sm:mb-8">Tanzania Chapter</span>
               {navLinks.map((link, i) => (
                 <motion.div
                   key={link.href}
