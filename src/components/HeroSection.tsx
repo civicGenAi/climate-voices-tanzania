@@ -74,15 +74,6 @@ const HeroSection = () => {
       <div className="relative z-10 flex-1 flex flex-col lg:flex-row items-center px-6 md:px-12 lg:px-20 pt-28 pb-16">
         {/* Left — Text content */}
         <div className="w-full lg:w-[50%] mb-10 lg:mb-0">
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="inline-block font-mono text-xs text-gold tracking-[0.2em] uppercase mb-4 border border-gold/20 rounded-full px-4 py-1.5"
-          >
-            Climate Cardinals Tanzania
-          </motion.span>
-
           <div className="overflow-hidden">
             <motion.h1
               initial={{ y: "100%" }}
@@ -130,7 +121,6 @@ const HeroSection = () => {
 
         {/* Right — Cartoon images collage */}
         <div className="w-full lg:w-[50%] relative flex justify-center items-center min-h-[350px] md:min-h-[450px]">
-          {/* Main large image */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8, rotate: -3 }}
             animate={{ opacity: 1, scale: 1, rotate: -2 }}
@@ -144,7 +134,6 @@ const HeroSection = () => {
             />
           </motion.div>
 
-          {/* Top-right floating image */}
           <motion.div
             initial={{ opacity: 0, x: 40, y: -20 }}
             animate={{ opacity: 1, x: 0, y: 0 }}
@@ -153,14 +142,13 @@ const HeroSection = () => {
           >
             <motion.img
               src={heroYouth}
-              alt="Youth volunteers speaking different languages"
+              alt="Youth volunteers"
               className="w-36 md:w-44 drop-shadow-xl rounded-2xl"
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             />
           </motion.div>
 
-          {/* Bottom-left floating image */}
           <motion.div
             initial={{ opacity: 0, x: -30, y: 20 }}
             animate={{ opacity: 1, x: 0, y: 0 }}
@@ -176,7 +164,6 @@ const HeroSection = () => {
             />
           </motion.div>
 
-          {/* Decorative floating dots */}
           <motion.div
             animate={{ y: [0, -12, 0], x: [0, 5, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -186,11 +173,6 @@ const HeroSection = () => {
             animate={{ y: [0, 8, 0], x: [0, -4, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 2 }}
             className="absolute bottom-16 right-12 w-2 h-2 rounded-full bg-leaf/50"
-          />
-          <motion.div
-            animate={{ y: [0, -6, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute top-1/2 right-0 w-4 h-4 rounded-full bg-gold/20"
           />
         </div>
       </div>
@@ -213,13 +195,8 @@ const HeroSection = () => {
         transition={{ delay: 2 }}
         className="absolute bottom-20 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1"
       >
-        <span className="font-mono text-[10px] text-muted-foreground tracking-widest">
-          SCROLL
-        </span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
+        <span className="font-mono text-[10px] text-muted-foreground tracking-widest">SCROLL</span>
+        <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
           <ChevronDown className="w-4 h-4 text-gold/60" />
         </motion.div>
       </motion.div>

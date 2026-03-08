@@ -1,6 +1,5 @@
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
-import ImpactSection from "@/components/ImpactSection";
 import AboutSection from "@/components/AboutSection";
 import MissionSection from "@/components/MissionSection";
 import FocusSection from "@/components/FocusSection";
@@ -15,7 +14,6 @@ const Index = () => {
     <main className="overflow-x-hidden">
       <Navigation />
       <HeroSection />
-      <ImpactSection />
       <AboutSection />
       <MissionSection />
       <FocusSection />

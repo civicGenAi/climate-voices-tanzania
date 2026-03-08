@@ -1,77 +1,177 @@
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { User, Award } from "lucide-react";
+import { useRef, useState } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
+import { User, Quote, Star, MessageSquarePlus, ChevronLeft, ChevronRight } from "lucide-react";
+
+const reviews = [
+  {
+    name: "Amina J.",
+    role: "Youth Volunteer, Dodoma",
+    text: "Joining Climate Cardinals Tanzania changed my perspective on climate action. I now translate climate documents into Gogo — my community finally understands what's happening to our environment.",
+    rating: 5,
+  },
+  {
+    name: "David M.",
+    role: "Community Leader, Arusha",
+    text: "The workshops brought by Climate Cardinals have educated our village elders about water conservation and sustainable farming. The materials in Kiswahili made all the difference.",
+    rating: 5,
+  },
+  {
+    name: "Fatuma K.",
+    role: "Student, University of Dar es Salaam",
+    text: "As a biology student, I was able to contribute my knowledge while learning about climate advocacy. The team is passionate and the impact is real.",
+    rating: 5,
+  },
+];
 
 const LeadershipSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+  const [currentReview, setCurrentReview] = useState(0);
+
+  const nextReview = () => setCurrentReview((prev) => (prev + 1) % reviews.length);
+  const prevReview = () => setCurrentReview((prev) => (prev - 1 + reviews.length) % reviews.length);
 
   return (
     <section id="leadership" ref={ref} className="relative py-24 md:py-36 bg-forest-night overflow-hidden">
-      <div className="max-w-5xl mx-auto px-6 md:px-12 text-center relative">
-        {/* Giant watermark name */}
-        <motion.span
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 0.04 } : {}}
-          transition={{ duration: 1.5 }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-display text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] font-bold text-foreground whitespace-nowrap select-none pointer-events-none leading-none"
-        >
-          Ester Kimario
-        </motion.span>
-
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          className="font-display text-3xl md:text-5xl font-bold text-foreground mb-12 relative z-10"
-        >
-          Founded & Led By
-        </motion.h2>
-
-        {/* Avatar */}
+      <div className="max-w-6xl mx-auto px-6 md:px-12">
+        {/* Founder Message */}
         <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={inView ? { scale: 1, opacity: 1 } : {}}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          className="relative mx-auto w-32 h-32 md:w-40 md:h-40 mb-8"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="relative mb-24"
         >
-          <div className="absolute inset-0 rounded-full border-2 border-gold/40" />
-          <div className="absolute -inset-3 rounded-full border border-leaf/20" />
-          <div className="absolute -inset-6 rounded-full border border-leaf/10" />
-          <div className="w-full h-full rounded-full bg-forest flex items-center justify-center">
-            <User className="w-12 h-12 md:w-16 md:h-16 text-gold/70" />
+          <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+            {/* Founder avatar */}
+            <div className="flex-shrink-0">
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={inView ? { scale: 1, opacity: 1 } : {}}
+                transition={{ delay: 0.3, duration: 0.8 }}
+                className="relative"
+              >
+                <div className="w-40 h-40 md:w-48 md:h-48 rounded-full bg-forest flex items-center justify-center border-2 border-gold/30">
+                  <User className="w-16 h-16 md:w-20 md:h-20 text-gold/60" />
+                </div>
+                <div className="absolute -inset-3 rounded-full border border-gold/10" />
+                <div className="absolute -inset-6 rounded-full border border-gold/5" />
+              </motion.div>
+            </div>
+
+            {/* Message */}
+            <div className="flex-1">
+              <span className="font-mono text-xs text-gold tracking-[0.3em] uppercase mb-4 block">
+                Message from the Founder
+              </span>
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-2">
+                Ester Kimario
+              </h2>
+              <p className="font-mono text-xs text-gold/60 mb-6">Founder & Chapter Lead</p>
+
+              <div className="relative">
+                <Quote className="absolute -top-2 -left-2 w-8 h-8 text-gold/15" />
+                <p className="font-body text-foreground/70 text-base md:text-lg leading-relaxed pl-8 border-l-2 border-gold/20">
+                  I founded Climate Cardinals Tanzania because I believe that language should never be a barrier 
+                  to survival. Every Tanzanian — whether they speak Kiswahili, Sukuma, Chagga, or any of our 
+                  beautiful tribal languages — deserves to understand the climate crisis and how to protect 
+                  their community. Together, we are building a movement where climate knowledge belongs to everyone.
+                </p>
+              </div>
+            </div>
           </div>
         </motion.div>
 
+        {/* Reviews section */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.6 }}
-          className="flex items-center justify-center gap-2 mb-6 relative z-10"
-        >
-          <Award className="w-4 h-4 text-gold" />
-          <span className="font-mono text-xs text-gold tracking-[0.3em] uppercase">
-            Founder & Chapter Lead
-          </span>
-        </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.8 }}
-          className="font-body text-foreground/70 text-lg leading-relaxed max-w-2xl mx-auto relative z-10"
+          transition={{ delay: 0.5, duration: 0.8 }}
         >
-          Ester Kimario is a passionate young climate advocate from Tanzania who founded the Climate Cardinals 
-          Tanzania Chapter to ensure that climate knowledge reaches every corner of her country — in every language 
-          spoken by its people. Her vision is rooted in the belief that language should never be a barrier to survival.
-        </motion.p>
+          <div className="text-center mb-12">
+            <span className="font-mono text-xs text-gold tracking-[0.3em] uppercase mb-4 block">
+              Community Voices
+            </span>
+            <h3 className="font-display text-2xl md:text-4xl font-bold text-foreground">
+              What People Say
+            </h3>
+          </div>
 
-        {/* Gold underline animation */}
-        <motion.div
-          initial={{ width: 0 }}
-          animate={inView ? { width: "8rem" } : {}}
-          transition={{ delay: 1.2, duration: 1 }}
-          className="h-0.5 bg-gold mx-auto mt-8"
-        />
+          {/* Review carousel */}
+          <div className="relative max-w-3xl mx-auto">
+            <div className="bg-card border border-border rounded-2xl p-8 md:p-12 min-h-[250px] flex flex-col justify-center">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentReview}
+                  initial={{ opacity: 0, x: 30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -30 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  {/* Stars */}
+                  <div className="flex gap-1 mb-6">
+                    {Array.from({ length: reviews[currentReview].rating }).map((_, i) => (
+                      <Star key={i} className="w-4 h-4 text-gold fill-gold" />
+                    ))}
+                  </div>
+
+                  <p className="font-body text-foreground/80 text-base md:text-lg leading-relaxed italic mb-8">
+                    "{reviews[currentReview].text}"
+                  </p>
+
+                  <div>
+                    <p className="font-display text-lg font-bold text-foreground">
+                      {reviews[currentReview].name}
+                    </p>
+                    <p className="font-body text-sm text-muted-foreground">
+                      {reviews[currentReview].role}
+                    </p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Navigation */}
+            <div className="flex items-center justify-between mt-6">
+              <button
+                onClick={prevReview}
+                className="w-10 h-10 rounded-full border border-border hover:border-gold/40 flex items-center justify-center transition-colors"
+              >
+                <ChevronLeft className="w-5 h-5 text-foreground/60" />
+              </button>
+
+              <div className="flex gap-2">
+                {reviews.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrentReview(i)}
+                    className={`w-2 h-2 rounded-full transition-colors ${
+                      i === currentReview ? "bg-gold" : "bg-foreground/20"
+                    }`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={nextReview}
+                className="w-10 h-10 rounded-full border border-border hover:border-gold/40 flex items-center justify-center transition-colors"
+              >
+                <ChevronRight className="w-5 h-5 text-foreground/60" />
+              </button>
+            </div>
+
+            {/* Write review button */}
+            <div className="text-center mt-10">
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 bg-gold text-accent-foreground font-body font-semibold px-6 py-3 rounded-full hover:bg-gold-warm transition-all duration-300 hover:shadow-lg hover:shadow-gold/20"
+              >
+                <MessageSquarePlus className="w-4 h-4" />
+                Write Your Review Too
+              </Link>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
