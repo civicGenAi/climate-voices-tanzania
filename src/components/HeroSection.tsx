@@ -45,7 +45,8 @@ const HeroSection = () => {
     window.addEventListener("resize", resize);
 
     const colors = ["#D4A017", "#52B788"];
-    for (let i = 0; i < 30; i++) {
+    const count = window.innerWidth < 768 ? 15 : 30;
+    for (let i = 0; i < count; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -82,7 +83,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section id="hero" className="relative min-h-screen overflow-hidden flex flex-col">
+    <section id="hero" className="relative min-h-[100svh] overflow-hidden flex flex-col">
       {/* Background images with crossfade */}
       <div className="absolute inset-0">
         <AnimatePresence mode="sync">
@@ -102,9 +103,21 @@ const HeroSection = () => {
           </motion.div>
         </AnimatePresence>
 
-        {/* Left shadow overlay — strong on left, fading to clear on right */}
+        {/* Mobile: full overlay for readability; Desktop: left-side gradient */}
         <div
-          className="absolute inset-0 z-[1]"
+          className="absolute inset-0 z-[1] md:hidden"
+          style={{
+            background: `linear-gradient(
+              to top,
+              hsl(var(--forest-night)) 0%,
+              hsl(var(--forest-night) / 0.85) 30%,
+              hsl(var(--forest-night) / 0.6) 60%,
+              hsl(var(--forest-night) / 0.4) 100%
+            )`,
+          }}
+        />
+        <div
+          className="absolute inset-0 z-[1] hidden md:block"
           style={{
             background: `linear-gradient(
               to right,
@@ -119,7 +132,7 @@ const HeroSection = () => {
           }}
         />
 
-        {/* Bottom gradient for text readability */}
+        {/* Bottom gradient */}
         <div
           className="absolute inset-0 z-[1]"
           style={{
@@ -132,7 +145,7 @@ const HeroSection = () => {
           }}
         />
 
-        {/* Top subtle gradient for nav readability */}
+        {/* Top gradient for nav */}
         <div
           className="absolute inset-0 z-[1]"
           style={{
@@ -149,14 +162,14 @@ const HeroSection = () => {
       <canvas ref={canvasRef} className="absolute inset-0 z-[2]" />
 
       {/* Content */}
-      <div className="relative z-10 flex-1 flex items-center px-6 md:px-12 lg:px-20 pt-28 pb-24">
+      <div className="relative z-10 flex-1 flex items-end sm:items-center px-5 sm:px-6 md:px-12 lg:px-20 pt-24 sm:pt-28 pb-28 sm:pb-24">
         <div className="w-full max-w-xl">
           <div className="overflow-hidden">
             <motion.h1
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-[1.1] mb-6"
+              className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-foreground leading-[1.1] mb-4 sm:mb-6"
             >
               Climate Knowledge
               <br />
@@ -168,7 +181,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.6 }}
-            className="font-body text-base md:text-lg text-foreground/80 max-w-md leading-relaxed mb-10"
+            className="font-body text-sm sm:text-base md:text-lg text-foreground/80 max-w-md leading-relaxed mb-6 sm:mb-10"
           >
             We break language barriers to bring vital climate education to Tanzanian
             communities — translating knowledge into Kiswahili and local tribal languages.
@@ -178,18 +191,18 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.3, duration: 0.6 }}
-            className="flex flex-wrap gap-3 mb-10"
+            className="flex flex-col sm:flex-row gap-3 mb-6 sm:mb-10"
           >
             <Link
               to="/join"
-              className="inline-flex items-center gap-2 bg-gold text-accent-foreground font-body font-semibold px-7 py-3.5 rounded-full hover:bg-gold-warm transition-all duration-300 hover:shadow-lg hover:shadow-gold/20"
+              className="inline-flex items-center justify-center gap-2 bg-gold text-accent-foreground font-body font-semibold px-6 sm:px-7 py-3 sm:py-3.5 rounded-full hover:bg-gold-warm transition-all duration-300 hover:shadow-lg hover:shadow-gold/20 text-sm sm:text-base"
             >
               Join the Movement
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               to="/about"
-              className="inline-flex items-center gap-2 bg-foreground/10 backdrop-blur-sm text-foreground font-body font-medium px-7 py-3.5 rounded-full border border-foreground/20 hover:border-gold/40 hover:bg-foreground/15 transition-all duration-300"
+              className="inline-flex items-center justify-center gap-2 bg-foreground/10 backdrop-blur-sm text-foreground font-body font-medium px-6 sm:px-7 py-3 sm:py-3.5 rounded-full border border-foreground/20 hover:border-gold/40 hover:bg-foreground/15 transition-all duration-300 text-sm sm:text-base"
             >
               Learn More
             </Link>
@@ -226,22 +239,22 @@ const HeroSection = () => {
       </div>
 
       {/* Marquee */}
-      <div className="relative z-10 border-t border-gold/20 bg-forest-night/80 backdrop-blur-sm py-3 overflow-hidden">
+      <div className="relative z-10 border-t border-gold/20 bg-forest-night/80 backdrop-blur-sm py-2 sm:py-3 overflow-hidden">
         <div className="flex animate-marquee whitespace-nowrap">
           {[...languages, ...languages].map((lang, i) => (
-            <span key={i} className="font-mono text-sm text-gold/80 mx-6">
+            <span key={i} className="font-mono text-xs sm:text-sm text-gold/80 mx-4 sm:mx-6">
               {lang} ·
             </span>
           ))}
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator — hidden on small mobile */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2 }}
-        className="absolute bottom-20 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1"
+        className="absolute bottom-16 sm:bottom-20 left-1/2 -translate-x-1/2 z-10 hidden sm:flex flex-col items-center gap-1"
       >
         <span className="font-mono text-[10px] text-foreground/50 tracking-widest">SCROLL</span>
         <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>

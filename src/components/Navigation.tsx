@@ -28,6 +28,16 @@ const Navigation = () => {
     setIsOpen(false);
   }, [location]);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [isOpen]);
+
   return (
     <>
       <nav
@@ -38,13 +48,13 @@ const Navigation = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo only */}
+          <div className="flex items-center justify-between h-14 sm:h-16 md:h-20">
+            {/* Logo */}
             <Link to="/" className="flex items-center group">
               <img
                 src={logo}
                 alt="Climate Cardinals Tanzania"
-                className="h-10 w-10 md:h-12 md:w-12 object-contain transition-transform duration-300 group-hover:scale-105"
+                className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 object-contain transition-transform duration-300 group-hover:scale-105"
               />
             </Link>
 
@@ -112,10 +122,10 @@ const Navigation = () => {
             </div>
 
             {/* Mobile */}
-            <div className="flex md:hidden items-center gap-3">
+            <div className="flex md:hidden items-center gap-2 sm:gap-3">
               <button
                 onClick={() => setLang(lang === "EN" ? "SW" : "EN")}
-                className="font-body text-[10px] font-semibold text-gold border border-gold/30 rounded-full px-2.5 py-1"
+                className="font-body text-[10px] font-semibold text-gold border border-gold/30 rounded-full px-2 sm:px-2.5 py-0.5 sm:py-1"
               >
                 {lang}
               </button>
@@ -155,8 +165,8 @@ const Navigation = () => {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 bg-forest-night/98 backdrop-blur-xl flex flex-col items-center justify-center"
           >
-            <div className="flex flex-col items-center gap-2">
-              <img src={logo} alt="Climate Cardinals Tanzania" className="h-16 w-16 object-contain mb-8" />
+            <div className="flex flex-col items-center gap-1 sm:gap-2">
+              <img src={logo} alt="Climate Cardinals Tanzania" className="h-12 sm:h-16 w-12 sm:w-16 object-contain mb-6 sm:mb-8" />
               {navLinks.map((link, i) => (
                 <motion.div
                   key={link.href}
@@ -166,7 +176,7 @@ const Navigation = () => {
                 >
                   <Link
                     to={link.href}
-                    className={`font-display text-2xl font-semibold py-3 px-8 rounded-lg transition-colors ${
+                    className={`font-display text-xl sm:text-2xl font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-lg transition-colors ${
                       location.pathname === link.href
                         ? "text-gold"
                         : "text-foreground/80 hover:text-gold"
@@ -180,11 +190,11 @@ const Navigation = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35 }}
-                className="mt-6"
+                className="mt-4 sm:mt-6"
               >
                 <Link
                   to="/join"
-                  className="font-body text-base font-semibold bg-gold text-accent-foreground px-8 py-3 rounded-full"
+                  className="font-body text-sm sm:text-base font-semibold bg-gold text-accent-foreground px-6 sm:px-8 py-2.5 sm:py-3 rounded-full"
                 >
                   Join Us
                 </Link>

@@ -32,7 +32,7 @@ const CountUp = ({ target, suffix, inView }: { target: number; suffix: string; i
   }, [inView, target]);
 
   return (
-    <span className="font-display text-4xl md:text-5xl font-bold text-gold">
+    <span className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-gold">
       {count}{suffix}
     </span>
   );
@@ -44,31 +44,31 @@ const AboutSection = () => {
 
   return (
     <section id="about" ref={ref} className="relative overflow-hidden">
-      <div className="flex flex-col lg:flex-row min-h-[70vh]">
+      <div className="flex flex-col lg:flex-row min-h-[auto] sm:min-h-[70vh]">
         {/* Left — Text */}
         <motion.div
           initial={{ x: -60, opacity: 0 }}
           animate={inView ? { x: 0, opacity: 1 } : {}}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full lg:w-1/2 bg-parchment p-8 md:p-16 flex flex-col justify-center"
+          className="w-full lg:w-1/2 bg-parchment p-6 sm:p-8 md:p-16 flex flex-col justify-center"
         >
-          <span className="font-mono text-xs text-forest tracking-[0.3em] uppercase mb-3 block">About Us</span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold text-parchment-foreground mb-6">
+          <span className="font-mono text-xs text-forest tracking-[0.3em] uppercase mb-2 sm:mb-3 block">About Us</span>
+          <h2 className="font-display text-2xl sm:text-3xl md:text-5xl font-bold text-parchment-foreground mb-4 sm:mb-6">
             Who We Are
           </h2>
-          <p className="font-body text-parchment-foreground/80 text-lg leading-relaxed max-w-lg mb-4">
+          <p className="font-body text-parchment-foreground/80 text-sm sm:text-lg leading-relaxed max-w-lg mb-3 sm:mb-4">
             Climate Cardinals Tanzania is a youth-led chapter of the global Climate Cardinals movement. 
             We break language barriers to bring vital climate education to Tanzanian communities — translating 
             critical climate information into Kiswahili and local tribal languages so that no community is 
             left behind in the fight against climate change.
           </p>
-          <p className="font-body text-parchment-foreground/60 text-sm max-w-lg mb-3 italic">
+          <p className="font-body text-parchment-foreground/60 text-xs sm:text-sm max-w-lg mb-3 italic">
             Our mission: To make climate education accessible to every Tanzanian community by empowering 
             youth to lead climate action at the grassroots level.
           </p>
 
           {/* Impact stats */}
-          <div className="flex flex-wrap gap-8 mt-6 mb-8">
+          <div className="flex flex-wrap gap-5 sm:gap-8 mt-4 sm:mt-6 mb-6 sm:mb-8">
             {stats.map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -78,7 +78,7 @@ const AboutSection = () => {
                 className="text-center"
               >
                 <CountUp target={stat.number} suffix={stat.suffix} inView={inView} />
-                <p className="font-body text-parchment-foreground/50 mt-1 text-xs">{stat.label}</p>
+                <p className="font-body text-parchment-foreground/50 mt-1 text-[10px] sm:text-xs">{stat.label}</p>
               </motion.div>
             ))}
           </div>
@@ -90,7 +90,7 @@ const AboutSection = () => {
           >
             <Link
               to="/about"
-              className="inline-flex items-center gap-2 bg-forest text-foreground font-body font-semibold px-6 py-3 rounded-full hover:bg-forest/90 transition-colors duration-300"
+              className="inline-flex items-center gap-2 bg-forest text-foreground font-body font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-full hover:bg-forest/90 transition-colors duration-300 text-sm"
             >
               Learn More
               <ArrowRight className="w-4 h-4" />
@@ -98,16 +98,16 @@ const AboutSection = () => {
           </motion.div>
         </motion.div>
 
-        {/* Right — Single cartoon illustration */}
+        {/* Right — Cartoon illustration */}
         <motion.div
           initial={{ x: 60, opacity: 0 }}
           animate={inView ? { x: 0, opacity: 1 } : {}}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-          className="w-full lg:w-1/2 bg-forest p-8 md:p-16 flex items-center justify-center min-h-[50vh] lg:min-h-0 relative"
+          className="w-full lg:w-1/2 bg-forest p-6 sm:p-8 md:p-16 flex items-center justify-center min-h-[40vh] sm:min-h-[50vh] lg:min-h-0 relative"
         >
-          {/* Decorative rings */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full border border-gold/[0.08]" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-dashed border-gold/[0.05]" />
+          {/* Decorative rings — hidden on mobile */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 sm:w-80 h-60 sm:h-80 rounded-full border border-gold/[0.08] hidden sm:block" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 sm:w-[400px] h-80 sm:h-[400px] rounded-full border border-dashed border-gold/[0.05] hidden sm:block" />
 
           <motion.div
             initial={{ opacity: 0, scale: 0.85 }}
@@ -118,7 +118,7 @@ const AboutSection = () => {
             <motion.img
               src={aboutLanguages}
               alt="Diverse community speaking many languages"
-              className="w-72 md:w-96 drop-shadow-2xl"
+              className="w-52 sm:w-72 md:w-96 drop-shadow-2xl"
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
             />
@@ -128,12 +128,12 @@ const AboutSection = () => {
           <motion.div
             animate={{ y: [0, -10, 0], x: [0, 5, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-12 right-16 w-3 h-3 rounded-full bg-gold/30"
+            className="absolute top-12 right-16 w-3 h-3 rounded-full bg-gold/30 hidden sm:block"
           />
           <motion.div
             animate={{ y: [0, 8, 0], x: [0, -6, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute bottom-16 left-12 w-2 h-2 rounded-full bg-leaf/40"
+            className="absolute bottom-16 left-12 w-2 h-2 rounded-full bg-leaf/40 hidden sm:block"
           />
         </motion.div>
       </div>
