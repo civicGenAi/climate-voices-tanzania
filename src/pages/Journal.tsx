@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Calendar, Clock, ArrowRight, BookOpen, Search, Tag } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import journalHero from "@/assets/journal-hero-cartoon.png";
 
 const categories = ["All", "News", "Stories", "Education", "Events"];
 

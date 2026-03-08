@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, Heart, Share2, Trophy, TrendingUp, Users, ChevronUp, Send, Flame, Clock, Filter } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import communityHero from "@/assets/community-hero-cartoon.png";
 
 type Topic = {
   id: number;
