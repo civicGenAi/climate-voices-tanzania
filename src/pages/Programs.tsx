@@ -72,10 +72,10 @@ const Programs = () => {
         <div className="max-w-5xl mx-auto px-6 md:px-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { number: "15+", label: "Languages" },
-              { number: "120+", label: "Volunteers" },
-              { number: "30+", label: "Communities" },
-              { number: "500+", label: "Workshops" },
+              { number: "6+", label: "Languages" },
+              { number: "20+", label: "Volunteers" },
+              { number: "20+", label: "Communities" },
+              { number: "300+", label: "Workshops" },
             ].map((stat) => (
               <div key={stat.label}>
                 <span className="font-display text-3xl md:text-4xl font-bold text-gold">{stat.number}</span>
