@@ -229,27 +229,49 @@ const About = () => {
       {/* Mission & Vision */}
       <section className="py-20 md:py-28 bg-forest-night">
         <div className="max-w-5xl mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-forest border border-leaf/20 rounded-2xl p-8 md:p-10">
-              <div className="w-12 h-12 rounded-xl bg-leaf/10 flex items-center justify-center mb-6">
-                <Target className="w-6 h-6 text-leaf" />
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="font-display text-3xl md:text-4xl font-bold text-foreground text-center mb-4"
+          >
+            What Drives Us
+          </motion.h2>
+          <p className="font-body text-muted-foreground text-center mb-16 max-w-2xl mx-auto">
+            Our mission and vision guide every action we take in the fight for climate justice.
+          </p>
+
+          <div className="relative flex flex-col items-center">
+            <div className="absolute left-1/2 -translate-x-1/2 top-0 w-0.5 h-full bg-gradient-to-b from-forest to-gold" />
+
+            {/* Mission — Left */}
+            <div className="relative w-full flex justify-start mb-20">
+              <div className="w-full md:w-[45%] bg-forest border border-leaf/20 rounded-2xl rounded-tr-[3rem] p-8 md:p-10 shadow-lg">
+                <div className="w-12 h-12 rounded-xl bg-leaf/10 flex items-center justify-center mb-6">
+                  <Target className="w-6 h-6 text-leaf" />
+                </div>
+                <span className="font-mono text-xs text-leaf tracking-widest uppercase mb-3 block">Our Mission</span>
+                <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">Mission</h3>
+                <p className="font-body text-foreground/80 leading-relaxed">
+                  To make climate education accessible to every Tanzanian community by translating climate 
+                  knowledge into Kiswahili and local tribal languages — empowering youth to lead climate 
+                  action at the grassroots level.
+                </p>
               </div>
-              <h3 className="font-display text-2xl font-bold text-foreground mb-4">Our Mission</h3>
-              <p className="font-body text-foreground/70 leading-relaxed">
-                To make climate education accessible to every Tanzanian community by translating climate 
-                knowledge into Kiswahili and local tribal languages — empowering youth to lead climate 
-                action at the grassroots level.
-              </p>
             </div>
-            <div className="bg-gold/10 border border-gold/20 rounded-2xl p-8 md:p-10">
-              <div className="w-12 h-12 rounded-xl bg-gold/20 flex items-center justify-center mb-6">
-                <Globe className="w-6 h-6 text-gold" />
+
+            {/* Vision — Right */}
+            <div className="relative w-full flex justify-end">
+              <div className="w-full md:w-[45%] bg-gold/10 border border-gold/20 rounded-2xl rounded-tl-[3rem] p-8 md:p-10 shadow-lg">
+                <div className="w-12 h-12 rounded-xl bg-gold/20 flex items-center justify-center mb-6">
+                  <Globe className="w-6 h-6 text-gold" />
+                </div>
+                <span className="font-mono text-xs text-gold tracking-widest uppercase mb-3 block">Our Vision</span>
+                <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">Vision</h3>
+                <p className="font-body text-foreground/70 leading-relaxed">
+                  A Tanzania where every community — urban or rural, young or old — has the knowledge and 
+                  tools to understand, respond to, and combat the effects of climate change in their own language.
+                </p>
               </div>
-              <h3 className="font-display text-2xl font-bold text-foreground mb-4">Our Vision</h3>
-              <p className="font-body text-foreground/70 leading-relaxed">
-                A Tanzania where every community — urban or rural, young or old — has the knowledge and 
-                tools to understand, respond to, and combat the effects of climate change in their own language.
-              </p>
             </div>
           </div>
         </div>
