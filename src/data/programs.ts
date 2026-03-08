@@ -42,6 +42,7 @@ export const programs = [
   {
     slug: "community-campaigns",
     icon: Megaphone,
+    heroImage: programCampaignsHero,
     title: "Community Awareness Campaigns",
     subtitle: "Reaching Every Corner of Tanzania",
     tagline: "Awareness is the first step toward action.",
