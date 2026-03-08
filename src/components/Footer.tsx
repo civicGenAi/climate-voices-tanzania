@@ -69,6 +69,7 @@ const Footer = () => {
                 { label: "Programs", to: "/programs" },
                 { label: "Join Us", to: "/join" },
                 { label: "Contact", to: "/contact" },
+                { label: "FAQ", to: "/faq" },
               ].map((link) => (
                 <li key={link.to}>
                   <Link
