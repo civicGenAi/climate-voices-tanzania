@@ -8,6 +8,8 @@ import About from "./pages/About";
 import Programs from "./pages/Programs";
 import Contact from "./pages/Contact";
 import Join from "./pages/Join";
+import Journal from "./pages/Journal";
+import Community from "./pages/Community";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +26,8 @@ const App = () => (
           <Route path="/programs" element={<Programs />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/join" element={<Join />} />
+          <Route path="/journal" element={<Journal />} />
+          <Route path="/community" element={<Community />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -1,0 +1,219 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Calendar, Clock, ArrowRight, BookOpen, Search, Tag } from "lucide-react";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+
+const categories = ["All", "News", "Stories", "Education", "Events"];
+
+const blogPosts = [
+  {
+    id: 1,
+    title: "How Kiswahili Translations Are Changing Climate Awareness in Rural Tanzania",
+    excerpt: "Our latest translation project has brought critical climate documents to over 15,000 people in Dodoma region who previously had no access to this vital information.",
+    category: "Stories",
+    date: "March 5, 2026",
+    readTime: "6 min read",
+    featured: true,
+  },
+  {
+    id: 2,
+    title: "500 Trees Planted in Kilimanjaro Region — A Community Milestone",
+    excerpt: "In partnership with local schools and community leaders, we achieved a significant milestone in our reforestation efforts on the slopes of Kilimanjaro.",
+    category: "News",
+    date: "February 28, 2026",
+    readTime: "4 min read",
+    featured: false,
+  },
+  {
+    id: 3,
+    title: "Youth Climate Leadership Workshop — What We Learned",
+    excerpt: "Our three-day workshop in Arusha brought together 40 young climate advocates. Here's what emerged from the conversations and collaborations.",
+    category: "Education",
+    date: "February 20, 2026",
+    readTime: "8 min read",
+    featured: false,
+  },
+  {
+    id: 4,
+    title: "Upcoming: World Environment Day Community Clean-Up",
+    excerpt: "Join us on June 5th for a nationwide community clean-up event across 10 Tanzanian cities. Registration is now open for volunteers.",
+    category: "Events",
+    date: "February 15, 2026",
+    readTime: "3 min read",
+    featured: false,
+  },
+  {
+    id: 5,
+    title: "Understanding Climate Change: A Guide in Simple Kiswahili",
+    excerpt: "We've released our most comprehensive educational guide yet — designed for community leaders and teachers to explain climate change in accessible language.",
+    category: "Education",
+    date: "February 10, 2026",
+    readTime: "5 min read",
+    featured: false,
+  },
+  {
+    id: 6,
+    title: "Partner Spotlight: Chanya Change Initiators International",
+    excerpt: "A look at how our partnership with Chanya Change has expanded our reach and created new opportunities for environmental advocacy.",
+    category: "Stories",
+    date: "February 1, 2026",
+    readTime: "5 min read",
+    featured: false,
+  },
+];
+
+const Journal = () => {
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filtered = blogPosts.filter((post) => {
+    const matchesCategory = activeCategory === "All" || post.category === activeCategory;
+    const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) || post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  const featuredPost = blogPosts.find((p) => p.featured);
+  const regularPosts = filtered.filter((p) => !p.featured || activeCategory !== "All");
+
+  return (
+    <main className="overflow-x-hidden">
+      <Navigation />
+
+      {/* Hero */}
+      <section className="relative pt-28 pb-16 md:pt-36 md:pb-20 bg-forest-night">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
+            <span className="inline-flex items-center gap-2 font-mono text-xs text-gold tracking-[0.3em] uppercase mb-4 px-4 py-1.5 rounded-full border border-gold/20 bg-gold/5">
+              <BookOpen className="w-3.5 h-3.5" />
+              Our Journal
+            </span>
+            <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-4">
+              Stories & <span className="text-gold">Impact</span>
+            </h1>
+            <p className="font-body text-muted-foreground max-w-xl mx-auto">
+              News, stories, and updates from our climate action journey across Tanzania.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Filters & Search */}
+      <section className="bg-forest-deep py-6 border-b border-border sticky top-16 md:top-20 z-30">
+        <div className="max-w-6xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center gap-4">
+          <div className="flex gap-2 overflow-x-auto pb-1 md:pb-0">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`font-body text-sm px-4 py-2 rounded-full whitespace-nowrap transition-all duration-200 ${
+                  activeCategory === cat
+                    ? "bg-gold text-accent-foreground font-semibold"
+                    : "text-muted-foreground border border-border hover:border-gold/30 hover:text-foreground"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+          <div className="relative flex-1 max-w-xs ml-auto">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/50" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search articles..."
+              className="w-full bg-background/30 border border-border rounded-xl pl-10 pr-4 py-2.5 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Post */}
+      {activeCategory === "All" && featuredPost && (
+        <section className="bg-forest-night py-12">
+          <div className="max-w-6xl mx-auto px-6 md:px-12">
+            <motion.article
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="group relative bg-gradient-to-br from-gold/10 via-card to-card border border-gold/20 rounded-[2rem] p-8 md:p-12 hover:border-gold/40 transition-all duration-500 cursor-pointer"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <span className="font-mono text-[10px] tracking-[0.2em] uppercase px-3 py-1 rounded-full bg-gold/15 text-gold font-semibold">Featured</span>
+                <span className="font-mono text-[10px] tracking-[0.2em] uppercase px-3 py-1 rounded-full border border-border text-muted-foreground">
+                  <Tag className="w-3 h-3 inline mr-1" />{featuredPost.category}
+                </span>
+              </div>
+              <h2 className="font-display text-2xl md:text-4xl font-bold text-foreground mb-4 group-hover:text-gold transition-colors">
+                {featuredPost.title}
+              </h2>
+              <p className="font-body text-muted-foreground text-base md:text-lg leading-relaxed mb-6 max-w-3xl">
+                {featuredPost.excerpt}
+              </p>
+              <div className="flex items-center gap-6">
+                <span className="flex items-center gap-1.5 font-body text-sm text-muted-foreground">
+                  <Calendar className="w-4 h-4" />{featuredPost.date}
+                </span>
+                <span className="flex items-center gap-1.5 font-body text-sm text-muted-foreground">
+                  <Clock className="w-4 h-4" />{featuredPost.readTime}
+                </span>
+              </div>
+              <div className="mt-6 flex items-center gap-2 text-gold font-body font-semibold text-sm group-hover:gap-3 transition-all">
+                Read Full Story <ArrowRight className="w-4 h-4" />
+              </div>
+            </motion.article>
+          </div>
+        </section>
+      )}
+
+      {/* Posts Grid */}
+      <section className="bg-forest-night py-12 md:py-16">
+        <div className="max-w-6xl mx-auto px-6 md:px-12">
+          {filtered.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="font-body text-muted-foreground">No articles found matching your search.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {(activeCategory === "All" ? regularPosts.filter((p) => !p.featured) : regularPosts).map((post, i) => (
+                <motion.article
+                  key={post.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1, duration: 0.6 }}
+                  className="group bg-card border border-border rounded-2xl p-6 hover:border-gold/30 transition-all duration-300 cursor-pointer flex flex-col"
+                >
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="font-mono text-[10px] tracking-[0.15em] uppercase px-2.5 py-1 rounded-full border border-border text-muted-foreground">
+                      {post.category}
+                    </span>
+                  </div>
+                  <h3 className="font-display text-lg font-bold text-foreground mb-3 group-hover:text-gold transition-colors line-clamp-2">
+                    {post.title}
+                  </h3>
+                  <p className="font-body text-muted-foreground text-sm leading-relaxed mb-4 flex-1 line-clamp-3">
+                    {post.excerpt}
+                  </p>
+                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/50">
+                    <span className="flex items-center gap-1 font-body text-xs text-muted-foreground">
+                      <Calendar className="w-3 h-3" />{post.date}
+                    </span>
+                    <span className="flex items-center gap-1 font-body text-xs text-muted-foreground">
+                      <Clock className="w-3 h-3" />{post.readTime}
+                    </span>
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      <Footer />
+    </main>
+  );
+};
+
+export default Journal;
