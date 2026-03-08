@@ -1,9 +1,10 @@
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Users, Globe, BookOpen, TreePine, Heart, Target, Eye, ArrowRight, MessageCircle } from "lucide-react";
+import { Users, Globe, BookOpen, TreePine, Heart, Target, Eye, ArrowRight, MessageCircle, ChevronDown } from "lucide-react";
+import React from "react";
 import pageAboutCartoon from "@/assets/page-about-cartoon.png";
 
 const values = [
@@ -36,6 +37,96 @@ const timeline = [
   { year: "2029", event: "Vision: Pan-African expansion — sharing our model with neighboring nations" },
   { year: "2030", event: "Vision: Every Tanzanian community climate-literate in their own language" },
 ];
+
+const INITIAL_VISIBLE = 8;
+
+const TimelineSection = React.forwardRef<HTMLElement, { inView: boolean }>(({ inView }, ref) => {
+  const [expanded, setExpanded] = useState(false);
+  const visibleItems = expanded ? timeline : timeline.slice(0, INITIAL_VISIBLE);
+
+  return (
+    <section ref={ref} className="py-20 md:py-28 bg-forest-night">
+      <div className="max-w-4xl mx-auto px-6 md:px-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          className="text-center mb-16"
+        >
+          <span className="font-mono text-xs text-gold tracking-[0.3em] uppercase mb-3 block">Where We've Been & Where We're Going</span>
+          <h2 className="font-display text-3xl md:text-5xl font-bold text-foreground">Our Journey</h2>
+        </motion.div>
+
+        <div className="relative">
+          <motion.div
+            initial={{ scaleY: 0 }}
+            animate={inView ? { scaleY: 1 } : {}}
+            transition={{ duration: 2.5, ease: "easeOut" }}
+            className="absolute left-4 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-gold via-leaf to-forest origin-top"
+          />
+
+          <AnimatePresence mode="sync">
+            {visibleItems.map((item, i) => {
+              const isFuture = parseInt(item.year) > 2025;
+              return (
+                <motion.div
+                  key={`${item.year}-${item.event}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ delay: i < INITIAL_VISIBLE ? 0.2 + i * 0.08 : 0.05 * (i - INITIAL_VISIBLE) }}
+                  className={`relative flex items-start gap-6 mb-6 ${
+                    i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                  }`}
+                >
+                  <div className={`hidden md:block flex-1 ${i % 2 === 0 ? "text-right" : "text-left"}`}>
+                    <span className={`font-mono text-sm font-semibold ${isFuture ? "text-leaf" : "text-gold"}`}>
+                      {item.year}
+                    </span>
+                  </div>
+                  <div className="relative z-10 flex-shrink-0">
+                    <div className={`w-8 h-8 rounded-full ${isFuture ? "bg-leaf/20 border-leaf/40" : "bg-forest border-parchment"} border-4 flex items-center justify-center`}>
+                      <div className={`w-2 h-2 rounded-full ${isFuture ? "bg-leaf" : "bg-gold"}`} />
+                    </div>
+                  </div>
+                  <div className="flex-1 pb-2">
+                    <span className={`font-mono text-sm font-semibold md:hidden ${isFuture ? "text-leaf" : "text-gold"}`}>
+                      {item.year}
+                    </span>
+                    <p className={`font-body text-sm leading-relaxed ${isFuture ? "text-muted-foreground italic" : "text-foreground/80"}`}>
+                      {isFuture && <span className="text-leaf/60 mr-1">→</span>}
+                      {item.event}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+
+          {/* Show more / less */}
+          {timeline.length > INITIAL_VISIBLE && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ delay: 1 }}
+              className="flex justify-center mt-8"
+            >
+              <button
+                onClick={() => setExpanded(!expanded)}
+                className="inline-flex items-center gap-2 font-body text-sm font-semibold text-gold hover:text-gold/80 transition-colors bg-gold/10 hover:bg-gold/20 px-6 py-3 rounded-full"
+              >
+                {expanded ? "Show Less" : `View Full Journey (${timeline.length - INITIAL_VISIBLE} more)`}
+                <motion.div animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.3 }}>
+                  <ChevronDown className="w-4 h-4" />
+                </motion.div>
+              </button>
+            </motion.div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+});
+TimelineSection.displayName = "TimelineSection";
 
 const About = () => {
   const heroRef = useRef(null);
@@ -200,152 +291,90 @@ const About = () => {
         </div>
       </section>
 
-      {/* Values — Honeycomb / Hexagonal creative layout */}
+      {/* Values — Connected hexagonal web */}
       <section ref={valuesRef} className="py-20 md:py-32 bg-parchment overflow-hidden">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={valuesInView ? { opacity: 1, y: 0 } : {}}
-            className="text-center mb-20"
+            className="text-center mb-16"
           >
             <span className="font-mono text-xs text-forest tracking-[0.3em] uppercase mb-3 block">What We Stand For</span>
             <h2 className="font-display text-3xl md:text-5xl font-bold text-parchment-foreground">Our Values</h2>
           </motion.div>
 
-          {/* Radial / Orbit layout */}
-          <div className="relative max-w-3xl mx-auto">
-            {/* Center circle */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0 }}
-              animate={valuesInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="hidden md:flex w-32 h-32 rounded-full bg-forest mx-auto items-center justify-center relative z-20"
-            >
-              <span className="font-display text-foreground text-sm font-bold text-center leading-tight px-2">
-                Our<br />Core
-              </span>
-            </motion.div>
+          {/* Connected web layout */}
+          <div className="relative max-w-4xl mx-auto">
+            {/* SVG connections between nodes (desktop) */}
+            <svg className="hidden md:block absolute inset-0 w-full h-full pointer-events-none z-0" preserveAspectRatio="none">
+              {/* Row 1 connections */}
+              <motion.line x1="25%" y1="30%" x2="50%" y2="30%" stroke="hsl(var(--forest))" strokeWidth="1" strokeDasharray="6 4" opacity="0.15"
+                initial={{ pathLength: 0 }} animate={valuesInView ? { pathLength: 1 } : {}} transition={{ delay: 0.8, duration: 0.6 }} />
+              <motion.line x1="50%" y1="30%" x2="75%" y2="30%" stroke="hsl(var(--forest))" strokeWidth="1" strokeDasharray="6 4" opacity="0.15"
+                initial={{ pathLength: 0 }} animate={valuesInView ? { pathLength: 1 } : {}} transition={{ delay: 0.9, duration: 0.6 }} />
+              {/* Cross connections */}
+              <motion.line x1="25%" y1="30%" x2="37%" y2="75%" stroke="hsl(var(--gold))" strokeWidth="1" strokeDasharray="6 4" opacity="0.1"
+                initial={{ pathLength: 0 }} animate={valuesInView ? { pathLength: 1 } : {}} transition={{ delay: 1.0, duration: 0.6 }} />
+              <motion.line x1="75%" y1="30%" x2="63%" y2="75%" stroke="hsl(var(--gold))" strokeWidth="1" strokeDasharray="6 4" opacity="0.1"
+                initial={{ pathLength: 0 }} animate={valuesInView ? { pathLength: 1 } : {}} transition={{ delay: 1.1, duration: 0.6 }} />
+              <motion.line x1="50%" y1="30%" x2="37%" y2="75%" stroke="hsl(var(--forest))" strokeWidth="1" strokeDasharray="6 4" opacity="0.1"
+                initial={{ pathLength: 0 }} animate={valuesInView ? { pathLength: 1 } : {}} transition={{ delay: 1.2, duration: 0.6 }} />
+              <motion.line x1="50%" y1="30%" x2="63%" y2="75%" stroke="hsl(var(--forest))" strokeWidth="1" strokeDasharray="6 4" opacity="0.1"
+                initial={{ pathLength: 0 }} animate={valuesInView ? { pathLength: 1 } : {}} transition={{ delay: 1.3, duration: 0.6 }} />
+              {/* Row 2 connections */}
+              <motion.line x1="37%" y1="75%" x2="63%" y2="75%" stroke="hsl(var(--gold))" strokeWidth="1" strokeDasharray="6 4" opacity="0.15"
+                initial={{ pathLength: 0 }} animate={valuesInView ? { pathLength: 1 } : {}} transition={{ delay: 1.4, duration: 0.6 }} />
+            </svg>
 
-            {/* Connecting lines (desktop) */}
-            <div className="hidden md:block absolute inset-0">
-              <svg className="w-full h-full absolute top-0 left-0" viewBox="0 0 600 500" fill="none" preserveAspectRatio="xMidYMid meet">
-                {[0, 1, 2, 3, 4, 5].map((i) => {
-                  const angle = (i * 60 - 90) * (Math.PI / 180);
-                  const cx = 300, cy = 200;
-                  const r = 200;
-                  return (
-                    <motion.line
-                      key={i}
-                      x1={cx}
-                      y1={cy}
-                      x2={cx + r * Math.cos(angle)}
-                      y2={cy + r * Math.sin(angle)}
-                      stroke="hsl(var(--forest))"
-                      strokeWidth="1"
-                      strokeDasharray="4 4"
-                      opacity="0.2"
-                      initial={{ pathLength: 0 }}
-                      animate={valuesInView ? { pathLength: 1 } : {}}
-                      transition={{ delay: 0.5 + i * 0.1, duration: 0.6 }}
-                    />
-                  );
-                })}
-              </svg>
-            </div>
-
-            {/* Value nodes — positioned around the center on desktop, stacked on mobile */}
-            <div className="md:relative md:h-[400px] flex flex-col md:block gap-4">
-              {values.map((value, i) => {
-                const angle = (i * 60 - 90) * (Math.PI / 180);
-                const radius = 42; // percentage
-                const cx = 50 + radius * Math.cos(angle);
-                const cy = 50 + radius * Math.sin(angle);
-
-                return (
-                  <motion.div
-                    key={value.title}
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={valuesInView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ delay: 0.4 + i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                    whileHover={{ scale: 1.08, zIndex: 30 }}
-                    className="md:absolute md:w-44 md:-translate-x-1/2 md:-translate-y-1/2 z-10"
-                    style={{
-                      left: `${cx}%`,
-                      top: `${cy}%`,
-                    }}
-                  >
-                    <div className={`bg-card border-2 ${value.color === "gold" ? "border-gold/30 hover:border-gold" : "border-leaf/30 hover:border-leaf"} rounded-2xl p-5 text-center transition-all duration-300 shadow-lg hover:shadow-xl cursor-default`}>
-                      <div className={`w-12 h-12 rounded-xl ${value.color === "gold" ? "bg-gold/15" : "bg-leaf/15"} flex items-center justify-center mx-auto mb-3`}>
-                        <value.icon className={`w-6 h-6 ${value.color === "gold" ? "text-gold" : "text-leaf"}`} />
-                      </div>
-                      <h3 className="font-display text-sm font-bold text-foreground mb-1">{value.title}</h3>
-                      <p className="font-body text-xs text-muted-foreground leading-relaxed">{value.description}</p>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Timeline — expanded to 2030 */}
-      <section ref={timelineRef} className="py-20 md:py-28 bg-forest-night">
-        <div className="max-w-4xl mx-auto px-6 md:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={timelineInView ? { opacity: 1, y: 0 } : {}}
-            className="text-center mb-16"
-          >
-            <span className="font-mono text-xs text-gold tracking-[0.3em] uppercase mb-3 block">Where We've Been & Where We're Going</span>
-            <h2 className="font-display text-3xl md:text-5xl font-bold text-foreground">Our Journey</h2>
-          </motion.div>
-
-          <div className="relative">
-            <motion.div
-              initial={{ scaleY: 0 }}
-              animate={timelineInView ? { scaleY: 1 } : {}}
-              transition={{ duration: 2.5, ease: "easeOut" }}
-              className="absolute left-4 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-gold via-leaf to-forest origin-top"
-            />
-
-            {timeline.map((item, i) => {
-              const isFuture = parseInt(item.year) > 2025;
-              return (
+            {/* Row 1: 3 cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 relative z-10">
+              {values.slice(0, 3).map((value, i) => (
                 <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={timelineInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.2 + i * 0.08 }}
-                  className={`relative flex items-start gap-6 mb-6 ${
-                    i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                  }`}
+                  key={value.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={valuesInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: 0.3 + i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  whileHover={{ y: -6, transition: { duration: 0.3 } }}
+                  className="group"
                 >
-                  <div className={`hidden md:block flex-1 ${i % 2 === 0 ? "text-right" : "text-left"}`}>
-                    <span className={`font-mono text-sm font-semibold ${isFuture ? "text-leaf" : "text-gold"}`}>
-                      {item.year}
-                    </span>
-                  </div>
-                  <div className="relative z-10 flex-shrink-0">
-                    <div className={`w-8 h-8 rounded-full ${isFuture ? "bg-leaf/20 border-leaf/40" : "bg-forest border-parchment"} border-4 flex items-center justify-center`}>
-                      <div className={`w-2 h-2 rounded-full ${isFuture ? "bg-leaf" : "bg-gold"}`} />
+                  <div className={`bg-card border-2 ${value.color === "gold" ? "border-gold/20 group-hover:border-gold/60" : "border-leaf/20 group-hover:border-leaf/60"} rounded-2xl p-6 text-center transition-all duration-300 shadow-md group-hover:shadow-xl h-full`}>
+                    <div className={`w-14 h-14 rounded-2xl ${value.color === "gold" ? "bg-gold/15" : "bg-leaf/15"} flex items-center justify-center mx-auto mb-4`}>
+                      <value.icon className={`w-7 h-7 ${value.color === "gold" ? "text-gold" : "text-leaf"}`} />
                     </div>
-                  </div>
-                  <div className="flex-1 pb-2">
-                    <span className={`font-mono text-sm font-semibold md:hidden ${isFuture ? "text-leaf" : "text-gold"}`}>
-                      {item.year}
-                    </span>
-                    <p className={`font-body text-sm leading-relaxed ${isFuture ? "text-muted-foreground italic" : "text-foreground/80"}`}>
-                      {isFuture && <span className="text-leaf/60 mr-1">→</span>}
-                      {item.event}
-                    </p>
+                    <h3 className="font-display text-base font-bold text-foreground mb-2">{value.title}</h3>
+                    <p className="font-body text-sm text-muted-foreground leading-relaxed">{value.description}</p>
                   </div>
                 </motion.div>
-              );
-            })}
+              ))}
+            </div>
+
+            {/* Row 2: 3 cards offset */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:px-16 relative z-10">
+              {values.slice(3).map((value, i) => (
+                <motion.div
+                  key={value.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={valuesInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: 0.6 + i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  whileHover={{ y: -6, transition: { duration: 0.3 } }}
+                  className="group"
+                >
+                  <div className={`bg-card border-2 ${value.color === "gold" ? "border-gold/20 group-hover:border-gold/60" : "border-leaf/20 group-hover:border-leaf/60"} rounded-2xl p-6 text-center transition-all duration-300 shadow-md group-hover:shadow-xl h-full`}>
+                    <div className={`w-14 h-14 rounded-2xl ${value.color === "gold" ? "bg-gold/15" : "bg-leaf/15"} flex items-center justify-center mx-auto mb-4`}>
+                      <value.icon className={`w-7 h-7 ${value.color === "gold" ? "text-gold" : "text-leaf"}`} />
+                    </div>
+                    <h3 className="font-display text-base font-bold text-foreground mb-2">{value.title}</h3>
+                    <p className="font-body text-sm text-muted-foreground leading-relaxed">{value.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
+
+      {/* Timeline — collapsible */}
+      <TimelineSection ref={timelineRef} inView={timelineInView} />
 
       {/* CTA Section */}
       <section className="py-24 md:py-32 bg-parchment relative overflow-hidden">
