@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect } from "react";
-import { motion, useInView } from "framer-motion";
-import { ArrowRight, Sprout, Handshake, Send, CheckCircle } from "lucide-react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { ArrowRight, Sprout, Handshake, Send, CheckCircle, X } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const JoinSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [showVolunteerModal, setShowVolunteerModal] = useState(false);
   const [volunteerSubmitted, setVolunteerSubmitted] = useState(false);
   const [volunteerForm, setVolunteerForm] = useState({ name: "", email: "", phone: "", motivation: "" });
 
@@ -63,66 +64,135 @@ const JoinSection = () => {
     if (!volunteerForm.name.trim() || !volunteerForm.email.trim()) return;
     setVolunteerSubmitted(true);
     setTimeout(() => {
+      setShowVolunteerModal(false);
       setVolunteerSubmitted(false);
       setVolunteerForm({ name: "", email: "", phone: "", motivation: "" });
-    }, 4000);
+    }, 3000);
   };
 
   return (
-    <section id="join" ref={ref} className="relative py-24 md:py-36 bg-forest overflow-hidden">
-      <canvas ref={canvasRef} className="absolute inset-0 z-0" />
+    <>
+      <section id="join" ref={ref} className="relative py-24 md:py-36 bg-forest overflow-hidden">
+        <canvas ref={canvasRef} className="absolute inset-0 z-0" />
 
-      <div className="max-w-5xl mx-auto px-6 md:px-12 relative z-10">
-        <div className="text-center mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="font-display text-4xl md:text-6xl font-bold text-foreground mb-2"
-          >
-            Be Part of <span className="text-gold">the Change.</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.3 }}
-            className="font-body text-muted-foreground max-w-lg mx-auto mt-4"
-          >
-            Join our growing community of climate advocates making real impact across Tanzania.
-          </motion.p>
-        </div>
+        <div className="max-w-5xl mx-auto px-6 md:px-12 relative z-10">
+          <div className="text-center mb-16">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8 }}
+              className="font-display text-4xl md:text-6xl font-bold text-foreground mb-2"
+            >
+              Be Part of <span className="text-gold">the Change.</span>
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ delay: 0.3 }}
+              className="font-body text-muted-foreground max-w-lg mx-auto mt-4"
+            >
+              Join our growing community of climate advocates making real impact across Tanzania.
+            </motion.p>
+          </div>
 
-        <div className="flex flex-col lg:flex-row gap-6">
-          {/* Volunteer Form */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.5 }}
-            className="flex-1 bg-forest-night border border-border rounded-2xl p-8 transition-all duration-300"
-          >
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-12 h-12 rounded-xl bg-leaf/10 flex items-center justify-center">
+          <div className="flex flex-col md:flex-row gap-6">
+            {/* Volunteer */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.5 }}
+              className="flex-1 bg-forest-night border border-border rounded-2xl p-8 hover:border-gold/30 transition-all duration-300 group"
+            >
+              <div className="w-12 h-12 rounded-xl bg-leaf/10 flex items-center justify-center mb-5">
                 <Sprout className="w-6 h-6 text-leaf" />
               </div>
-              <h3 className="font-display text-2xl font-bold text-foreground">Volunteer</h3>
-            </div>
-            <p className="font-body text-muted-foreground text-sm mb-6">
-              Join our team of youth climate translators and educators. Make a real difference in your community.
-            </p>
-
-            {volunteerSubmitted ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="text-center py-8"
+              <h3 className="font-display text-2xl font-bold text-foreground mb-3">
+                Volunteer
+              </h3>
+              <p className="font-body text-muted-foreground text-sm mb-6">
+                Join our team of youth climate translators and educators. Make a real difference in your community.
+              </p>
+              <button
+                onClick={() => setShowVolunteerModal(true)}
+                className="inline-flex items-center gap-2 bg-gold text-accent-foreground font-body font-semibold px-6 py-3 rounded-full hover:bg-gold-warm transition-all duration-300 hover:shadow-lg hover:shadow-gold/20"
               >
-                <CheckCircle className="w-12 h-12 text-leaf mx-auto mb-3" />
-                <p className="font-display text-xl font-bold text-foreground mb-1">Application Sent!</p>
-                <p className="font-body text-muted-foreground text-sm">We'll be in touch soon.</p>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleVolunteerSubmit} className="space-y-4">
-                <div>
+                Apply Now
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </motion.div>
+
+            {/* Partner */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.7 }}
+              className="flex-1 bg-gold/10 border border-gold/20 rounded-2xl p-8 hover:bg-gold/15 transition-all duration-300 group"
+            >
+              <div className="w-12 h-12 rounded-xl bg-gold/15 flex items-center justify-center mb-5">
+                <Handshake className="w-6 h-6 text-gold" />
+              </div>
+              <h3 className="font-display text-2xl font-bold text-gold mb-3">
+                Partner With Us
+              </h3>
+              <p className="font-body text-muted-foreground text-sm mb-6">
+                Organizations and institutions — let's amplify impact together across Tanzania.
+              </p>
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 bg-transparent text-gold font-body font-semibold px-6 py-3 rounded-full border-2 border-gold hover:bg-gold hover:text-accent-foreground transition-all duration-300"
+              >
+                Get in Touch
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Volunteer Modal */}
+      <AnimatePresence>
+        {showVolunteerModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
+            onClick={() => setShowVolunteerModal(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-lg bg-card border border-border rounded-2xl p-8 relative shadow-2xl"
+            >
+              <button
+                onClick={() => setShowVolunteerModal(false)}
+                className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-leaf/10 flex items-center justify-center">
+                  <Sprout className="w-5 h-5 text-leaf" />
+                </div>
+                <h3 className="font-display text-xl font-bold text-foreground">Volunteer Application</h3>
+              </div>
+
+              {volunteerSubmitted ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="text-center py-8"
+                >
+                  <CheckCircle className="w-14 h-14 text-leaf mx-auto mb-3" />
+                  <p className="font-display text-xl font-bold text-foreground mb-1">Application Sent!</p>
+                  <p className="font-body text-muted-foreground text-sm">We'll be in touch soon.</p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleVolunteerSubmit} className="space-y-4">
                   <input
                     type="text"
                     value={volunteerForm.name}
@@ -130,10 +200,8 @@ const JoinSection = () => {
                     placeholder="Full Name *"
                     maxLength={100}
                     required
-                    className="w-full bg-background/30 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
+                    className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                   />
-                </div>
-                <div>
                   <input
                     type="email"
                     value={volunteerForm.email}
@@ -141,69 +209,38 @@ const JoinSection = () => {
                     placeholder="Email Address *"
                     maxLength={255}
                     required
-                    className="w-full bg-background/30 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
+                    className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                   />
-                </div>
-                <div>
                   <input
                     type="tel"
                     value={volunteerForm.phone}
                     onChange={(e) => setVolunteerForm({ ...volunteerForm, phone: e.target.value })}
                     placeholder="Phone Number (optional)"
                     maxLength={20}
-                    className="w-full bg-background/30 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
+                    className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                   />
-                </div>
-                <div>
                   <textarea
                     value={volunteerForm.motivation}
                     onChange={(e) => setVolunteerForm({ ...volunteerForm, motivation: e.target.value })}
                     placeholder="Why do you want to volunteer? (optional)"
                     maxLength={500}
                     rows={3}
-                    className="w-full bg-background/30 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all resize-none"
+                    className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all resize-none"
                   />
-                </div>
-                <motion.button
-                  type="submit"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full inline-flex items-center justify-center gap-2 bg-gold text-accent-foreground font-body font-semibold px-6 py-3 rounded-full hover:bg-gold-warm transition-all duration-300 hover:shadow-lg hover:shadow-gold/20"
-                >
-                  <Send className="w-4 h-4" />
-                  Apply Now
-                </motion.button>
-              </form>
-            )}
+                  <button
+                    type="submit"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-gold text-accent-foreground font-body font-semibold px-6 py-3 rounded-full hover:bg-gold-warm transition-all duration-300"
+                  >
+                    <Send className="w-4 h-4" />
+                    Submit Application
+                  </button>
+                </form>
+              )}
+            </motion.div>
           </motion.div>
-
-          {/* Partner card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.7 }}
-            className="flex-1 bg-gold/10 border border-gold/20 rounded-2xl p-8 hover:bg-gold/15 transition-all duration-300 flex flex-col"
-          >
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-12 h-12 rounded-xl bg-gold/15 flex items-center justify-center">
-                <Handshake className="w-6 h-6 text-gold" />
-              </div>
-              <h3 className="font-display text-2xl font-bold text-gold">Partner With Us</h3>
-            </div>
-            <p className="font-body text-muted-foreground text-sm mb-6 flex-1">
-              Organizations and institutions — let's amplify impact together across Tanzania. We welcome partnerships that align with our mission of climate education and environmental justice.
-            </p>
-            <Link
-              to="/contact"
-              className="inline-flex items-center justify-center gap-2 bg-transparent text-gold font-body font-semibold px-6 py-3 rounded-full border-2 border-gold hover:bg-gold hover:text-accent-foreground transition-all duration-300"
-            >
-              Get in Touch
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </motion.div>
-        </div>
-      </div>
-    </section>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

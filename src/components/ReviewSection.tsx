@@ -1,10 +1,11 @@
 import { useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { Star, Send, MessageSquareQuote, CheckCircle } from "lucide-react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { Star, Send, MessageSquareQuote, CheckCircle, X } from "lucide-react";
 
 const ReviewSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [showModal, setShowModal] = useState(false);
   const [rating, setRating] = useState(0);
   const [hoveredStar, setHoveredStar] = useState(0);
   const [submitted, setSubmitted] = useState(false);
@@ -15,6 +16,7 @@ const ReviewSection = () => {
     if (!form.name.trim() || !form.description.trim() || rating === 0) return;
     setSubmitted(true);
     setTimeout(() => {
+      setShowModal(false);
       setSubmitted(false);
       setForm({ name: "", position: "", description: "" });
       setRating(0);
@@ -22,14 +24,12 @@ const ReviewSection = () => {
   };
 
   return (
-    <section ref={ref} className="relative py-24 md:py-32 bg-forest-deep overflow-hidden">
-      {/* Decorative */}
-      <div className="absolute top-0 left-0 w-80 h-80 rounded-full bg-gold/[0.03] blur-3xl" />
-      <div className="absolute bottom-0 right-0 w-64 h-64 rounded-full bg-leaf/[0.03] blur-3xl" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-dashed border-foreground/[0.03]" />
+    <>
+      <section ref={ref} className="relative py-24 md:py-32 bg-forest-deep overflow-hidden">
+        <div className="absolute top-0 left-0 w-80 h-80 rounded-full bg-gold/[0.03] blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-64 h-64 rounded-full bg-leaf/[0.03] blur-3xl" />
 
-      <div className="max-w-3xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-12">
+        <div className="max-w-3xl mx-auto px-6 relative z-10 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={inView ? { opacity: 1, scale: 1 } : {}}
@@ -49,115 +49,139 @@ const ReviewSection = () => {
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ delay: 0.2 }}
-            className="font-body text-muted-foreground max-w-lg mx-auto"
+            className="font-body text-muted-foreground max-w-lg mx-auto mb-8"
           >
             Your feedback helps us grow and inspire others to join the movement.
           </motion.p>
+          <motion.button
+            initial={{ opacity: 0, y: 10 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.4 }}
+            onClick={() => setShowModal(true)}
+            className="inline-flex items-center gap-2 bg-gold text-accent-foreground font-body font-semibold px-8 py-3.5 rounded-full hover:bg-gold-warm transition-all duration-300 hover:shadow-lg hover:shadow-gold/20"
+          >
+            Write a Review
+            <Star className="w-4 h-4" />
+          </motion.button>
         </div>
+      </section>
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        >
-          {submitted ? (
+      {/* Review Modal */}
+      <AnimatePresence>
+        {showModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
+            onClick={() => setShowModal(false)}
+          >
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="bg-card/60 backdrop-blur-sm border border-leaf/30 rounded-[2rem] p-12 text-center"
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-lg bg-card border border-border rounded-2xl p-8 relative shadow-2xl"
             >
-              <CheckCircle className="w-16 h-16 text-leaf mx-auto mb-4" />
-              <h3 className="font-display text-2xl font-bold text-foreground mb-2">Thank You!</h3>
-              <p className="font-body text-muted-foreground">Your review has been submitted successfully.</p>
-            </motion.div>
-          ) : (
-            <form onSubmit={handleSubmit} className="bg-card/60 backdrop-blur-sm border border-border rounded-[2rem] p-8 md:p-12 space-y-6">
-              {/* Name & Position row */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="font-body text-sm text-muted-foreground mb-2 block">Your Name *</label>
-                  <input
-                    type="text"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    placeholder="e.g. John Mwangi"
-                    maxLength={100}
-                    required
-                    className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
-                  />
-                </div>
-                <div>
-                  <label className="font-body text-sm text-muted-foreground mb-2 block">Your Position</label>
-                  <input
-                    type="text"
-                    value={form.position}
-                    onChange={(e) => setForm({ ...form, position: e.target.value })}
-                    placeholder="e.g. Student, Teacher, Volunteer"
-                    maxLength={100}
-                    className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
-                  />
-                </div>
-              </div>
-
-              {/* Star Rating */}
-              <div>
-                <label className="font-body text-sm text-muted-foreground mb-3 block">Your Rating *</label>
-                <div className="flex items-center gap-1.5">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <motion.button
-                      key={star}
-                      type="button"
-                      whileHover={{ scale: 1.2 }}
-                      whileTap={{ scale: 0.9 }}
-                      onMouseEnter={() => setHoveredStar(star)}
-                      onMouseLeave={() => setHoveredStar(0)}
-                      onClick={() => setRating(star)}
-                      className="focus:outline-none transition-colors"
-                    >
-                      <Star
-                        className={`w-8 h-8 transition-colors duration-200 ${
-                          star <= (hoveredStar || rating)
-                            ? "text-gold fill-gold"
-                            : "text-muted-foreground/30"
-                        }`}
-                      />
-                    </motion.button>
-                  ))}
-                  {rating > 0 && (
-                    <span className="ml-3 font-body text-sm text-gold">{rating}/5</span>
-                  )}
-                </div>
-              </div>
-
-              {/* Description */}
-              <div>
-                <label className="font-body text-sm text-muted-foreground mb-2 block">Your Review *</label>
-                <textarea
-                  value={form.description}
-                  onChange={(e) => setForm({ ...form, description: e.target.value })}
-                  placeholder="Share your experience with Climate Cardinals Tanzania..."
-                  maxLength={1000}
-                  required
-                  rows={4}
-                  className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all resize-none"
-                />
-              </div>
-
-              {/* Submit */}
-              <motion.button
-                type="submit"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full md:w-auto inline-flex items-center justify-center gap-2 bg-gold text-accent-foreground font-body font-semibold px-8 py-3.5 rounded-full hover:bg-gold-warm transition-all duration-300 hover:shadow-lg hover:shadow-gold/20"
+              <button
+                onClick={() => setShowModal(false)}
+                className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
               >
-                <Send className="w-4 h-4" />
-                Submit Review
-              </motion.button>
-            </form>
-          )}
-        </motion.div>
-      </div>
-    </section>
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                  <MessageSquareQuote className="w-5 h-5 text-gold" />
+                </div>
+                <h3 className="font-display text-xl font-bold text-foreground">Write Your Review</h3>
+              </div>
+
+              {submitted ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="text-center py-8"
+                >
+                  <CheckCircle className="w-14 h-14 text-leaf mx-auto mb-3" />
+                  <p className="font-display text-xl font-bold text-foreground mb-1">Thank You!</p>
+                  <p className="font-body text-muted-foreground text-sm">Your review has been submitted.</p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input
+                      type="text"
+                      value={form.name}
+                      onChange={(e) => setForm({ ...form, name: e.target.value })}
+                      placeholder="Your Name *"
+                      maxLength={100}
+                      required
+                      className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
+                    />
+                    <input
+                      type="text"
+                      value={form.position}
+                      onChange={(e) => setForm({ ...form, position: e.target.value })}
+                      placeholder="Position (optional)"
+                      maxLength={100}
+                      className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
+                    />
+                  </div>
+
+                  {/* Star Rating */}
+                  <div>
+                    <label className="font-body text-sm text-muted-foreground mb-2 block">Rating *</label>
+                    <div className="flex items-center gap-1.5">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                          key={star}
+                          type="button"
+                          onMouseEnter={() => setHoveredStar(star)}
+                          onMouseLeave={() => setHoveredStar(0)}
+                          onClick={() => setRating(star)}
+                          className="focus:outline-none transition-transform hover:scale-125"
+                        >
+                          <Star
+                            className={`w-7 h-7 transition-colors duration-200 ${
+                              star <= (hoveredStar || rating)
+                                ? "text-gold fill-gold"
+                                : "text-muted-foreground/30"
+                            }`}
+                          />
+                        </button>
+                      ))}
+                      {rating > 0 && (
+                        <span className="ml-2 font-body text-sm text-gold">{rating}/5</span>
+                      )}
+                    </div>
+                  </div>
+
+                  <textarea
+                    value={form.description}
+                    onChange={(e) => setForm({ ...form, description: e.target.value })}
+                    placeholder="Share your experience... *"
+                    maxLength={1000}
+                    required
+                    rows={4}
+                    className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all resize-none"
+                  />
+
+                  <button
+                    type="submit"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-gold text-accent-foreground font-body font-semibold px-6 py-3 rounded-full hover:bg-gold-warm transition-all duration-300"
+                  >
+                    <Send className="w-4 h-4" />
+                    Submit Review
+                  </button>
+                </form>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
