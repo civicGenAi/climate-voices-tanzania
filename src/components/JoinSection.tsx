@@ -1,12 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
+import { ArrowRight, Sprout, Handshake, Send, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Sprout, Handshake, Mail, Phone, Instagram } from "lucide-react";
 
 const JoinSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [volunteerSubmitted, setVolunteerSubmitted] = useState(false);
+  const [volunteerForm, setVolunteerForm] = useState({ name: "", email: "", phone: "", motivation: "" });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -56,11 +58,15 @@ const JoinSection = () => {
     return () => { cancelAnimationFrame(animationId); window.removeEventListener("resize", resize); };
   }, []);
 
-  const contacts = [
-    { Icon: Mail, text: "climatecardinalstz@gmail.com", href: "mailto:climatecardinalstz@gmail.com" },
-    { Icon: Phone, text: "+255 626 700 442", href: "tel:+255626700442" },
-    { Icon: Instagram, text: "@climatecardinalstz", href: "https://instagram.com/climatecardinalstz" },
-  ];
+  const handleVolunteerSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!volunteerForm.name.trim() || !volunteerForm.email.trim()) return;
+    setVolunteerSubmitted(true);
+    setTimeout(() => {
+      setVolunteerSubmitted(false);
+      setVolunteerForm({ name: "", email: "", phone: "", motivation: "" });
+    }, 4000);
+  };
 
   return (
     <section id="join" ref={ref} className="relative py-24 md:py-36 bg-forest overflow-hidden">
@@ -86,75 +92,115 @@ const JoinSection = () => {
           </motion.p>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-6 mb-16">
-          {/* Volunteer */}
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Volunteer Form */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.5 }}
-            className="flex-1 bg-forest-night border border-border rounded-2xl p-8 hover:border-gold/30 transition-all duration-300 group"
+            className="flex-1 bg-forest-night border border-border rounded-2xl p-8 transition-all duration-300"
           >
-            <div className="w-12 h-12 rounded-xl bg-leaf/10 flex items-center justify-center mb-5">
-              <Sprout className="w-6 h-6 text-leaf" />
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-12 h-12 rounded-xl bg-leaf/10 flex items-center justify-center">
+                <Sprout className="w-6 h-6 text-leaf" />
+              </div>
+              <h3 className="font-display text-2xl font-bold text-foreground">Volunteer</h3>
             </div>
-            <h3 className="font-display text-2xl font-bold text-foreground mb-3">
-              Volunteer
-            </h3>
             <p className="font-body text-muted-foreground text-sm mb-6">
               Join our team of youth climate translators and educators. Make a real difference in your community.
             </p>
-            <Link
-              to="/join"
-              className="inline-flex items-center gap-2 bg-gold text-accent-foreground font-body font-semibold px-6 py-3 rounded-full hover:bg-gold-warm transition-all duration-300 hover:shadow-lg hover:shadow-gold/20"
-            >
-              Apply Now
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+
+            {volunteerSubmitted ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center py-8"
+              >
+                <CheckCircle className="w-12 h-12 text-leaf mx-auto mb-3" />
+                <p className="font-display text-xl font-bold text-foreground mb-1">Application Sent!</p>
+                <p className="font-body text-muted-foreground text-sm">We'll be in touch soon.</p>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleVolunteerSubmit} className="space-y-4">
+                <div>
+                  <input
+                    type="text"
+                    value={volunteerForm.name}
+                    onChange={(e) => setVolunteerForm({ ...volunteerForm, name: e.target.value })}
+                    placeholder="Full Name *"
+                    maxLength={100}
+                    required
+                    className="w-full bg-background/30 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
+                  />
+                </div>
+                <div>
+                  <input
+                    type="email"
+                    value={volunteerForm.email}
+                    onChange={(e) => setVolunteerForm({ ...volunteerForm, email: e.target.value })}
+                    placeholder="Email Address *"
+                    maxLength={255}
+                    required
+                    className="w-full bg-background/30 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
+                  />
+                </div>
+                <div>
+                  <input
+                    type="tel"
+                    value={volunteerForm.phone}
+                    onChange={(e) => setVolunteerForm({ ...volunteerForm, phone: e.target.value })}
+                    placeholder="Phone Number (optional)"
+                    maxLength={20}
+                    className="w-full bg-background/30 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
+                  />
+                </div>
+                <div>
+                  <textarea
+                    value={volunteerForm.motivation}
+                    onChange={(e) => setVolunteerForm({ ...volunteerForm, motivation: e.target.value })}
+                    placeholder="Why do you want to volunteer? (optional)"
+                    maxLength={500}
+                    rows={3}
+                    className="w-full bg-background/30 border border-border rounded-xl px-4 py-3 font-body text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all resize-none"
+                  />
+                </div>
+                <motion.button
+                  type="submit"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full inline-flex items-center justify-center gap-2 bg-gold text-accent-foreground font-body font-semibold px-6 py-3 rounded-full hover:bg-gold-warm transition-all duration-300 hover:shadow-lg hover:shadow-gold/20"
+                >
+                  <Send className="w-4 h-4" />
+                  Apply Now
+                </motion.button>
+              </form>
+            )}
           </motion.div>
 
-          {/* Partner */}
+          {/* Partner card */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.7 }}
-            className="flex-1 bg-gold/10 border border-gold/20 rounded-2xl p-8 hover:bg-gold/15 transition-all duration-300 group"
+            className="flex-1 bg-gold/10 border border-gold/20 rounded-2xl p-8 hover:bg-gold/15 transition-all duration-300 flex flex-col"
           >
-            <div className="w-12 h-12 rounded-xl bg-gold/15 flex items-center justify-center mb-5">
-              <Handshake className="w-6 h-6 text-gold" />
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-12 h-12 rounded-xl bg-gold/15 flex items-center justify-center">
+                <Handshake className="w-6 h-6 text-gold" />
+              </div>
+              <h3 className="font-display text-2xl font-bold text-gold">Partner With Us</h3>
             </div>
-            <h3 className="font-display text-2xl font-bold text-gold mb-3">
-              Partner With Us
-            </h3>
-            <p className="font-body text-muted-foreground text-sm mb-6">
-              Organizations and institutions — let's amplify impact together across Tanzania.
+            <p className="font-body text-muted-foreground text-sm mb-6 flex-1">
+              Organizations and institutions — let's amplify impact together across Tanzania. We welcome partnerships that align with our mission of climate education and environmental justice.
             </p>
             <Link
               to="/contact"
-              className="inline-flex items-center gap-2 bg-transparent text-gold font-body font-semibold px-6 py-3 rounded-full border-2 border-gold hover:bg-gold hover:text-accent-foreground transition-all duration-300"
+              className="inline-flex items-center justify-center gap-2 bg-transparent text-gold font-body font-semibold px-6 py-3 rounded-full border-2 border-gold hover:bg-gold hover:text-accent-foreground transition-all duration-300"
             >
               Get in Touch
               <ArrowRight className="w-4 h-4" />
             </Link>
           </motion.div>
-        </div>
-
-        {/* Contact pills */}
-        <div className="flex flex-wrap gap-4 justify-center">
-          {contacts.map((c, i) => (
-            <motion.a
-              key={c.text}
-              href={c.href}
-              target={c.href.startsWith("http") ? "_blank" : undefined}
-              rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.9 + i * 0.1 }}
-              className="flex items-center gap-2 bg-forest-night/80 border border-border rounded-full px-5 py-2.5 font-body text-sm text-foreground hover:border-gold/40 transition-colors"
-            >
-              <c.Icon className="w-4 h-4 text-gold" />
-              {c.text}
-            </motion.a>
-          ))}
         </div>
       </div>
     </section>
