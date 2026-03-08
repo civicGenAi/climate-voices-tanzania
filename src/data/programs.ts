@@ -1,4 +1,8 @@
 import { BookOpen, Megaphone, Languages, TreePine } from "lucide-react";
+import programEducationHero from "@/assets/program-education-hero.png";
+import programCampaignsHero from "@/assets/program-campaigns-hero.png";
+import programTranslationHero from "@/assets/program-translation-hero.png";
+import programPlantingHero from "@/assets/program-planting-hero.png";
 
 export const programs = [
   {
