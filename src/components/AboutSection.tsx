@@ -2,10 +2,10 @@ import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import aboutTree from "@/assets/about-tree-planting.png";
-import aboutEducation from "@/assets/about-education.png";
-import aboutCommunity from "@/assets/about-community.png";
-import aboutTranslate from "@/assets/about-translate.png";
+import realCommunity from "@/assets/real-community.jpeg";
+import realEducation from "@/assets/real-education.jpeg";
+import realPlanting from "@/assets/real-planting.jpeg";
+import founderImg from "@/assets/founder.jpeg";
 
 const stats = [
   { number: 15, label: "Languages Targeted", suffix: "+" },
@@ -42,10 +42,10 @@ const CountUp = ({ target, suffix, inView }: { target: number; suffix: string; i
 };
 
 const images = [
-  { src: aboutTree, alt: "Tree planting initiative", rotate: -6 },
-  { src: aboutEducation, alt: "Climate education", rotate: 4 },
-  { src: aboutCommunity, alt: "Community outreach", rotate: -3 },
-  { src: aboutTranslate, alt: "Translation work", rotate: 5 },
+  { src: realPlanting, alt: "Tree planting initiative", rotate: -5, delay: 0 },
+  { src: realEducation, alt: "Climate education workshop", rotate: 3, delay: 0.15 },
+  { src: realCommunity, alt: "Community outreach event", rotate: -2, delay: 0.3 },
+  { src: founderImg, alt: "Founder Ester Kimario", rotate: 4, delay: 0.45 },
 ];
 
 const AboutSection = () => {
@@ -54,7 +54,6 @@ const AboutSection = () => {
 
   return (
     <section id="about" ref={ref} className="relative overflow-hidden">
-      {/* Main about content */}
       <div className="flex flex-col lg:flex-row min-h-[70vh]">
         {/* Left — Text */}
         <motion.div
@@ -94,7 +93,6 @@ const AboutSection = () => {
             ))}
           </div>
 
-          {/* Learn More button */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -110,7 +108,7 @@ const AboutSection = () => {
           </motion.div>
         </motion.div>
 
-        {/* Right — 4 animated images */}
+        {/* Right — 4 real photos in animated collage */}
         <motion.div
           initial={{ x: 60, opacity: 0 }}
           animate={inView ? { x: 0, opacity: 1 } : {}}
@@ -123,7 +121,7 @@ const AboutSection = () => {
                 key={img.alt}
                 initial={{ opacity: 0, scale: 0.6, rotate: 0 }}
                 animate={inView ? { opacity: 1, scale: 1, rotate: img.rotate } : {}}
-                transition={{ delay: 0.6 + i * 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ delay: 0.6 + img.delay, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute w-[48%] rounded-xl overflow-hidden shadow-xl border-2 border-gold/20 hover:z-40 hover:scale-110 transition-transform duration-500 cursor-pointer"
                 style={{
                   top: i < 2 ? "2%" : "50%",

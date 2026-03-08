@@ -3,6 +3,7 @@ import { motion, useInView } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Users, Globe, BookOpen, TreePine, Heart, Target } from "lucide-react";
+import pageAboutCartoon from "@/assets/page-about-cartoon.png";
 
 const values = [
   { icon: Users, title: "Youth-Led", description: "We believe young people are the most powerful agents of change in the climate movement." },
@@ -34,123 +35,77 @@ const About = () => {
     <main className="overflow-x-hidden">
       <Navigation />
 
-      {/* Hero */}
+      {/* Hero with cartoon */}
       <section ref={heroRef} className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-forest-night overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="about-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="hsl(43 75% 46%)" strokeWidth="0.5" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#about-grid)" />
-          </svg>
-        </div>
-
-        <div className="max-w-5xl mx-auto px-6 md:px-12 relative z-10">
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={heroInView ? { opacity: 1 } : {}}
-            className="font-mono text-xs text-gold tracking-[0.3em] uppercase mb-4 block"
+        <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10 flex flex-col lg:flex-row items-center gap-10">
+          <div className="flex-1">
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={heroInView ? { opacity: 1 } : {}}
+              className="font-mono text-xs text-gold tracking-[0.3em] uppercase mb-4 block"
+            >
+              About Us
+            </motion.span>
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={heroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.2, duration: 0.8 }}
+              className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6 max-w-3xl"
+            >
+              Breaking Language Barriers for <span className="text-gold">Climate Justice</span>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={heroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="font-body text-lg text-muted-foreground max-w-2xl leading-relaxed"
+            >
+              Climate Cardinals Tanzania is a youth-led chapter of the global Climate Cardinals movement. 
+              We translate critical climate information into Kiswahili and local tribal languages so that 
+              no community is left behind in the fight against climate change.
+            </motion.p>
+          </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+            animate={heroInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+            transition={{ delay: 0.3, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="flex-shrink-0"
           >
-            About Us
-          </motion.span>
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6 max-w-3xl"
-          >
-            Breaking Language Barriers for <span className="text-gold">Climate Justice</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="font-body text-lg text-muted-foreground max-w-2xl leading-relaxed"
-          >
-            Climate Cardinals Tanzania is a youth-led chapter of the global Climate Cardinals movement. 
-            We translate critical climate information into Kiswahili and local tribal languages so that 
-            no community is left behind in the fight against climate change.
-          </motion.p>
+            <motion.img
+              src={pageAboutCartoon}
+              alt="Youth studying climate science"
+              className="w-64 md:w-80 drop-shadow-2xl"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </motion.div>
         </div>
       </section>
 
-      {/* Illustration + Story */}
+      {/* Story */}
       <section className="py-20 md:py-28 bg-parchment">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            {/* SVG Illustration */}
-            <div className="flex justify-center">
-              <svg viewBox="0 0 400 400" className="w-full max-w-sm" aria-hidden="true">
-                {/* Earth circle */}
-                <circle cx="200" cy="200" r="150" fill="hsl(153 44% 18%)" opacity="0.15" />
-                <circle cx="200" cy="200" r="130" fill="none" stroke="hsl(43 75% 46%)" strokeWidth="1" strokeDasharray="8 4" />
-                {/* Africa shape simplified */}
-                <path
-                  d="M185 120 L195 100 L215 95 L230 110 L235 140 L240 170 L230 200 L225 230 L210 260 L195 280 L180 270 L170 240 L165 210 L170 180 L175 150 Z"
-                  fill="hsl(152 43% 50%)"
-                  opacity="0.3"
-                  stroke="hsl(152 43% 50%)"
-                  strokeWidth="1"
-                />
-                {/* Tanzania dot */}
-                <circle cx="225" cy="210" r="6" fill="hsl(43 75% 46%)" />
-                <circle cx="225" cy="210" r="12" fill="none" stroke="hsl(43 75% 46%)" strokeWidth="1" opacity="0.5" />
-                <circle cx="225" cy="210" r="20" fill="none" stroke="hsl(43 75% 46%)" strokeWidth="0.5" opacity="0.3" />
-                {/* Language lines radiating */}
-                {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => {
-                  const rad = (angle * Math.PI) / 180;
-                  const x1 = 225 + Math.cos(rad) * 25;
-                  const y1 = 210 + Math.sin(rad) * 25;
-                  const x2 = 225 + Math.cos(rad) * 55;
-                  const y2 = 210 + Math.sin(rad) * 55;
-                  return (
-                    <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="hsl(43 75% 46%)" strokeWidth="0.8" opacity="0.5" />
-                  );
-                })}
-                {/* People icons */}
-                {[30, 90, 150, 210, 270, 330].map((angle, i) => {
-                  const rad = (angle * Math.PI) / 180;
-                  const x = 200 + Math.cos(rad) * 120;
-                  const y = 200 + Math.sin(rad) * 120;
-                  return (
-                    <g key={i} transform={`translate(${x},${y})`}>
-                      <circle r="8" fill="hsl(153 44% 18%)" opacity="0.2" />
-                      <circle r="3" fill="hsl(43 75% 46%)" opacity="0.7" />
-                    </g>
-                  );
-                })}
-                {/* Text labels */}
-                <text x="200" y="340" textAnchor="middle" className="font-mono" fontSize="10" fill="hsl(153 44% 18%)" opacity="0.6">
-                  CONNECTING COMMUNITIES THROUGH LANGUAGE
-                </text>
-              </svg>
-            </div>
-
-            {/* Story text */}
-            <div>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-parchment-foreground mb-6">
-                Our Story
-              </h2>
-              <div className="space-y-4 font-body text-parchment-foreground/80 leading-relaxed">
-                <p>
-                  Climate Cardinals is the world's largest youth-led climate translation organization. 
-                  The Tanzania Chapter was founded by Ester Kimario with a singular vision: ensuring 
-                  that every Tanzanian community has access to life-saving climate information in their 
-                  own language.
-                </p>
-                <p>
-                  In Tanzania, where over 120 tribal languages are spoken, critical climate knowledge 
-                  often remains locked in English or Kiswahili — leaving rural communities without the 
-                  information they need to adapt to a changing climate.
-                </p>
-                <p>
-                  We mobilize young volunteers to translate, educate, and advocate — building a 
-                  generation of climate-literate Tanzanians who can lead their communities toward 
-                  a sustainable future.
-                </p>
-              </div>
+          <div className="max-w-3xl mx-auto">
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-parchment-foreground mb-6">
+              Our Story
+            </h2>
+            <div className="space-y-4 font-body text-parchment-foreground/80 leading-relaxed">
+              <p>
+                Climate Cardinals is the world's largest youth-led climate translation organization. 
+                The Tanzania Chapter was founded by Ester Kimario with a singular vision: ensuring 
+                that every Tanzanian community has access to life-saving climate information in their 
+                own language.
+              </p>
+              <p>
+                In Tanzania, where over 120 tribal languages are spoken, critical climate knowledge 
+                often remains locked in English or Kiswahili — leaving rural communities without the 
+                information they need to adapt to a changing climate.
+              </p>
+              <p>
+                We mobilize young volunteers to translate, educate, and advocate — building a 
+                generation of climate-literate Tanzanians who can lead their communities toward 
+                a sustainable future.
+              </p>
             </div>
           </div>
         </div>
@@ -243,7 +198,6 @@ const About = () => {
           <div className="relative flex flex-col items-center">
             <div className="absolute left-1/2 -translate-x-1/2 top-0 w-0.5 h-full bg-gradient-to-b from-forest to-gold" />
 
-            {/* Mission — Left */}
             <div className="relative w-full flex justify-start mb-20">
               <div className="w-full md:w-[45%] bg-forest border border-leaf/20 rounded-2xl rounded-tr-[3rem] p-8 md:p-10 shadow-lg">
                 <div className="w-12 h-12 rounded-xl bg-leaf/10 flex items-center justify-center mb-6">
@@ -259,7 +213,6 @@ const About = () => {
               </div>
             </div>
 
-            {/* Vision — Right */}
             <div className="relative w-full flex justify-end">
               <div className="w-full md:w-[45%] bg-gold/10 border border-gold/20 rounded-2xl rounded-tl-[3rem] p-8 md:p-10 shadow-lg">
                 <div className="w-12 h-12 rounded-xl bg-gold/20 flex items-center justify-center mb-6">

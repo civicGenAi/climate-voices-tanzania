@@ -3,6 +3,7 @@ import { motion, useInView } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { BookOpen, Megaphone, Languages, TreePine, CheckCircle } from "lucide-react";
+import pageProgramsCartoon from "@/assets/page-programs-cartoon.png";
 
 const programs = [
   {
@@ -71,44 +72,49 @@ const Programs = () => {
     <main className="overflow-x-hidden">
       <Navigation />
 
-      {/* Hero */}
+      {/* Hero with cartoon */}
       <section ref={heroRef} className="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-forest-night overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="programs-dots" width="30" height="30" patternUnits="userSpaceOnUse">
-                <circle cx="15" cy="15" r="1.5" fill="hsl(152 43% 50%)" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#programs-dots)" />
-          </svg>
-        </div>
-
-        <div className="max-w-5xl mx-auto px-6 md:px-12 relative z-10">
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={heroInView ? { opacity: 1 } : {}}
-            className="font-mono text-xs text-gold tracking-[0.3em] uppercase mb-4 block"
+        <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10 flex flex-col lg:flex-row items-center gap-10">
+          <div className="flex-1">
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={heroInView ? { opacity: 1 } : {}}
+              className="font-mono text-xs text-gold tracking-[0.3em] uppercase mb-4 block"
+            >
+              Our Programs
+            </motion.span>
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={heroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.2, duration: 0.8 }}
+              className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6 max-w-3xl"
+            >
+              Climate Action <span className="text-gold">In Action</span>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={heroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="font-body text-lg text-muted-foreground max-w-2xl leading-relaxed"
+            >
+              From classrooms to communities, from translation desks to tree nurseries — 
+              discover how we're making climate knowledge accessible and actionable across Tanzania.
+            </motion.p>
+          </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
+            animate={heroInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+            transition={{ delay: 0.3, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="flex-shrink-0"
           >
-            Our Programs
-          </motion.span>
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6 max-w-3xl"
-          >
-            Climate Action <span className="text-gold">In Action</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="font-body text-lg text-muted-foreground max-w-2xl leading-relaxed"
-          >
-            From classrooms to communities, from translation desks to tree nurseries — 
-            discover how we're making climate knowledge accessible and actionable across Tanzania.
-          </motion.p>
+            <motion.img
+              src={pageProgramsCartoon}
+              alt="Youth planting trees and teaching"
+              className="w-64 md:w-80 drop-shadow-2xl"
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </motion.div>
         </div>
       </section>
 
@@ -131,7 +137,6 @@ const Programs = () => {
                     !isEven ? "lg:direction-rtl" : ""
                   }`}
                 >
-                  {/* SVG Illustration */}
                   <div className={`lg:col-span-2 flex justify-center ${!isEven ? "lg:order-2" : ""}`}>
                     <div className="w-full max-w-xs aspect-square bg-forest-night/5 rounded-2xl border border-forest/10 flex items-center justify-center p-8">
                       <svg viewBox="0 0 200 200" className="w-full" aria-hidden="true">
@@ -144,7 +149,6 @@ const Programs = () => {
                     </div>
                   </div>
 
-                  {/* Content */}
                   <div className={`lg:col-span-3 ${!isEven ? "lg:order-1" : ""}`}>
                     <div className="flex items-center gap-3 mb-4">
                       <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${

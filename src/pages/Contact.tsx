@@ -3,6 +3,7 @@ import { motion, useInView } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Mail, Phone, MapPin, Instagram, Clock, Send } from "lucide-react";
+import pageContactCartoon from "@/assets/page-contact-cartoon.png";
 
 const contactMethods = [
   {
@@ -43,32 +44,48 @@ const Contact = () => {
     <main className="overflow-x-hidden">
       <Navigation />
 
-      {/* Hero */}
+      {/* Hero with cartoon */}
       <section ref={heroRef} className="relative pt-32 pb-16 md:pt-40 md:pb-20 bg-forest-night overflow-hidden">
-        <div className="max-w-5xl mx-auto px-6 md:px-12 relative z-10">
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={heroInView ? { opacity: 1 } : {}}
-            className="font-mono text-xs text-gold tracking-[0.3em] uppercase mb-4 block"
+        <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10 flex flex-col lg:flex-row items-center gap-10">
+          <div className="flex-1">
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={heroInView ? { opacity: 1 } : {}}
+              className="font-mono text-xs text-gold tracking-[0.3em] uppercase mb-4 block"
+            >
+              Contact Us
+            </motion.span>
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={heroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.2, duration: 0.8 }}
+              className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6 max-w-3xl"
+            >
+              Let's <span className="text-gold">Connect</span>
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={heroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="font-body text-lg text-muted-foreground max-w-2xl leading-relaxed"
+            >
+              Have questions about our work? Want to partner with us or learn more? We'd love to hear from you.
+            </motion.p>
+          </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotate: -3 }}
+            animate={heroInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+            transition={{ delay: 0.3, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="flex-shrink-0"
           >
-            Contact Us
-          </motion.span>
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="font-display text-4xl md:text-6xl font-bold text-foreground mb-6 max-w-3xl"
-          >
-            Let's <span className="text-gold">Connect</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="font-body text-lg text-muted-foreground max-w-2xl leading-relaxed"
-          >
-            Have questions about our work? Want to partner with us or learn more? We'd love to hear from you.
-          </motion.p>
+            <motion.img
+              src={pageContactCartoon}
+              alt="People connecting and collaborating"
+              className="w-56 md:w-72 drop-shadow-2xl"
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </motion.div>
         </div>
       </section>
 
@@ -76,7 +93,6 @@ const Contact = () => {
       <section className="py-20 md:py-28 bg-parchment">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-            {/* Contact methods */}
             <div className="lg:col-span-2 space-y-6">
               <h2 className="font-display text-2xl font-bold text-parchment-foreground mb-6">
                 Reach Out
@@ -110,7 +126,6 @@ const Contact = () => {
                 </motion.a>
               ))}
 
-              {/* Office hours */}
               <div className="flex items-start gap-3 mt-8 pt-6 border-t border-forest/10">
                 <Clock className="w-4 h-4 text-forest/40 mt-0.5" />
                 <div>
@@ -124,7 +139,6 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Contact form */}
             <div className="lg:col-span-3">
               <div className="bg-forest-night rounded-2xl p-8 md:p-10">
                 <h2 className="font-display text-2xl font-bold text-foreground mb-2">
@@ -208,17 +222,15 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Map placeholder */}
+      {/* Map */}
       <section className="py-16 bg-forest-night">
         <div className="max-w-5xl mx-auto px-6 md:px-12 text-center">
           <h2 className="font-display text-2xl font-bold text-foreground mb-4">Where We Operate</h2>
           <p className="font-body text-sm text-muted-foreground mb-10 max-w-lg mx-auto">
             Our impact spans across Tanzania, from the slopes of Kilimanjaro to the shores of Lake Victoria.
           </p>
-          {/* SVG Tanzania Map */}
           <div className="flex justify-center">
             <svg viewBox="0 0 500 400" className="w-full max-w-lg" aria-label="Map of Tanzania showing areas of operation">
-              {/* Simplified Tanzania outline */}
               <path
                 d="M200 50 L250 40 L300 50 L350 70 L380 100 L390 150 L400 200 L390 250 L370 300 L340 340 L300 360 L260 370 L220 360 L180 330 L160 290 L150 250 L140 200 L150 150 L160 100 L180 70 Z"
                 fill="hsl(153 44% 18%)"
@@ -226,7 +238,6 @@ const Contact = () => {
                 stroke="hsl(152 43% 50%)"
                 strokeWidth="1.5"
               />
-              {/* Region dots */}
               {[
                 { x: 300, y: 70, name: "Kilimanjaro" },
                 { x: 350, y: 120, name: "Tanga" },
