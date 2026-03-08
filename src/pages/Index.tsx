@@ -5,7 +5,6 @@ import FocusSection from "@/components/FocusSection";
 import ProgramsSection from "@/components/ProgramsSection";
 import LeadershipSection from "@/components/LeadershipSection";
 import PartnerSection from "@/components/PartnerSection";
-import ReviewSection from "@/components/ReviewSection";
 import JoinSection from "@/components/JoinSection";
 import Footer from "@/components/Footer";
 
