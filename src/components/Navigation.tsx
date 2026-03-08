@@ -51,12 +51,18 @@ const Navigation = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16 md:h-20">
             {/* Logo */}
-            <Link to="/" className="flex items-center group">
+            <Link to="/" className="flex items-center gap-2 sm:gap-3 group">
               <img
-                src={logo}
-                alt="Climate Cardinals Tanzania"
-                className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 object-contain transition-transform duration-300 group-hover:scale-105"
+                src={globalLogo}
+                alt="Climate Cardinals"
+                className="h-7 w-auto sm:h-8 md:h-10 object-contain transition-transform duration-300 group-hover:scale-105"
               />
+              <div className="hidden sm:flex items-center gap-1.5">
+                <div className="w-px h-6 md:h-7 bg-gold/30" />
+                <span className="font-display text-[10px] md:text-xs font-semibold text-gold tracking-wider uppercase leading-tight">
+                  Tanzania<br />Chapter
+                </span>
+              </div>
             </Link>
 
             {/* Desktop Nav */}
