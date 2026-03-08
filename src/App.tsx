@@ -12,6 +12,7 @@ import Join from "./pages/Join";
 import Journal from "./pages/Journal";
 import Community from "./pages/Community";
 import FAQ from "./pages/FAQ";
+import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import DashboardLayout from "./pages/admin/DashboardLayout";
 import Overview from "./pages/admin/Overview";
