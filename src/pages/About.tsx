@@ -142,6 +142,7 @@ const About = () => {
   const timelineInView = useInView(timelineRef, { once: true, margin: "-100px" });
 
   return (
+    <PageTransition>
     <main className="overflow-x-hidden">
       <Navigation />
 
