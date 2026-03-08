@@ -149,6 +149,7 @@ const Community = () => {
   ];
 
   return (
+    <PageTransition>
     <main className="overflow-x-hidden">
       <Navigation />
 
