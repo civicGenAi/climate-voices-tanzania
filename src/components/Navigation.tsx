@@ -3,20 +3,21 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "@/assets/logo.png";
 import globalLogo from "@/assets/climate-cardinals-global-logo.png";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Programs", href: "/programs" },
-  { label: "Journal", href: "/journal" },
-  { label: "Community", href: "/community" },
-  { label: "Contact", href: "/contact" },
+const navKeys = [
+  { key: "nav.home", href: "/" },
+  { key: "nav.about", href: "/about" },
+  { key: "nav.programs", href: "/programs" },
+  { key: "nav.journal", href: "/journal" },
+  { key: "nav.community", href: "/community" },
+  { key: "nav.contact", href: "/contact" },
 ];
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [lang, setLang] = useState<"EN" | "SW">("EN");
+  const { lang, setLang, t } = useLanguage();
   const location = useLocation();
 
   useEffect(() => {
@@ -29,7 +30,6 @@ const Navigation = () => {
     setIsOpen(false);
   }, [location]);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -50,7 +50,6 @@ const Navigation = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16 md:h-20">
-            {/* Logo */}
             <Link to="/" className="flex items-center gap-2 sm:gap-3 group">
               <img
                 src={globalLogo}
@@ -59,15 +58,14 @@ const Navigation = () => {
               />
               <div className="hidden sm:flex items-center gap-1.5">
                 <div className="w-px h-6 md:h-7 bg-gold/30" />
-                <span className="font-display text-[10px] md:text-xs font-semibold text-gold tracking-wider uppercase leading-tight">
-                  Tanzania<br />Chapter
+                <span className="font-display text-[10px] md:text-xs font-semibold text-gold tracking-wider uppercase leading-tight whitespace-pre-line">
+                  {t("nav.tanzaniaChapter")}
                 </span>
               </div>
             </Link>
 
-            {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-1">
-              {navLinks.map((link) => {
+              {navKeys.map((link) => {
                 const isActive = location.pathname === link.href;
                 return (
                   <Link
@@ -79,7 +77,7 @@ const Navigation = () => {
                         : "text-foreground/70 hover:text-foreground hover:bg-muted/30"
                     }`}
                   >
-                    {link.label}
+                    {t(link.key)}
                     {isActive && (
                       <motion.div
                         layoutId="nav-indicator"
@@ -92,9 +90,7 @@ const Navigation = () => {
               })}
             </div>
 
-            {/* Right side */}
             <div className="hidden md:flex items-center gap-4">
-              {/* Language Toggle */}
               <div className="relative flex items-center bg-forest/60 rounded-full p-0.5 border border-gold/20">
                 <button
                   onClick={() => setLang("EN")}
@@ -124,11 +120,10 @@ const Navigation = () => {
                 to="/join"
                 className="font-body text-sm font-semibold bg-gold text-accent-foreground px-6 py-2.5 rounded-full hover:bg-gold-warm transition-all duration-300 hover:shadow-lg hover:shadow-gold/20"
               >
-                Join Us
+                {t("nav.joinUs")}
               </Link>
             </div>
 
-            {/* Mobile */}
             <div className="flex md:hidden items-center gap-2 sm:gap-3">
               <button
                 onClick={() => setLang(lang === "EN" ? "SW" : "EN")}
@@ -162,7 +157,6 @@ const Navigation = () => {
         </div>
       </nav>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -174,8 +168,10 @@ const Navigation = () => {
           >
             <div className="flex flex-col items-center gap-1 sm:gap-2">
               <img src={globalLogo} alt="Climate Cardinals" className="h-10 sm:h-14 w-auto object-contain mb-2" />
-              <span className="font-display text-[10px] sm:text-xs font-semibold text-gold tracking-widest uppercase mb-6 sm:mb-8">Tanzania Chapter</span>
-              {navLinks.map((link, i) => (
+              <span className="font-display text-[10px] sm:text-xs font-semibold text-gold tracking-widest uppercase mb-6 sm:mb-8">
+                {t("nav.tanzaniaChapter").replace("\n", " ")}
+              </span>
+              {navKeys.map((link, i) => (
                 <motion.div
                   key={link.href}
                   initial={{ opacity: 0, y: 20 }}
@@ -190,7 +186,7 @@ const Navigation = () => {
                         : "text-foreground/80 hover:text-gold"
                     }`}
                   >
-                    {link.label}
+                    {t(link.key)}
                   </Link>
                 </motion.div>
               ))}
@@ -204,7 +200,7 @@ const Navigation = () => {
                   to="/join"
                   className="font-body text-sm sm:text-base font-semibold bg-gold text-accent-foreground px-6 sm:px-8 py-2.5 sm:py-3 rounded-full"
                 >
-                  Join Us
+                  {t("nav.joinUs")}
                 </Link>
               </motion.div>
             </div>

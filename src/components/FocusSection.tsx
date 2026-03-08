@@ -1,54 +1,28 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { BookOpen, TreePine, Languages, Users, ArrowRight } from "lucide-react";
+import { BookOpen, TreePine, Languages, Users } from "lucide-react";
 import focusEducation from "@/assets/focus-education-cartoon.png";
 import focusPlanting from "@/assets/focus-planting-cartoon.png";
 import focusTranslate from "@/assets/focus-translate-cartoon.png";
 import focusLeadership from "@/assets/focus-leadership-cartoon.png";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-const focusAreas = [
-  {
-    title: "Climate Education",
-    description: "Delivering climate literacy programs in schools and communities across Tanzania, making complex climate science understandable and actionable.",
-    Icon: BookOpen,
-    image: focusEducation,
-    iconColor: "text-gold",
-    tag: "In Action",
-  },
-  {
-    title: "Tree Planting",
-    description: "Organizing tree planting initiatives to restore degraded ecosystems and combat deforestation — one seedling at a time.",
-    Icon: TreePine,
-    image: focusPlanting,
-    iconColor: "text-leaf",
-    tag: "In Action",
-  },
-  {
-    title: "Translation Work",
-    description: "Translating critical climate documents, guides, and educational materials into Kiswahili and tribal languages — bridging the knowledge gap.",
-    Icon: Languages,
-    image: focusTranslate,
-    iconColor: "text-sky",
-    tag: "In Action",
-  },
-  {
-    title: "Youth Leadership",
-    description: "Training and empowering young Tanzanians to become climate ambassadors in their communities — building the next generation of change-makers.",
-    Icon: Users,
-    image: focusLeadership,
-    iconColor: "text-gold",
-    tag: "In Action",
-  },
+const focusKeys = [
+  { titleKey: "focus.education.title", descKey: "focus.education.description", Icon: BookOpen, image: focusEducation, iconColor: "text-gold" },
+  { titleKey: "focus.planting.title", descKey: "focus.planting.description", Icon: TreePine, image: focusPlanting, iconColor: "text-leaf" },
+  { titleKey: "focus.translation.title", descKey: "focus.translation.description", Icon: Languages, image: focusTranslate, iconColor: "text-sky" },
+  { titleKey: "focus.leadership.title", descKey: "focus.leadership.description", Icon: Users, image: focusLeadership, iconColor: "text-gold" },
 ];
 
 const FocusSection = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
   const [activeCard, setActiveCard] = useState(0);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveCard((prev) => (prev + 1) % focusAreas.length);
+      setActiveCard((prev) => (prev + 1) % focusKeys.length);
     }, 6000);
     return () => clearInterval(interval);
   }, []);
@@ -66,14 +40,14 @@ const FocusSection = () => {
             animate={inView ? { opacity: 1, scale: 1 } : {}}
             className="inline-block font-mono text-xs text-gold tracking-[0.3em] uppercase mb-3 sm:mb-4 px-4 py-1.5 rounded-full border border-gold/20 bg-gold/5"
           >
-            Our Approach
+            {t("focus.label")}
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             className="font-display text-2xl sm:text-3xl md:text-5xl font-bold text-foreground mb-3 sm:mb-4"
           >
-            How We Work
+            {t("focus.title")}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
@@ -81,12 +55,11 @@ const FocusSection = () => {
             transition={{ delay: 0.2 }}
             className="font-body text-sm sm:text-base text-muted-foreground max-w-xl mx-auto"
           >
-            Four pillars that define our approach to climate action in Tanzania.
+            {t("focus.subtitle")}
           </motion.p>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-4 sm:gap-8 items-stretch">
-          {/* Main card with cartoon background */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -103,32 +76,21 @@ const FocusSection = () => {
                 className="absolute inset-0 flex items-end justify-end p-4 sm:p-6"
               >
                 <img
-                  src={focusAreas[activeCard].image}
-                  alt={focusAreas[activeCard].title}
+                  src={focusKeys[activeCard].image}
+                  alt={t(focusKeys[activeCard].titleKey)}
                   className="w-[55%] sm:w-[65%] md:w-[55%] max-h-[80%] sm:max-h-[85%] object-contain drop-shadow-2xl"
                 />
               </motion.div>
             </AnimatePresence>
 
-            {/* Shadow overlay */}
             <div
               className="absolute inset-0 pointer-events-none z-[1]"
               style={{
-                background: `linear-gradient(
-                  to right,
-                  hsl(var(--forest-night)) 0%,
-                  hsl(var(--forest-night) / 0.97) 15%,
-                  hsl(var(--forest-night) / 0.88) 25%,
-                  hsl(var(--forest-night) / 0.65) 35%,
-                  hsl(var(--forest-night) / 0.3) 45%,
-                  transparent 60%
-                )`,
+                background: `linear-gradient(to right, hsl(var(--forest-night)) 0%, hsl(var(--forest-night) / 0.97) 15%, hsl(var(--forest-night) / 0.88) 25%, hsl(var(--forest-night) / 0.65) 35%, hsl(var(--forest-night) / 0.3) 45%, transparent 60%)`,
               }}
             />
-
             <div className="absolute inset-0 bg-gradient-to-t from-forest-night/50 via-transparent to-transparent pointer-events-none z-[1]" />
 
-            {/* Content */}
             <div className="absolute inset-0 z-[2] flex flex-col justify-end p-5 sm:p-8 md:p-12">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -142,12 +104,12 @@ const FocusSection = () => {
                   <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                     <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-background/20 backdrop-blur-md flex items-center justify-center border border-foreground/10">
                       {(() => {
-                        const IconComp = focusAreas[activeCard].Icon;
-                        return <IconComp className={`w-5 h-5 sm:w-6 sm:h-6 ${focusAreas[activeCard].iconColor}`} />;
+                        const IconComp = focusKeys[activeCard].Icon;
+                        return <IconComp className={`w-5 h-5 sm:w-6 sm:h-6 ${focusKeys[activeCard].iconColor}`} />;
                       })()}
                     </div>
                     <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.2em] uppercase px-2 sm:px-3 py-1 rounded-full bg-gold/20 backdrop-blur-sm text-gold font-semibold border border-gold/20">
-                      {focusAreas[activeCard].tag}
+                      {t("focus.tag")}
                     </span>
                   </div>
 
@@ -156,26 +118,25 @@ const FocusSection = () => {
                   </span>
 
                   <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2 sm:mb-3">
-                    {focusAreas[activeCard].title}
+                    {t(focusKeys[activeCard].titleKey)}
                   </h3>
                   <p className="font-body text-foreground/80 text-xs sm:text-sm md:text-base leading-relaxed line-clamp-3 sm:line-clamp-none">
-                    {focusAreas[activeCard].description}
+                    {t(focusKeys[activeCard].descKey)}
                   </p>
                 </motion.div>
               </AnimatePresence>
             </div>
           </motion.div>
 
-          {/* Selector pills — horizontal scroll on mobile, vertical on desktop */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.5, duration: 0.8 }}
             className="w-full lg:w-72 flex flex-row lg:flex-col gap-2 sm:gap-3 overflow-x-auto pb-2 lg:pb-0 snap-x snap-mandatory lg:snap-none"
           >
-            {focusAreas.map((area, i) => (
+            {focusKeys.map((area, i) => (
               <button
-                key={area.title}
+                key={area.titleKey}
                 onClick={() => setActiveCard(i)}
                 className={`flex-shrink-0 w-[140px] sm:w-auto lg:flex-none text-left p-3 sm:p-4 md:p-5 rounded-xl sm:rounded-2xl border transition-all duration-500 group snap-start ${
                   i === activeCard
@@ -195,7 +156,7 @@ const FocusSection = () => {
                     <p className={`font-display text-xs sm:text-sm font-bold transition-colors truncate ${
                       i === activeCard ? "text-foreground" : "text-muted-foreground"
                     }`}>
-                      {area.title}
+                      {t(area.titleKey)}
                     </p>
                     <span className={`font-mono text-[9px] sm:text-[10px] tracking-wider ${
                       i === activeCard ? "text-gold" : "text-muted-foreground/50"

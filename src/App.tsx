@@ -1,6 +1,7 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
@@ -29,37 +30,39 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/programs" element={<Programs />} />
-          <Route path="/programs/:slug" element={<ProgramDetail />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/join" element={<Join />} />
-          <Route path="/journal" element={<Journal />} />
-          <Route path="/community" element={<Community />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/login" element={<Login />} />
-          {/* Admin Dashboard */}
-          <Route path="/admin" element={<DashboardLayout />}>
-            <Route index element={<Overview />} />
-            <Route path="faqs" element={<FAQManager />} />
-            <Route path="programs" element={<ProgramsManager />} />
-            <Route path="impact" element={<ImpactManager />} />
-            <Route path="team" element={<TeamManager />} />
-            <Route path="journal" element={<JournalManager />} />
-            <Route path="messages" element={<MessagesManager />} />
-            <Route path="newsletter" element={<NewsletterManager />} />
-            <Route path="analytics" element={<AnalyticsDashboard />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <LanguageProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/programs" element={<Programs />} />
+            <Route path="/programs/:slug" element={<ProgramDetail />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/join" element={<Join />} />
+            <Route path="/journal" element={<Journal />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/login" element={<Login />} />
+            {/* Admin Dashboard */}
+            <Route path="/admin" element={<DashboardLayout />}>
+              <Route index element={<Overview />} />
+              <Route path="faqs" element={<FAQManager />} />
+              <Route path="programs" element={<ProgramsManager />} />
+              <Route path="impact" element={<ImpactManager />} />
+              <Route path="team" element={<TeamManager />} />
+              <Route path="journal" element={<JournalManager />} />
+              <Route path="messages" element={<MessagesManager />} />
+              <Route path="newsletter" element={<NewsletterManager />} />
+              <Route path="analytics" element={<AnalyticsDashboard />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </LanguageProvider>
   </QueryClientProvider>
 );
 
