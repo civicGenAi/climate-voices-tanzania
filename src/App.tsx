@@ -12,6 +12,7 @@ import Join from "./pages/Join";
 import Journal from "./pages/Journal";
 import Community from "./pages/Community";
 import FAQ from "./pages/FAQ";
+import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import DashboardLayout from "./pages/admin/DashboardLayout";
 import Overview from "./pages/admin/Overview";
@@ -42,6 +43,7 @@ const App = () => (
           <Route path="/journal" element={<Journal />} />
           <Route path="/community" element={<Community />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/login" element={<Login />} />
           {/* Admin Dashboard */}
           <Route path="/admin" element={<DashboardLayout />}>
             <Route index element={<Overview />} />
