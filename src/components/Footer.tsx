@@ -94,9 +94,12 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3 sm:space-y-4">
               <li>
-                <a href="mailto:climatecardinalstz@gmail.com" className="flex items-start gap-3 font-body text-xs sm:text-sm text-muted-foreground hover:text-gold transition-colors">
+                <a
+                  href="mailto:climatecardinalstz@gmail.com"
+                  className="flex items-start gap-3 font-body text-xs sm:text-sm text-muted-foreground hover:text-gold transition-colors"
+                >
                   <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4 mt-0.5 flex-shrink-0 text-gold/60" />
-                  <span className="break-all sm:break-normal">climatecardinalstz@gmail.com</span>
+                  <span className="break-all sm:break-normal">climatecardinalstz@climatecardinalst.or.tz</span>
                 </a>
               </li>
               <li>

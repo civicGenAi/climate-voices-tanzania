@@ -10,8 +10,8 @@ const contactMethods = [
   {
     icon: Mail,
     title: "Email Us",
-    value: "climatecardinalstz@gmail.com",
-    href: "mailto:climatecardinalstz@gmail.com",
+    value: "climatecardinalstz@climatecardinalst.or.tz",
+    href: "mailto:climatecardinalstz@climatecardinalst.or.tz",
     description: "We respond within 24-48 hours",
   },
   {
