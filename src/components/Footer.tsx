@@ -1,12 +1,59 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
 import globalLogo from "@/assets/climate-cardinals-global-logo.png";
 import { Mail, Phone, MapPin, Instagram, Twitter, Facebook, ArrowUp } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { toast } from "sonner";
 
 const Footer = () => {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
   const { t } = useLanguage();
+
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!email) {
+      toast.error("Please enter your email address.");
+      return;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Subscription failed");
+      }
+
+      toast.success("Successfully subscribed to our newsletter!");
+      setEmail("");
+      // Add optional reset if ref was added
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to subscribe. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const quickLinks = [
     { key: "footer.quickLinks.home", to: "/" },
@@ -128,15 +175,23 @@ const Footer = () => {
                 {t("footer.newsletter.subtitle")}
               </p>
             </div>
-            <div className="flex w-full sm:w-auto">
-              <input
-                type="email"
-                placeholder={t("footer.newsletter.placeholder")}
-                className="flex-1 sm:w-48 md:w-64 bg-muted/30 border border-border rounded-l-lg px-3 sm:px-4 py-2 sm:py-2.5 font-body text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-gold/40 transition-colors"
-              />
-              <button className="bg-gold text-accent-foreground font-body text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-r-lg hover:bg-gold-warm transition-colors whitespace-nowrap">
-                {t("footer.newsletter.button")}
-              </button>
+            <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-4 sm:gap-0 relative">
+              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row w-full">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder={t("footer.newsletter.placeholder")}
+                  className="flex-1 sm:w-48 md:w-64 bg-muted/30 border border-border sm:rounded-l-lg sm:rounded-r-none rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 font-body text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-gold/40 transition-colors mb-3 sm:mb-0"
+                />
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="bg-gold text-accent-foreground font-body text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2 sm:py-2.5 sm:rounded-r-lg sm:rounded-l-none rounded-lg hover:bg-gold-warm transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? "Subscribing..." : t("footer.newsletter.button")}
+                </button>
+              </form>
             </div>
           </div>
         </div>
