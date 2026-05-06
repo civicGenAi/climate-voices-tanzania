@@ -6,9 +6,64 @@ import { Calendar, Clock, ArrowRight, BookOpen, Search, Tag } from "lucide-react
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import journalHero from "@/assets/journal-hero-cartoon.png";
-import { blogPosts } from "@/data/journal";
 
 const categories = ["All", "News", "Stories", "Education", "Events"];
+
+const blogPosts = [
+  {
+    id: 1,
+    title: "How Kiswahili Translations Are Changing Climate Awareness in Rural Tanzania",
+    excerpt: "Our latest translation project has brought critical climate documents to over 15,000 people in Dodoma region who previously had no access to this vital information.",
+    category: "Stories",
+    date: "March 5, 2026",
+    readTime: "6 min read",
+    featured: true,
+  },
+  {
+    id: 2,
+    title: "500 Trees Planted in Kilimanjaro Region — A Community Milestone",
+    excerpt: "In partnership with local schools and community leaders, we achieved a significant milestone in our reforestation efforts on the slopes of Kilimanjaro.",
+    category: "News",
+    date: "February 28, 2026",
+    readTime: "4 min read",
+    featured: false,
+  },
+  {
+    id: 3,
+    title: "Youth Climate Leadership Workshop — What We Learned",
+    excerpt: "Our three-day workshop in Arusha brought together 40 young climate advocates. Here's what emerged from the conversations and collaborations.",
+    category: "Education",
+    date: "February 20, 2026",
+    readTime: "8 min read",
+    featured: false,
+  },
+  {
+    id: 4,
+    title: "Upcoming: World Environment Day Community Clean-Up",
+    excerpt: "Join us on June 5th for a nationwide community clean-up event across 10 Tanzanian cities. Registration is now open for volunteers.",
+    category: "Events",
+    date: "February 15, 2026",
+    readTime: "3 min read",
+    featured: false,
+  },
+  {
+    id: 5,
+    title: "Understanding Climate Change: A Guide in Simple Kiswahili",
+    excerpt: "We've released our most comprehensive educational guide yet — designed for community leaders and teachers to explain climate change in accessible language.",
+    category: "Education",
+    date: "February 10, 2026",
+    readTime: "5 min read",
+    featured: false,
+  },
+  {
+    id: 7,
+    title: "Protecting What We Inherited",
+    excerpt: "During a Wikimedia community activity, I visited a natural site full of beauty and life. It made me realize that what we enjoy today exists because someone chose to protect it.",
+    category: "Stories",
+    date: "May 6, 2026",
+    readTime: "3 min read",
+    featured: true,
+  },
 
 const Journal = () => {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -102,7 +157,6 @@ const Journal = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               className="group relative bg-gradient-to-br from-gold/10 via-card to-card border border-gold/20 rounded-xl sm:rounded-[2rem] p-5 sm:p-8 md:p-12 hover:border-gold/40 transition-all duration-500 cursor-pointer"
-              onClick={() => navigate(`/journal/${featuredPost.id}`)}
             >
               <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                 <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.2em] uppercase px-2.5 sm:px-3 py-1 rounded-full bg-gold/15 text-gold font-semibold">Featured</span>
@@ -148,7 +202,6 @@ const Journal = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1, duration: 0.6 }}
                   className="group bg-card border border-border rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:border-gold/30 transition-all duration-300 cursor-pointer flex flex-col"
-                  onClick={() => navigate(`/journal/${post.id}`)}
                 >
                   <div className="flex items-center gap-2 mb-3 sm:mb-4">
                     <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.15em] uppercase px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full border border-border text-muted-foreground">
