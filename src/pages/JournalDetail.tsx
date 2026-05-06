@@ -153,52 +153,49 @@ const JournalDetail = () => {
                       {post.content}
                     </div>
                   </div>
-                  <div className="rounded-3xl border border-border bg-card p-6">
+                  <div className="rounded-3xl border border-border bg-card p-5 h-fit sticky top-24">
                     <div className="flex items-center gap-3 text-foreground font-semibold mb-4">
                       <Share2 className="w-4 h-4" />
                       Share this story
                     </div>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-2">
                       <button
                         type="button"
                         onClick={handleNativeShare}
-                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-4 py-2 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
+                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1.5 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
                       >
-                        <Share2 className="w-4 h-4" />
+                        <Share2 className="w-3.5 h-3.5" />
                         Share
                       </button>
-                      <a
-                        href={shareUrls.twitter}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-4 py-2 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
+                      <button
+                        type="button"
+                        onClick={() => window.open(shareUrls.twitter, 'twitter-share', 'width=550,height=400')}
+                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1.5 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
                       >
-                        <Twitter className="w-4 h-4" />
+                        <Twitter className="w-3.5 h-3.5" />
                         Twitter
-                      </a>
-                      <a
-                        href={shareUrls.facebook}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-4 py-2 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => window.open(shareUrls.facebook, 'facebook-share', 'width=550,height=400')}
+                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1.5 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
                       >
-                        <Facebook className="w-4 h-4" />
+                        <Facebook className="w-3.5 h-3.5" />
                         Facebook
-                      </a>
-                      <a
-                        href={shareUrls.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-4 py-2 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => window.open(shareUrls.linkedin, 'linkedin-share', 'width=550,height=400')}
+                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1.5 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
                       >
-                        <Linkedin className="w-4 h-4" />
+                        <Linkedin className="w-3.5 h-3.5" />
                         LinkedIn
-                      </a>
+                      </button>
                       <a
                         href={shareUrls.email}
-                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-4 py-2 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
+                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1.5 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
                       >
-                        <Copy className="w-4 h-4" />
+                        <Copy className="w-3.5 h-3.5" />
                         Email link
                       </a>
                     </div>
@@ -224,52 +221,49 @@ const JournalDetail = () => {
                   transition={{ delay: 0.35 }}
                   className="grid gap-6"
                 >
-                  <div className="rounded-3xl border border-border bg-card p-6">
+                  <div className="rounded-3xl border border-border bg-card p-5 h-fit">
                     <div className="flex items-center gap-3 text-foreground font-semibold mb-4">
                       <Share2 className="w-4 h-4" />
                       Share this story
                     </div>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-2">
                       <button
                         type="button"
                         onClick={handleNativeShare}
-                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-4 py-2 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
+                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1.5 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
                       >
-                        <Share2 className="w-4 h-4" />
+                        <Share2 className="w-3.5 h-3.5" />
                         Share
                       </button>
-                      <a
-                        href={shareUrls.twitter}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-4 py-2 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
+                      <button
+                        type="button"
+                        onClick={() => window.open(shareUrls.twitter, 'twitter-share', 'width=550,height=400')}
+                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1.5 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
                       >
-                        <Twitter className="w-4 h-4" />
+                        <Twitter className="w-3.5 h-3.5" />
                         Twitter
-                      </a>
-                      <a
-                        href={shareUrls.facebook}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-4 py-2 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => window.open(shareUrls.facebook, 'facebook-share', 'width=550,height=400')}
+                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1.5 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
                       >
-                        <Facebook className="w-4 h-4" />
+                        <Facebook className="w-3.5 h-3.5" />
                         Facebook
-                      </a>
-                      <a
-                        href={shareUrls.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-4 py-2 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => window.open(shareUrls.linkedin, 'linkedin-share', 'width=550,height=400')}
+                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1.5 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
                       >
-                        <Linkedin className="w-4 h-4" />
+                        <Linkedin className="w-3.5 h-3.5" />
                         LinkedIn
-                      </a>
+                      </button>
                       <a
                         href={shareUrls.email}
-                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-4 py-2 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
+                        className="inline-flex items-center gap-2 rounded-full border border-border bg-background/80 px-3 py-1.5 text-sm text-foreground transition hover:border-gold/40 hover:text-gold"
                       >
-                        <Copy className="w-4 h-4" />
+                        <Copy className="w-3.5 h-3.5" />
                         Email link
                       </a>
                     </div>
